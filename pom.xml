@@ -12,9 +12,9 @@
         <module>shop-mbg</module>
         <module>shop-security</module>
         <!--<module>mall-demo</module>-->
-        <!--<module>mall-admin</module>-->
-        <!--<module>mall-search</module>-->
-        <!--<module>mall-portal</module>-->
+        <module>shop-admin</module>
+        <module>shop-search</module>
+        <module>shop-portal</module>
     </modules>
 
     <parent>

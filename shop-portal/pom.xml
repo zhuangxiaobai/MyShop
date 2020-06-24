@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zc.shop</groupId>
+    <artifactId>shop-portal</artifactId>
+    <version>1.0.0</version>
+    <name>shop-portal</name>
+    <description>商城后台</description>
+
+
+    <parent>
+        <groupId>com.zc</groupId>
+        <artifactId>shop</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zc.shop</groupId>
+            <artifactId>shop-mbg</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zc.shop</groupId>
+            <artifactId>shop-security</artifactId>
+        </dependency>
+        <!--mongodb依赖配置-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+        <!--</dependency>-->
+        <!--redis依赖配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--集成消息队列-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-amqp</artifactId>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+
+</project>
