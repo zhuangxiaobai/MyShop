@@ -48,6 +48,8 @@
         <shop-common.version>1.0.0</shop-common.version>
         <shop-mbg.version>1.0.0</shop-mbg.version>
         <shop-security.version>1.0.0</shop-security.version>
+        <tencentcloud-sdk-java.version>3.1.79</tencentcloud-sdk-java.version>
+        <!--<aliyun-java-sdk-core.version>4.5.1</aliyun-java-sdk-core.version>-->
     </properties>
 
     <dependencies>
@@ -184,6 +186,12 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+            <!--腾讯云 短信 SDK-->
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>${tencentcloud-sdk-java.version}</version>
             </dependency>
            </dependencies>
     </dependencyManagement>
