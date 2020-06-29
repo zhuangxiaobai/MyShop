@@ -52,10 +52,7 @@ public class JwtLoginInterceptor implements HandlerInterceptor {
                         System.out.println(user.toString());
                         if (jwtTokenUtil.validateToken(authToken, user)) {
 
-//                            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-//                            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                         //   LOGGER.info("authenticated user:{}", username);
-//                            SecurityContextHolder.getContext().setAuthentication(authentication);
+//
                             return true;
                         }
                     }
