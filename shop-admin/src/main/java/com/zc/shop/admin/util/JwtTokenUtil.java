@@ -1,9 +1,10 @@
-package com.zc.shop.security.util;
+package com.zc.shop.admin.util;
 
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
+import com.zc.shop.admin.dao.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,12 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-//import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * JwtToken生成的工具类

@@ -1,9 +1,10 @@
-package com.zc.shop.security.interceptor;
+package com.zc.shop.admin.interceptor;
 
 
+import com.zc.shop.admin.util.JwtTokenUtil;
 import com.zc.shop.common.api.ResultCode;
 import com.zc.shop.common.exception.BusinessException;
-import com.zc.shop.security.util.JwtTokenUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
