@@ -1,10 +1,12 @@
 package com.zc.shop.admin.interceptor;
 
 
+import com.zc.shop.admin.mapper.UsersExtMapper;
 import com.zc.shop.admin.util.JwtTokenUtil;
 import com.zc.shop.common.api.ResultCode;
 import com.zc.shop.common.exception.BusinessException;
 
+import com.zc.shop.mbg.po.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class JwtLoginInterceptor implements HandlerInterceptor {
 
-    //@Autowired
-    //private E_UserMapper e_userMapper;
+    @Autowired
+    private UsersExtMapper usersExtMapper;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Value("${jwt.tokenHeader}")
@@ -48,8 +50,8 @@ public class JwtLoginInterceptor implements HandlerInterceptor {
                     System.out.println("username:"+username);
                    // LOGGER.info("checking username:{}", username);
                     if (username != null ) {
-                      //  User user = this.eUserMapper.selectByExample(new EUserExample());
-                        user = this.e_userMapper.selectUserByUserName(username);
+
+                        Users user = this.usersExtMapper.selectUserByUserName(username);
                         System.out.println(user.toString());
                         if (jwtTokenUtil.validateToken(authToken, user)) {
 

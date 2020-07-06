@@ -4,7 +4,8 @@ package com.zc.shop.admin.util;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
-import com.zc.shop.admin.dao.User;
+
+import com.zc.shop.mbg.po.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -111,9 +112,9 @@ public class JwtTokenUtil {
      * @param token       客户端传入的token
      * @param userDetails 从数据库中查询出来的用户信息
      */
-    public boolean validateToken(String token, User userDetails) {
+    public boolean validateToken(String token, Users userDetails) {
         String username = getUserNameFromToken(token);
-        return username.equals(userDetails.getName()) && !isTokenExpired(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     /**
@@ -135,9 +136,9 @@ public class JwtTokenUtil {
     /**
      * 根据用户信息生成token
      */
-    public String generateToken(User user) {
+    public String generateToken(Users user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME, user.getName());
+        claims.put(CLAIM_KEY_USERNAME, user.getUsername());
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }
