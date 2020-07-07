@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zc.shop.mbg.mapper.UsersExtMapper">
+<mapper namespace="com.zc.shop.admin.mapper.UsersExtMapper">
 
     <select id="selectUserByUserName"  resultMap="com.zc.shop.mbg.mapper.UsersMapper.BaseResultMap">
         select
-        <include refid="com.zc.shop.mbg.mapper.UsersMapper.Base_Column_List" />
+        <include refid="com.zc.shop.mbg.mapper.UsersMapper.Base_Column_List"/>
         from users
         where username = #{username,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectUserByNickName"  resultMap="com.zc.shop.mbg.mapper.UsersMapper.BaseResultMap">
+        select
+        <include refid="com.zc.shop.mbg.mapper.UsersMapper.Base_Column_List" />
+        from users
+        where nickname = #{nickname,jdbcType=VARCHAR}
+    </select>
+
+
+
+    <select id="selectUserByUserNameAndPassword"  resultMap="com.zc.shop.mbg.mapper.UsersMapper.BaseResultMap">
+        select
+        <include refid="com.zc.shop.mbg.mapper.UsersMapper.Base_Column_List" />
+        from users
+        where username = #{username,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

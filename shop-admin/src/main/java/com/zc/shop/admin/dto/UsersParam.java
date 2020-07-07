@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class UsersParam {
 
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "注册用户名")
     private String username;
 
     @ApiModelProperty(value = "密码")
@@ -17,10 +17,6 @@ public class UsersParam {
 
     @ApiModelProperty(value = "昵称")
     private String nickname;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
 
 
 

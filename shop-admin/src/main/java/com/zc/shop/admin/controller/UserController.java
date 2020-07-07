@@ -11,6 +11,7 @@ import com.zc.shop.admin.dto.UsersLoginParam;
 import com.zc.shop.admin.dto.UsersParam;
 import com.zc.shop.admin.service.UserService;
 import com.zc.shop.common.api.CommonResult;
+import com.zc.shop.common.api.ResultCode;
 import com.zc.shop.mbg.po.Users;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -72,13 +73,25 @@ public class UserController {
         String token = request.getHeader(tokenHeader);
         String refreshToken = userService.refreshToken(token);
         if (refreshToken == null) {
-            return CommonResult.failed("token已经过期！");
+            return CommonResult.failed(ResultCode.UNAUTHORIZED);
         }
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", refreshToken);
         tokenMap.put("tokenHead", tokenHead);
         return CommonResult.success(tokenMap);
     }
+
+
+    @ApiOperation(value = "登出功能")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult logout() {
+        return CommonResult.success(null);
+    }
+
+
+
+
 
 
  /*   @ApiOperation(value = "获取验证码")

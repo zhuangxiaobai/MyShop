@@ -28,7 +28,7 @@ public class JwtLoginInterceptor implements HandlerInterceptor {
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
-   // private User user;
+
 
 
     @Override
@@ -42,9 +42,9 @@ public class JwtLoginInterceptor implements HandlerInterceptor {
 
                 String authHeader = request.getHeader(this.tokenHeader);
                 System.out.println("header:"+authHeader);
-                if (authHeader != null){ //&& authHeader.startsWith(this.tokenHead)) {
-                    String authToken =  authHeader;
-                            //authHeader.substring(this.tokenHead.length());// The part after "Bearer "
+                if (authHeader != null){
+                    //String authToken =  authHeader;
+                    String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
                     String username = jwtTokenUtil.getUserNameFromToken(authToken);
                     System.out.println(authToken);
                     System.out.println("username:"+username);
@@ -55,7 +55,6 @@ public class JwtLoginInterceptor implements HandlerInterceptor {
                         System.out.println(user.toString());
                         if (jwtTokenUtil.validateToken(authToken, user)) {
 
-//
                             return true;
                         }
                     }

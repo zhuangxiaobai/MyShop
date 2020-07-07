@@ -8,9 +8,7 @@ public enum ResultCode implements IErrorCode {
     FAILED(9999, "操作失败"),
 
 
-
     VALIDATE_FAILED(404, "参数检验失败"),
-    UNAUTHORIZED(401, "暂未登录或token已经过期"),
     FORBIDDEN(403, "没有相关权限"),
 
 
@@ -18,7 +16,18 @@ public enum ResultCode implements IErrorCode {
     UNMANAGER(800,"您并非管理员，没有此权限"),
     UNSUPERMANAGER(801,"您并非超级管理员，没有此权限"),
     UNAUTHORIZEDSESSION(900, "暂未登录或session已经过期"),
-    USERNAMEEXIST(901, "用户名已经存在");
+
+
+
+
+
+    UNAUTHORIZED(401, "暂未登录或token已经过期"),
+    USERNAMEEXIST(901, "用户名已经存在"),
+    NICKNAMEEXIST(902,"昵称已经存在"),
+    USERNAMEORPASSWORDERROR(903,"用户名或密码错误");
+
+
+
     private long code;
     private String message;
 
