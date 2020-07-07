@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
         //登陆成功创建token
         String token = jwtTokenUtil.generateToken(user);
-
+        System.out.println("生成的token:"+token);
 
         return token;
     }
