@@ -24,8 +24,8 @@ public enum ResultCode implements IErrorCode {
     UNAUTHORIZED(401, "暂未登录或token已经过期"),
     USERNAMEEXIST(901, "用户名已经存在"),
     NICKNAMEEXIST(902,"昵称已经存在"),
-    USERNAMEORPASSWORDERROR(903,"用户名或密码错误");
-
+    USERNAMEORPASSWORDERROR(903,"用户名或密码错误"),
+    PASSWORDERROR(904,"密码错误");
 
 
     private long code;

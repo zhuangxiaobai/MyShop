@@ -7,6 +7,7 @@
         <include refid="com.zc.shop.mbg.mapper.UsersMapper.Base_Column_List"/>
         from users
         where username = #{username,jdbcType=VARCHAR}
+        and is_delete = 0
     </select>
 
     <select id="selectUserByNickName"  resultMap="com.zc.shop.mbg.mapper.UsersMapper.BaseResultMap">
@@ -14,6 +15,7 @@
         <include refid="com.zc.shop.mbg.mapper.UsersMapper.Base_Column_List" />
         from users
         where nickname = #{nickname,jdbcType=VARCHAR}
+        and is_delete = 0
     </select>
 
 
@@ -23,6 +25,7 @@
         <include refid="com.zc.shop.mbg.mapper.UsersMapper.Base_Column_List" />
         from users
         where username = #{username,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+        and is_delete = 0
     </select>
 
 </mapper>

@@ -46,15 +46,16 @@ public class JwtLoginInterceptor implements HandlerInterceptor {
                     //String authToken =  authHeader;
                     String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
                     String username = jwtTokenUtil.getUserNameFromToken(authToken);
-                    System.out.println(authToken);
-                    System.out.println("username:"+username);
+                    //System.out.println(authToken);
+                   // System.out.println("username:"+username);
                    // LOGGER.info("checking username:{}", username);
                     if (username != null ) {
 
                         Users user = this.usersExtMapper.selectUserByUserName(username);
-                        System.out.println(user.toString());
+                        //  System.out.println(user.toString());
                         if (jwtTokenUtil.validateToken(authToken, user)) {
-
+                            request.setAttribute("user",user);
+                            System.out.println("--------成功通过了token登录过滤器----------");
                             return true;
                         }
                     }

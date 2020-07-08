@@ -1,5 +1,6 @@
 package com.zc.shop.mbg.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,8 +17,10 @@ public class Users implements Serializable {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
     private String apiToken;

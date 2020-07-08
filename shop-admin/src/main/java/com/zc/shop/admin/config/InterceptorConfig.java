@@ -31,6 +31,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         .excludePathPatterns("/user/login")     //不需要拦截的路径
         .excludePathPatterns("/user/register")
                 .excludePathPatterns("/error")
+                .excludePathPatterns("/user/forgetPassword")
+                .excludePathPatterns("/user/sendMessage")
                 .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");//不拦截swagger相关资源
 
 

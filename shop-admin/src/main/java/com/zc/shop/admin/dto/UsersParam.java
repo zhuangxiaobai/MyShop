@@ -1,11 +1,13 @@
 package com.zc.shop.admin.dto;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@ApiModel(description = "用户注册对象")
 public class UsersParam {
 
 

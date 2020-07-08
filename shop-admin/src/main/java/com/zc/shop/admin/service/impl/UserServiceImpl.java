@@ -10,10 +10,9 @@ import com.zc.shop.mbg.po.Users;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -26,8 +25,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional(rollbackFor =  Exception.class)
     public Users register(UsersParam usersParam) {
-        
+
         String username = usersParam.getUsername();
 
         String nickname = usersParam.getNickname();
@@ -79,5 +79,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public String refreshToken(String oldToken) {
         return jwtTokenUtil.refreshHeadToken(oldToken);
+    }
+
+    @Override
+    @Transactional(rollbackFor =  Exception.class)
+    public int updatePassword(Users currenetUser, String newPassword) {
+
+        currenetUser.setPassword(newPassword);
+        currenetUser.setUpdatedAt(LocalDateTime.now());
+
+
+        return usersExtMapper.updateByPrimaryKeySelective(currenetUser);
     }
 }

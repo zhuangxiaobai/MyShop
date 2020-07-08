@@ -9,4 +9,6 @@ public interface UserService {
     String login(String username, String password);
 
     String refreshToken(String token);
+
+    int updatePassword(Users currenetUser, String newPassword);
 }
