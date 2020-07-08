@@ -20,7 +20,8 @@ public class UsersParam {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
-
+    @ApiModelProperty(value = "手机验证码")
+    private String captcha;
 
 
 
