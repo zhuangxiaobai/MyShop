@@ -11,4 +11,8 @@ public interface UserService {
     String refreshToken(String token);
 
     int updatePassword(Users currenetUser, String newPassword);
+
+    Users userExistByUserName(String username);
+
+    int resetPassWord(String mobile, String newPassword);
 }

@@ -1,9 +1,8 @@
 package com.zc.shop.admin.controller;
 
 
-import cn.hutool.cache.CacheUtil;
-import cn.hutool.cache.impl.TimedCache;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.CommonRequest;
@@ -56,7 +55,7 @@ public class UserController {
     public CommonResult<UsersVo> register(@RequestBody @ApiParam(value="传入用户注册对象")UsersParam usersParam) {
         //验证手机短信验证码是否正确
         String yanzhengma = MyCacheUtil.get(usersParam.getUsername());
-        if(!yanzhengma.equals(usersParam.getCaptcha())){
+        if(yanzhengma==null || !yanzhengma.equals(usersParam.getCaptcha())){
             return CommonResult.failed(ResultCode.CAPTCHADERROR);
         }
 
@@ -129,14 +128,16 @@ public class UserController {
     public CommonResult updatePassword(@RequestBody @ApiParam(value="修改用户密码")UpdateUsersPasswordParam updateUsersPasswordParam, HttpServletRequest request) {
         String oldPassword = updateUsersPasswordParam.getPassword();
         String newPassword = updateUsersPasswordParam.getNewPassword();
+        String oldPasswordToMd5 = DigestUtil.md5Hex(oldPassword);
+        String newPasswordToMd5 = DigestUtil.md5Hex(newPassword);
         //验证老密码是否正确
         Users currenetUser = (Users) request.getAttribute("user");
-        if(!currenetUser.getPassword().equals(oldPassword)){
+        if(!currenetUser.getPassword().equals(oldPasswordToMd5)){
             throw new BusinessException(ResultCode.PASSWORDERROR);
         }
 
         //传入新密码去修改
-        userService.updatePassword(currenetUser,newPassword);
+        userService.updatePassword(currenetUser,newPasswordToMd5);
 
 
         return CommonResult.success(null);
@@ -150,6 +151,7 @@ public class UserController {
         String mobile = forgetUsersPasswordParam.getMobile();
         String captcha =forgetUsersPasswordParam.getCaptcha();
         String newPassword =forgetUsersPasswordParam.getNewPassword();
+        String newPasswordToMd5 = DigestUtil.md5Hex(newPassword);
         //验证一下验证码是否正确
         //验证手机短信验证码是否正确
         String yanzhengma = MyCacheUtil.get(mobile);
@@ -159,9 +161,7 @@ public class UserController {
 
         //验证成功,去修改密码
 
-
-
-
+         userService.resetPassWord(mobile,newPasswordToMd5);
 
 
 
@@ -192,16 +192,42 @@ public class UserController {
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult sendMessage(@Validated @RequestBody @ApiParam(value="获取手机验证码") MobileSendMessageParam mobileSendMessageParam) {
+        String username = mobileSendMessageParam.getMobile();
+        String mobileType = mobileSendMessageParam.getType();
 
-        //查询一下手机号是否已经注册
+            //注册
+        if(mobileType.equals("1")){
+
+            //查询一下手机号是否已经注册
+            Users users = userService.userExistByUserName(username);
+            if(users != null){
+                return CommonResult.failed(ResultCode.USERNAMEEXIST);
+            }
+            //重置密码
+        }else if(mobileType.equals("2")){
+
+            //查询一下手机号是否已经注册
+            Users users = userService.userExistByUserName(username);
+            if(users == null){
+                return CommonResult.failed(ResultCode.USERNAMENOTEXIST);
+            }
+
+
+           //发其他的提示失败
+        }else{
+
+            return  CommonResult.failed(ResultCode.PARAMNOTFULL);
+        }
 
 
 
-
+       //没注册发验证码
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4FgVL9JFiWNBCwNUssip", "rvX9vOLcH5Ng7MRKqlNhM5wRFw9D6P");
         IAcsClient client = new DefaultAcsClient(profile);
 
-        String  yanzhengma = String.valueOf((int)Math.floor(Math.random()*10000));
+        //生成4位随机数,random为左闭右开的
+        String  yanzhengma = String.valueOf((int)((Math.random()*9+1)*1000));
+
         System.out.println("验证码为"+yanzhengma);
         //把验证码存入定时缓存缓存中,时间为5分钟,key为手机号，value为验证码
         MyCacheUtil.put(mobileSendMessageParam.getMobile(),yanzhengma);

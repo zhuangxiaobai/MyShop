@@ -26,7 +26,9 @@ public enum ResultCode implements IErrorCode {
     NICKNAMEEXIST(902,"昵称已经存在"),
     USERNAMEORPASSWORDERROR(903,"用户名或密码错误"),
     PASSWORDERROR(904,"密码错误"),
-    CAPTCHADERROR(905,"手机验证码错误或已过期");
+    CAPTCHADERROR(905,"手机验证码错误或已过期"),
+    USERNAMENOTEXIST(906,"用户名不存在"),
+    PARAMNOTFULL(922,"接口参数验证错误");
 
 
     private long code;

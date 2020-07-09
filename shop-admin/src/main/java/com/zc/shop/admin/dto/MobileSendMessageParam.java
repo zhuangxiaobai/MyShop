@@ -16,4 +16,8 @@ public class MobileSendMessageParam {
     private String mobile;
 
 
+    @ApiModelProperty(value = "验证码用途分类 1为注册 2为重置密码，字符串形式")
+    @NotBlank(message = "验证码类型不能为空")
+    private String type;
+
 }
