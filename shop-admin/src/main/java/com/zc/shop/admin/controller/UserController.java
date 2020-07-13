@@ -31,10 +31,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @Api(tags = "UserController", description = "用户")
@@ -272,6 +274,50 @@ public class UserController {
 
 
     }
+
+
+
+    @ApiOperation(value = "上传图片接口")
+    @RequestMapping(value = "/saveFile", method = RequestMethod.POST)
+    @ResponseBody
+    private List<String> saveFile(HttpServletRequest request,
+                                  MultipartFile file) {
+
+        List<String> list = new ArrayList<>();
+
+        System.out.println(file.toString());
+        // 判断文件是否为空
+        if (!file.isEmpty()) {
+
+
+
+            try {
+                // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中
+                // )
+                // String filePath = "C:/fileUpload/picture" + (new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
+
+                String fileName = "picture"+(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
+                String filePath=  "Macintosh HD/" + fileName;
+
+
+
+                list.add(filePath);
+                File saveDir = new File(filePath);
+                if (!saveDir.getParentFile().exists()) {
+                    saveDir.getParentFile().mkdirs();
+                }
+                // 转存文件
+                file.transferTo(saveDir);
+
+
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
 
 
 

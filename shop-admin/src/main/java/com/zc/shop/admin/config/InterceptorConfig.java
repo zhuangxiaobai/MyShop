@@ -30,6 +30,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         interceptorRegistry.addPathPatterns("/**") //需要拦截的路径
         .excludePathPatterns("/user/login")     //不需要拦截的路径
         .excludePathPatterns("/user/register")
+                .excludePathPatterns("/user/saveFile")
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/user/forgetPassword")
                 .excludePathPatterns("/user/sendMessage")
