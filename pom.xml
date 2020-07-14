@@ -50,6 +50,7 @@
         <shop-security.version>1.0.0</shop-security.version>
         <tencentcloud-sdk-java.version>3.1.79</tencentcloud-sdk-java.version>
         <aliyun-java-sdk-core.version>4.5.0</aliyun-java-sdk-core.version>
+        <common-lang3.version>3.10</common-lang3.version>
     </properties>
 
     <dependencies>
@@ -203,6 +204,12 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-core</artifactId>
                 <version>${aliyun-java-sdk-core.version}</version>
+            </dependency>
+            <!--实用类软件包-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${common-lang3.version}</version>
             </dependency>
            </dependencies>
     </dependencyManagement>
