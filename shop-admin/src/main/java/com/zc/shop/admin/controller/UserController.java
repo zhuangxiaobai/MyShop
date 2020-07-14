@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.service.UserService;
 import com.zc.shop.admin.util.MyCacheUtil;
+import org.apache.commons.lang3.StringUtils;
 import com.zc.shop.admin.vo.UsersVo;
 import com.zc.shop.common.api.CommonResult;
 import com.zc.shop.common.api.ResultCode;
@@ -27,10 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +45,10 @@ public class UserController {
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+
+
+    @Value("${uploadFile.location}")
+    private String uploadFileLocation;//上传文件保存的本地目录，使用@Value获取全局配置文件中配置的属性值
     @Autowired
     private UserService userService;
 
@@ -277,27 +279,45 @@ public class UserController {
 
 
 
-    @ApiOperation(value = "上传图片接口")
-    @RequestMapping(value = "/saveFile", method = RequestMethod.POST)
+
+
+    @ApiOperation("上传图片接口")
+    @RequestMapping(value = "/uploadImage",produces="application/json;charset=UTF-8",method = RequestMethod.POST)
     @ResponseBody
-    private List<String> saveFile(HttpServletRequest request,
-                                  MultipartFile file) {
+    public CommonResult uploadImage(@RequestParam(value = "files" ) MultipartFile[] files,
+                                    HttpServletRequest request) {
 
         List<String> list = new ArrayList<>();
+        if (files != null && files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                MultipartFile file = files[i];
+                // 保存文件
+                list = saveFile(request, file, list);
+            }
+        }
+        //测试
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("集合里面的数据" + list.get(i));
+        }
+        // 数组转String字符串
+        String newStr = StringUtils.join(list, ",");
+        System.out.println(newStr);
 
-        System.out.println(file.toString());
+
+        return CommonResult.success(newStr);
+    }
+
+    private List<String> saveFile(HttpServletRequest request,
+                                  MultipartFile file, List<String> list) {
         // 判断文件是否为空
         if (!file.isEmpty()) {
-
-
-
             try {
                 // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中
                 // )
                 // String filePath = "C:/fileUpload/picture" + (new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
 
                 String fileName = "picture"+(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
-                String filePath=  "Macintosh HD/" + fileName;
+                String filePath=  uploadFileLocation + fileName;
 
 
 
@@ -317,6 +337,8 @@ public class UserController {
         }
         return list;
     }
+
+
 
 
 
