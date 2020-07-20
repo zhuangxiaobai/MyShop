@@ -15,6 +15,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
     private boolean addRemarkComments = false;
     private static final String EXAMPLE_SUFFIX="Example";
     private static final String API_MODEL_PROPERTY_FULL_CLASS_NAME="io.swagger.annotations.ApiModelProperty";
+    private static final String API_JSONFORMAT  = "com.fasterxml.jackson.annotation.JsonFormat";
 
     /**
      * 设置用户配置的参数
@@ -71,6 +72,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
         //只在model中添加swagger注解类的导入
         if(!compilationUnit.isJavaInterface()&&!compilationUnit.getType().getFullyQualifiedName().contains(EXAMPLE_SUFFIX)){
             compilationUnit.addImportedType(new FullyQualifiedJavaType(API_MODEL_PROPERTY_FULL_CLASS_NAME));
+            compilationUnit.addImportedType(new FullyQualifiedJavaType(API_JSONFORMAT));
         }
     }
 }
