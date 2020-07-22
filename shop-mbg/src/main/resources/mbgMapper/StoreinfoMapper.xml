@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.StoreinfoMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.Storeinfo">
+    <id column="id" jdbcType="SMALLINT" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="INTEGER" property="phone" />
+    <result column="business" jdbcType="VARCHAR" property="business" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="max_sellweight" jdbcType="DECIMAL" property="maxSellweight" />
+    <result column="max_landweight" jdbcType="DECIMAL" property="maxLandweight" />
+    <result column="max_sellnum" jdbcType="INTEGER" property="maxSellnum" />
+    <result column="max_landnum" jdbcType="INTEGER" property="maxLandnum" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="provinces" jdbcType="VARCHAR" property="provinces" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zc.shop.mbg.po.Storeinfo">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, title, name, phone, business, city, address, logo, max_sellweight, max_landweight, 
+    max_sellnum, max_landnum, created_at, updated_at, provinces
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storeinfo
+    where id = #{id,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from storeinfo
+    where id = #{id,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.Storeinfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Short">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into storeinfo (user_id, title, name, 
+      phone, business, city, 
+      address, logo, max_sellweight, 
+      max_landweight, max_sellnum, max_landnum, 
+      created_at, updated_at, provinces, 
+      content)
+    values (#{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=INTEGER}, #{business,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{maxSellweight,jdbcType=DECIMAL}, 
+      #{maxLandweight,jdbcType=DECIMAL}, #{maxSellnum,jdbcType=INTEGER}, #{maxLandnum,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{provinces,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Storeinfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Short">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into storeinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="business != null">
+        business,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="maxSellweight != null">
+        max_sellweight,
+      </if>
+      <if test="maxLandweight != null">
+        max_landweight,
+      </if>
+      <if test="maxSellnum != null">
+        max_sellnum,
+      </if>
+      <if test="maxLandnum != null">
+        max_landnum,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="provinces != null">
+        provinces,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=INTEGER},
+      </if>
+      <if test="business != null">
+        #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="maxSellweight != null">
+        #{maxSellweight,jdbcType=DECIMAL},
+      </if>
+      <if test="maxLandweight != null">
+        #{maxLandweight,jdbcType=DECIMAL},
+      </if>
+      <if test="maxSellnum != null">
+        #{maxSellnum,jdbcType=INTEGER},
+      </if>
+      <if test="maxLandnum != null">
+        #{maxLandnum,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinces != null">
+        #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Storeinfo">
+    update storeinfo
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=INTEGER},
+      </if>
+      <if test="business != null">
+        business = #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="maxSellweight != null">
+        max_sellweight = #{maxSellweight,jdbcType=DECIMAL},
+      </if>
+      <if test="maxLandweight != null">
+        max_landweight = #{maxLandweight,jdbcType=DECIMAL},
+      </if>
+      <if test="maxSellnum != null">
+        max_sellnum = #{maxSellnum,jdbcType=INTEGER},
+      </if>
+      <if test="maxLandnum != null">
+        max_landnum = #{maxLandnum,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinces != null">
+        provinces = #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zc.shop.mbg.po.Storeinfo">
+    update storeinfo
+    set user_id = #{userId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=INTEGER},
+      business = #{business,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      max_sellweight = #{maxSellweight,jdbcType=DECIMAL},
+      max_landweight = #{maxLandweight,jdbcType=DECIMAL},
+      max_sellnum = #{maxSellnum,jdbcType=INTEGER},
+      max_landnum = #{maxLandnum,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      provinces = #{provinces,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Storeinfo">
+    update storeinfo
+    set user_id = #{userId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=INTEGER},
+      business = #{business,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      max_sellweight = #{maxSellweight,jdbcType=DECIMAL},
+      max_landweight = #{maxLandweight,jdbcType=DECIMAL},
+      max_sellnum = #{maxSellnum,jdbcType=INTEGER},
+      max_landnum = #{maxLandnum,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      provinces = #{provinces,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+</mapper>

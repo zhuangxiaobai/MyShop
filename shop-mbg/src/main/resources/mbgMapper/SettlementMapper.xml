@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.SettlementMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.Settlement">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="real_weight" jdbcType="DECIMAL" property="realWeight" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="invoice_weight" jdbcType="DECIMAL" property="invoiceWeight" />
+    <result column="invoice_price" jdbcType="DECIMAL" property="invoicePrice" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, goods_id, weight, real_weight, price, invoice_weight, invoice_price, 
+    created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from settlement
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from settlement
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.Settlement">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into settlement (order_id, goods_id, weight, 
+      real_weight, price, invoice_weight, 
+      invoice_price, created_at, updated_at
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL}, 
+      #{realWeight,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{invoiceWeight,jdbcType=DECIMAL}, 
+      #{invoicePrice,jdbcType=DECIMAL}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Settlement">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into settlement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="realWeight != null">
+        real_weight,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="invoiceWeight != null">
+        invoice_weight,
+      </if>
+      <if test="invoicePrice != null">
+        invoice_price,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="realWeight != null">
+        #{realWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceWeight != null">
+        #{invoiceWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="invoicePrice != null">
+        #{invoicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Settlement">
+    update settlement
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="realWeight != null">
+        real_weight = #{realWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceWeight != null">
+        invoice_weight = #{invoiceWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="invoicePrice != null">
+        invoice_price = #{invoicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Settlement">
+    update settlement
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DECIMAL},
+      real_weight = #{realWeight,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      invoice_weight = #{invoiceWeight,jdbcType=DECIMAL},
+      invoice_price = #{invoicePrice,jdbcType=DECIMAL},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
