@@ -28,7 +28,9 @@ public enum ResultCode implements IErrorCode {
     PASSWORDERROR(904,"密码错误"),
     CAPTCHADERROR(905,"手机验证码错误或已过期"),
     USERNAMENOTEXIST(906,"用户名不存在"),
-    PARAMNOTFULL(922,"接口参数验证错误");
+    PARAMNOTFULL(922,"接口参数验证错误"),
+    LOGINUSERISNULL(10010,"当前登录的用户对象为null");
+
 
 
     private long code;

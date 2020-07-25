@@ -118,6 +118,9 @@ public class UserController {
     public CommonResult<UsersVo> getUserInfo(HttpServletRequest request) {
 
         Users currenetUser = (Users) request.getAttribute("user");
+        if(currenetUser == null){
+              throw new BusinessException(ResultCode.LOGINUSERISNULL);
+          }
         UsersVo usersVo = new UsersVo();
 
         BeanUtil.copyProperties(currenetUser,usersVo);
@@ -176,7 +179,24 @@ public class UserController {
 
 
 
-
+//    @ApiOperation(value = "获取当前登录的用户信息")
+//    @RequestMapping(value = "/info", method = RequestMethod.POST)
+//    @ResponseBody
+//    public CommonResult<UsersVo> register(HttpServletRequest request) {
+//
+//          Users user = (Users)request.getAttribute("user");
+//          if(user == null){
+//              throw new BusinessException(ResultCode.LOGINUSERISNULL);
+//          }
+//
+//          UsersVo usersVo = new UsersVo();
+//          BeanUtil.copyProperties(user,usersVo);
+//
+//
+//         return CommonResult.success(usersVo);
+//
+//
+//    }
 
 
 
