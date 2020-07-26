@@ -1,19 +1,12 @@
 package com.zc.shop.admin.mapper;
 
+import com.zc.shop.mbg.mapper.ShopcartMapper;
 import com.zc.shop.mbg.po.Shopcart;
+import org.apache.ibatis.annotations.Param;
 
-public interface ShopcartExtMapper {
-    int deleteByPrimaryKey(Short id);
+import java.util.List;
 
-    int insert(Shopcart record);
+public interface ShopcartExtMapper extends ShopcartMapper {
 
-    int insertSelective(Shopcart record);
-
-    Shopcart selectByPrimaryKey(Short id);
-
-    int updateByPrimaryKeySelective(Shopcart record);
-
-    int updateByPrimaryKeyWithBLOBs(Shopcart record);
-
-    int updateByPrimaryKey(Shopcart record);
+    List<Shopcart> selectByUserId(@Param("userId") Integer userId);
 }

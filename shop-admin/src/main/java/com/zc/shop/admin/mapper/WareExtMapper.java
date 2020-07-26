@@ -1,19 +1,12 @@
 package com.zc.shop.admin.mapper;
 
+
+import com.zc.shop.mbg.mapper.WareMapper;
 import com.zc.shop.mbg.po.Ware;
 
-public interface WareExtMapper {
-    int deleteByPrimaryKey(Short id);
+import java.util.List;
 
-    int insert(Ware record);
+public interface WareExtMapper extends WareMapper {
 
-    int insertSelective(Ware record);
-
-    Ware selectByPrimaryKey(Short id);
-
-    int updateByPrimaryKeySelective(Ware record);
-
-    int updateByPrimaryKeyWithBLOBs(Ware record);
-
-    int updateByPrimaryKey(Ware record);
+    List<Ware> selectAllWare();
 }

@@ -1,5 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zc.shop.mbg.mapper.OrderExtMapper">
+<mapper namespace="com.zc.shop.admin.mapper.OrderExtMapper">
+
+    <resultMap id="OrderGoodsVoMap" type="com.zc.shop.admin.vo.OrderGoodsVo">
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+
+
+    </resultMap>
+
+    <select id="selectMySellOrder"  parameterType="com.zc.shop.admin.dto.OrderSellSelectParam" resultMap="OrderGoodsVoMap">
+      	SELECT
+      	o.*,
+      	g.*
+      	from `order` as o
+		left join  goods as g
+		on o.goods_id = g.id
+		left join users u
+		on o.buy_id = u.id
+		left join ware w
+		on g.ware_id = w.id
+		<where>
+        <if test="code != null">
+         and o.code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="username != null">
+		and u.username = #{username,jdbcType=VARCHAR}
+        </if>
+        <if test="nickname != null">
+		and u.nickname = #{nickname,jdbcType=VARCHAR}
+        </if>
+        <if test="goodsName != null">
+		and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+        </if>
+
+        <if test="status != null">
+          and o.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+		and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+        </if>
+        <if test="endTime != null">
+         and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+        </if>
+        <if test="wareName != null">
+		and w.title = #{wareName,jdbcType=VARCHAR}
+        </if>
+        <if test="supplierId != null">
+		and g.suppliers_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+        <if test="startPage != null and PageSize != null">
+		limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+        </where>
+    </select>
+
 
 </mapper>

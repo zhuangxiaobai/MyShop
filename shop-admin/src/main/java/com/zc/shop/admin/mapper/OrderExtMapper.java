@@ -1,19 +1,12 @@
 package com.zc.shop.admin.mapper;
 
-import com.zc.shop.mbg.po.Order;
+import com.zc.shop.admin.dto.OrderSellSelectParam;
+import com.zc.shop.admin.vo.OrderGoodsVo;
+import com.zc.shop.mbg.mapper.OrderMapper;
 
-public interface OrderExtMapper {
-    int deleteByPrimaryKey(Long id);
+import java.util.List;
 
-    int insert(Order record);
+public interface OrderExtMapper extends OrderMapper {
 
-    int insertSelective(Order record);
-
-    Order selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Order record);
-
-    int updateByPrimaryKeyWithBLOBs(Order record);
-
-    int updateByPrimaryKey(Order record);
+    List<OrderGoodsVo> selectMySellOrder(OrderSellSelectParam orderSellSelectParam);
 }
