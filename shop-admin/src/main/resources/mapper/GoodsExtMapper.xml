@@ -6,14 +6,20 @@
     <update id="updateGoodsNum">
       update goods
       set
-      goods_number = #{num,jdbcType=SMALLINT},
-
-    where id = #{goodId,jdbcType=INTEGER}
-    and  is_on_sale = 1
+      goods_number = #{num,jdbcType=SMALLINT}
+      where id = #{goodId,jdbcType=INTEGER}
+      and  is_on_sale = 1
 
     </update>
 
+    <update id="updateGoodsNumPlus">
+      update goods
+      set
+      goods_number = goods_number + #{num,jdbcType=SMALLINT}
+      where id = #{goodId,jdbcType=INTEGER}
+      and  is_on_sale = 1
 
+    </update>
 
 
 </mapper>

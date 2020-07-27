@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Param;
 public interface GoodsExtMapper extends GoodsMapper {
 
     int updateGoodsNum(@Param("goodId") Integer goodId, @Param("num") Short buyNum);
+
+    int updateGoodsNumPlus(@Param("goodId") Integer goodId, @Param("num") Short buyNum);
 }

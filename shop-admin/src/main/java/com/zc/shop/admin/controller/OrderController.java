@@ -1,8 +1,6 @@
 package com.zc.shop.admin.controller;
 
-import com.zc.shop.admin.dto.GoodsCreateParam;
-import com.zc.shop.admin.dto.OrderSellSelectParam;
-import com.zc.shop.admin.dto.ShopcartParam;
+import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.service.OrderService;
 import com.zc.shop.common.api.CommonResult;
 import com.zc.shop.mbg.po.Shopcart;
@@ -61,22 +59,31 @@ public class OrderController {
 
     }
 
-  /*  @ApiOperation(value = "买家获取我的订单")
+    @ApiOperation(value = "买家获取我的订单")
     @RequestMapping(value = "/myBuyOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult myBuyOrder(@RequestBody @ApiParam(value="查询订单对象") OrderSellSelectParam orderSellSelectParam, HttpServletRequest request) {
+    public CommonResult myBuyOrder(@RequestBody @ApiParam(value="查询订单对象") OrderBuySelectParam orderBuySelectParam, HttpServletRequest request) {
 
         //获取当前用户id
         Users user = (Users) request.getAttribute("user");
         Integer userId = user.getId();
 
 
-        return CommonResult.success(orderService.myBuyOrder(orderSellSelectParam,userId));
+        return CommonResult.success(orderService.myBuyOrder(orderBuySelectParam,userId));
 
     }
-*/
 
 
+    @ApiOperation("修改订单，修改订单状态之类的")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult update(@RequestBody OrderParam orderParam) {
+        int count = orderService.updateShopcart(orderParam);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
 
 
 

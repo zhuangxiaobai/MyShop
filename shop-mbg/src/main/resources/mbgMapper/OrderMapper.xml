@@ -29,18 +29,18 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from order
+    from `order`
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from order
+    delete from `order`
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zc.shop.mbg.po.Order">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into order (code, supplier_id, goods_id, 
+    insert into `order` (code, supplier_id, goods_id,
       num, weight, status, 
       buy_id, created_at, updated_at, 
       remaining, remark)
@@ -53,7 +53,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="code != null">
         code,
@@ -126,7 +126,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Order">
-    update order
+    update `order`
     <set>
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
@@ -165,7 +165,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zc.shop.mbg.po.Order">
-    update order
+    update `order`
     set code = #{code,jdbcType=VARCHAR},
       supplier_id = #{supplierId,jdbcType=INTEGER},
       goods_id = #{goodsId,jdbcType=INTEGER},
@@ -180,7 +180,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Order">
-    update order
+    update `order`
     set code = #{code,jdbcType=VARCHAR},
       supplier_id = #{supplierId,jdbcType=INTEGER},
       goods_id = #{goodsId,jdbcType=INTEGER},

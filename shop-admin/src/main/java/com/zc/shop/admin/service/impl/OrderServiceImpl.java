@@ -1,6 +1,9 @@
 package com.zc.shop.admin.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.zc.shop.admin.dto.OrderBuySelectParam;
+import com.zc.shop.admin.dto.OrderParam;
 import com.zc.shop.admin.dto.OrderSellSelectParam;
 import com.zc.shop.admin.dto.ShopcartParam;
 import com.zc.shop.admin.mapper.GoodsExtMapper;
@@ -46,12 +49,59 @@ public class OrderServiceImpl implements OrderService {
             Integer  start = (startPage-1)*pageSize +1;
             orderSellSelectParam.setStartPage(start);
             orderSellSelectParam.setSupplierId(userId);
-
-           List<OrdersAllVo> orderGoodsVo  = orderExtMapper.selectMySellOrder(orderSellSelectParam);
-
+            //获取订单中的所有信息
+            List<OrdersAllVo> orderGoodsVo  = orderExtMapper.selectMySellOrder(orderSellSelectParam);
 
             return orderGoodsVo;
       }
+
+
+    @Override
+    public List<OrdersAllVo> myBuyOrder(OrderBuySelectParam orderBuySelectParam, Integer userId) {
+        //分页查询处理
+        Integer startPage = orderBuySelectParam.getStartPage();
+        Integer pageSize = orderBuySelectParam.getPageSize();
+        Integer  start = (startPage-1)*pageSize +1;
+        orderBuySelectParam.setStartPage(start);
+        orderBuySelectParam.setBuyId(userId);
+        //获取订单中的所有信息
+        List<OrdersAllVo> orderGoodsVo  = orderExtMapper.selectMyBuyOrder(orderBuySelectParam);
+
+
+        return orderGoodsVo;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int updateShopcart(OrderParam orderParam) {
+
+          orderParam.setUpdatedAt(LocalDateTime.now());
+
+          Order order = new Order();
+        BeanUtil.copyProperties(orderParam,order);
+        int i = orderExtMapper.updateByPrimaryKeySelective(order);
+        //修改成功并且修改为16，订单作废，这时候需要去修改增加goods表商品数量(没有付款前可以作废订单)
+        if(i>0 && order.getStatus().toString().equals("16")){
+
+            Order orderZuoFei = orderExtMapper.selectByPrimaryKey(order.getId());
+
+           Short buyNum = orderZuoFei.getNum().shortValue();
+           Integer goodId = orderZuoFei.getGoodsId();
+
+         /*   Goods goods = goodsExtMapper.selectByPrimaryKey(goodId);
+            Short num = Integer.valueOf(goods.getGoodsNumber()+buyNum).shortValue();*/
+            //修改商品数量
+           /* int updateNumSuccess = goodsExtMapper.updateGoodsNum(goodId,num);*/
+            int updateNumSuccess = goodsExtMapper.updateGoodsNumPlus(goodId,buyNum);
+            if(!(updateNumSuccess >0)){
+                throw new BusinessException("商品数量还原失败");
+            }
+
+        }
+
+        return i;
+    }
+
 
       @Override
       @Transactional(rollbackFor = Exception.class)
@@ -171,4 +221,6 @@ public class OrderServiceImpl implements OrderService {
 
             return 1;
       }
+
+
 }
