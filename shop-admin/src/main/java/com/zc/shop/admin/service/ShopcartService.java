@@ -9,4 +9,8 @@ public interface ShopcartService {
     int addShopcart(Shopcart shopcart);
 
     List<ShopcartVo> shopcartList(Integer userId);
+
+    int updateShopcart(Shopcart shopcart);
+
+    int deleteShopcart(List<Short> shopcartIds);
 }

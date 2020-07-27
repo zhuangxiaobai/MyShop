@@ -22,7 +22,7 @@ public class ShopcartController {
     @Autowired
     private ShopcartService shopcartService;
 
-    @ApiOperation("添加商品到购物车")
+    @ApiOperation("添加商品到购物车，需要传入userId")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult add(@RequestBody Shopcart shopcart) {
@@ -49,52 +49,36 @@ public class ShopcartController {
         return CommonResult.success(shopcartVoList);
     }
 
-/*
-    @ApiOperation("修改购物车中某个商品的数量")
-    @RequestMapping(value = "/update/quantity", method = RequestMethod.GET)
+
+    @ApiOperation("修改购物车中某个商品的数量，需要传入userId")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateQuantity(@RequestParam Long id,
-                                       @RequestParam Integer quantity) {
-        int count = cartItemService.updateQuantity(id, memberService.getCurrentMember().getId(), quantity);
+    public CommonResult update(@RequestBody Shopcart shopcart) {
+        int count = shopcartService.updateShopcart(shopcart);
         if (count > 0) {
             return CommonResult.success(count);
         }
         return CommonResult.failed();
     }
 
-    @ApiOperation("修改购物车中商品的件数")
-    @RequestMapping(value = "/update/attr", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult updateAttr(@RequestBody OmsCartItem cartItem) {
-        int count = cartItemService.updateAttr(cartItem);
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.failed();
-    }
 
-    @ApiOperation("删除购物车中的某个商品")
+    @ApiOperation("删除选中商品，清空下架商品")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@RequestParam("ids") List<Long> ids) {
-        int count = cartItemService.delete(memberService.getCurrentMember().getId(), ids);
+    public CommonResult delete(@RequestParam("shopcartIds") List<Short> shopcartIds) {
+
+
+
+        int count = shopcartService.deleteShopcart(shopcartIds);;
         if (count > 0) {
             return CommonResult.success(count);
         }
         return CommonResult.failed();
     }
 
-    @ApiOperation("清空购物车")
-    @RequestMapping(value = "/clear", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult clear() {
-        int count = cartItemService.clear(memberService.getCurrentMember().getId());
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.failed();
-    }
-*/
+
+
+
 
 
 }

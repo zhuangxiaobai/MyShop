@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zc.shop.admin.mapper.GoodsExtMapper">
 
+
+    <update id="updateGoodsNum">
+      update goods
+      set
+      goods_number = #{num,jdbcType=SMALLINT},
+
+    where id = #{goodId,jdbcType=INTEGER}
+    and  is_on_sale = 1
+
+    </update>
+
+
+
+
 </mapper>

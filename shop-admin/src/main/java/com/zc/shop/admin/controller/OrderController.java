@@ -1,8 +1,11 @@
 package com.zc.shop.admin.controller;
 
+import com.zc.shop.admin.dto.GoodsCreateParam;
 import com.zc.shop.admin.dto.OrderSellSelectParam;
+import com.zc.shop.admin.dto.ShopcartParam;
 import com.zc.shop.admin.service.OrderService;
 import com.zc.shop.common.api.CommonResult;
+import com.zc.shop.mbg.po.Shopcart;
 import com.zc.shop.mbg.po.Users;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @Api(tags = "OrderController", description = "订单表")
@@ -23,6 +27,24 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+
+    @ApiOperation(value = "用户下订单,传购物车对象集合的json字符串")
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult register(@RequestBody @ApiParam(value="购物车对象集合")List<ShopcartParam> shopcartList, HttpServletRequest request) {
+
+
+        //创建订单信息
+        int count = orderService.create(shopcartList);
+        if(count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+
+    }
+
 
 
     @ApiOperation(value = "卖家获取我的订单")

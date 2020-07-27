@@ -32,7 +32,8 @@ public enum ResultCode implements IErrorCode {
     LOGINUSERISNULL(10010,"当前登录的用户对象为null"),
     PINGZHONGNOTEXIST(10020,"传入的品种不存在"),
     STOREINFOEXIST(10023,"此用户已经拥有店铺"),
-    GOODSNUMBERNOTENOUGH(10030,"商品存量不足");
+    GOODSNUMBERNOTENOUGH(10030,"商品存量不足"),
+    GOODSISNOTONSALE(10030,"商品存量不足");
 
     private long code;
     private String message;

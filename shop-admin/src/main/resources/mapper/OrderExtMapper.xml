@@ -2,30 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zc.shop.admin.mapper.OrderExtMapper">
 
-    <resultMap id="OrderGoodsVoMap" type="com.zc.shop.admin.vo.OrderGoodsVo">
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+    <resultMap id="OrdersAllVoMap" type="com.zc.shop.admin.vo.OrdersAllVo">
+        <!--订单表数据-->
+        <result column="orderId" jdbcType="BIGINT" property="orderId" />
+        <result column="orderCode" jdbcType="VARCHAR" property="orderCode" />
+        <result column="supplier_id" jdbcType="INTEGER" property="orderSupplierId" />
+        <result column="orderSupplierId" jdbcType="INTEGER" property="orderGoodsId" />
+        <result column="orderNum" jdbcType="INTEGER" property="orderNum" />
+        <result column="orderWeight" jdbcType="DECIMAL" property="orderWeight" />
+        <result column="orderStatus" jdbcType="INTEGER" property="orderStatus" />
+        <result column="orderBuyId" jdbcType="INTEGER" property="orderBuyId" />
+        <result column="orderCreatedAt" jdbcType="TIMESTAMP" property="orderCreatedAt" />
+        <result column="orderUpdatedAt" jdbcType="TIMESTAMP" property="orderUpdatedAt" />
+        <result column="orderRemaining" jdbcType="DECIMAL" property="orderRemaining" />
+        <result column="orderRemark" jdbcType="LONGVARCHAR" property="orderRemark" />
+      <!--商品表部分-->
 
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
-        <result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+
+
+
+
+      <!--品种品名表-->
+
+
+
+
+
+
+
 
 
     </resultMap>
 
-    <select id="selectMySellOrder"  parameterType="com.zc.shop.admin.dto.OrderSellSelectParam" resultMap="OrderGoodsVoMap">
+    <select id="selectMySellOrder"  parameterType="com.zc.shop.admin.dto.OrderSellSelectParam" resultMap="OrdersAllVoMap">
       	SELECT
-      	o.*,
-      	g.*
+      	o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,
+      	g.*,
+        l.*,
+        w.*,
+        u.*,
+        attr.*
       	from `order` as o
 		left join  goods as g
 		on o.goods_id = g.id
-		left join users u
+        left join
+           (select a1.attr_name as pingzhong,
+            a2.attr_name as attrname,
+            a2.specifications as specifications,
+            a2.material as material,
+            a2.id as attrnameid
+            from attribute a1
+            left join attribute a2
+            on a1.id = a2.parent_id
+            WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+
+        left join lading l
+        on o.id = l.order_id
+        left join users u
 		on o.buy_id = u.id
 		left join ware w
 		on g.ware_id = w.id

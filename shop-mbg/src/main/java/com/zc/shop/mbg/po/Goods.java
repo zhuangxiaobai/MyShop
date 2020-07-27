@@ -10,7 +10,7 @@ public class Goods implements Serializable {
     @ApiModelProperty(value = "商品表主ID")
     private Integer id;
 
-    @ApiModelProperty(value = "关联节点category表用于分类展示")
+    @ApiModelProperty(value = "关联节点Attribute表用于分类展示")
     private Short catId;
 
     @ApiModelProperty(value = "商品货号，SZ+即将插入产生的6位goods_id，不足6位于SZ和goods_id间补0，如SZ003329")
@@ -31,19 +31,20 @@ public class Goods implements Serializable {
     @ApiModelProperty(value = "本网售价")
     private BigDecimal shopPrice;
 
-    @ApiModelProperty(value = "商品缩略图")
+    @ApiModelProperty(value = "商品缩略图,备用字段")
     private String goodsThumb;
 
+    @ApiModelProperty(value = "备用字段")
     private String goodsImg;
 
-    @ApiModelProperty(value = "原始图片地址")
+    @ApiModelProperty(value = "原始图片地址,备用字段")
     private String originalImg;
 
     @ApiModelProperty(value = "上架为1，下架为0")
-    private Boolean isOnSale;
+    private Integer isOnSale;
 
-    @ApiModelProperty(value = "1为免运费，0为正常运费")
-    private Boolean isShipping;
+    @ApiModelProperty(value = "1为免运费，0为正常运费,备用字段")
+    private Integer isShipping;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime addTime;
@@ -156,19 +157,19 @@ public class Goods implements Serializable {
         this.originalImg = originalImg;
     }
 
-    public Boolean getIsOnSale() {
+    public Integer getIsOnSale() {
         return isOnSale;
     }
 
-    public void setIsOnSale(Boolean isOnSale) {
+    public void setIsOnSale(Integer isOnSale) {
         this.isOnSale = isOnSale;
     }
 
-    public Boolean getIsShipping() {
+    public Integer getIsShipping() {
         return isShipping;
     }
 
-    public void setIsShipping(Boolean isShipping) {
+    public void setIsShipping(Integer isShipping) {
         this.isShipping = isShipping;
     }
 
