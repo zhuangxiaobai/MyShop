@@ -75,10 +75,11 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     public int updateShopcart(OrderParam orderParam) {
 
-          orderParam.setUpdatedAt(LocalDateTime.now());
+
 
           Order order = new Order();
         BeanUtil.copyProperties(orderParam,order);
+        order.setUpdatedAt(LocalDateTime.now());
         int i = orderExtMapper.updateByPrimaryKeySelective(order);
         //修改成功并且修改为16，订单作废，这时候需要去修改增加goods表商品数量(没有付款前可以作废订单)
         if(i>0 && order.getStatus().toString().equals("16")){

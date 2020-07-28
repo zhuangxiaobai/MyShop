@@ -74,7 +74,7 @@ public class OrderController {
     }
 
 
-    @ApiOperation("修改订单，修改订单状态之类的")
+    @ApiOperation("修改订单状态之类的")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult update(@RequestBody OrderParam orderParam) {

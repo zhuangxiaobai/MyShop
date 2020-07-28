@@ -1,12 +1,15 @@
 package com.zc.shop.admin.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.zc.shop.mbg.po.Lading;
+import com.zc.shop.mbg.po.Storeinfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @ApiModel(description="查询订单的时候返回给前端的信息,包含完整信息")
@@ -172,10 +175,13 @@ public class OrdersAllVo {
     private String ladingRemark;
 
     @ApiModelProperty(value = "提单图片")
-    private String ladingPic;
-*/
+    private String ladingPic;*/
 
+    @ApiModelProperty(value = "店铺表")
+    Storeinfo storeinfo;
 
+    @ApiModelProperty(value = "提单表集合")
+     List<Lading> ladingList;
 
 
 

@@ -28,6 +28,7 @@ public class Lading implements Serializable {
     private Integer status;
 
     @ApiModelProperty(value = "提货时间")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime ladingedAt;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

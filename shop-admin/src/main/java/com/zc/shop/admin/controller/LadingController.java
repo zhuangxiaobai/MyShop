@@ -1,6 +1,6 @@
 package com.zc.shop.admin.controller;
 
-import com.zc.shop.admin.dto.LadingCreateParam;
+import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.service.LadingService;
 import com.zc.shop.common.api.CommonResult;
 import com.zc.shop.mbg.po.Users;
@@ -34,7 +34,7 @@ public class LadingController {
         Integer userId = user.getId();
 
 
-        //创建商品信息
+        //创建提单信息
         int count = ladingService.create(ladingCreateParam,userId);
         if(count > 0) {
             return CommonResult.success(count);
@@ -43,6 +43,56 @@ public class LadingController {
         }
 
     }
+
+
+    @ApiOperation("修改提单状态的")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult update(@RequestBody LadingParam ladingParam) {
+        int count = ladingService.updateLadingStatus(ladingParam);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+
+
+    @ApiOperation(value = "卖家获取我的放货单")
+    @RequestMapping(value = "/mySellLading", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult mySellOrder(@RequestBody @ApiParam(value="查询放货单对象") LadingSellSelectParam ladingSellSelectParam, HttpServletRequest request) {
+
+        //获取当前用户id
+        Users user = (Users) request.getAttribute("user");
+        Integer userId = user.getId();
+
+
+        return CommonResult.success(ladingService.mySellLading(ladingSellSelectParam,userId));
+
+    }
+
+    @ApiOperation(value = "买家获取我的提货单")
+    @RequestMapping(value = "/myBuyLading", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult myBuyOrder(@RequestBody @ApiParam(value="查询提单对象") LadingBuySelectParam ladingBuySelectParam, HttpServletRequest request) {
+
+        //获取当前用户id
+        Users user = (Users) request.getAttribute("user");
+        Integer userId = user.getId();
+
+
+        return CommonResult.success(ladingService.myBuyLading(ladingBuySelectParam,userId));
+
+    }
+
+
+
+
+
+
+
+
 
 
 
