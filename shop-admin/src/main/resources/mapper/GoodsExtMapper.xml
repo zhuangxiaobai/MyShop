@@ -20,6 +20,13 @@
       and  is_on_sale = 1
 
     </update>
+    <select id="selectGoodsBuSupplierId" resultMap="com.zc.shop.mbg.mapper.GoodsMapper.BaseResultMap">
+        select
+        <include refid="com.zc.shop.mbg.mapper.GoodsMapper.Base_Column_List" />
+        from goods
+        where suppliers_id = #{supplierId,jdbcType=SMALLINT}
+
+    </select>
 
 
 </mapper>

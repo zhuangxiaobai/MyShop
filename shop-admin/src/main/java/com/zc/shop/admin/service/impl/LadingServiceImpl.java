@@ -142,13 +142,17 @@ public class LadingServiceImpl implements LadingService {
     @Override
     public List<LadingAllVo> mySellLading(LadingSellSelectParam ladingSelectParam, Integer userId) {
 
+        //分页查询处理
+        Integer startPage = ladingSelectParam.getStartPage();
+        Integer pageSize = ladingSelectParam.getPageSize();
+        Integer  start = (startPage-1)*pageSize ;
+        ladingSelectParam.setStartPage(start);
+        ladingSelectParam.setSupplierId(userId);
+        //获取订单中的所有信息
+        List<LadingAllVo> ladingAllVos  = ladingExtMapper.selectMySellLading(ladingSelectParam);
 
 
-
-
-
-
-        return null;
+        return ladingAllVos;
     }
 
     @Override
@@ -159,7 +163,7 @@ public class LadingServiceImpl implements LadingService {
         //分页查询处理
         Integer startPage = ladingSelectParam.getStartPage();
         Integer pageSize = ladingSelectParam.getPageSize();
-        Integer  start = (startPage-1)*pageSize +1;
+        Integer  start = (startPage-1)*pageSize ;
         ladingSelectParam.setStartPage(start);
         ladingSelectParam.setBuyId(userId);
         //获取订单中的所有信息

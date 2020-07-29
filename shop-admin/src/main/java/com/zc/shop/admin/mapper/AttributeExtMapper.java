@@ -1,5 +1,6 @@
 package com.zc.shop.admin.mapper;
 
+import com.zc.shop.admin.vo.AttributeVo;
 import com.zc.shop.mbg.mapper.AttributeMapper;
 import com.zc.shop.mbg.po.Attribute;
 import org.apache.ibatis.annotations.Param;
@@ -33,4 +34,8 @@ public interface AttributeExtMapper extends AttributeMapper {
      * @return  品种下所有品名集合
      */
     List<Attribute> ListByPingZhong(@Param("pingZhong") String pingZhong);
+
+
+
+    List<AttributeVo> AllAttributeVo();
 }

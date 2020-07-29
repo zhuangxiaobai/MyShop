@@ -8,6 +8,10 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/*
+   修改提单状态的
+ */
+
 @Data
 public class LadingParam {
 

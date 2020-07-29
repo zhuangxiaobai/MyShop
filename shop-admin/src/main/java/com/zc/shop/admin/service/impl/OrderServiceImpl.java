@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
            //分页查询处理
             Integer startPage = orderSellSelectParam.getStartPage();
             Integer pageSize = orderSellSelectParam.getPageSize();
-            Integer  start = (startPage-1)*pageSize +1;
+            Integer  start = (startPage-1)*pageSize ;
             orderSellSelectParam.setStartPage(start);
             orderSellSelectParam.setSupplierId(userId);
             //获取订单中的所有信息
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         //分页查询处理
         Integer startPage = orderBuySelectParam.getStartPage();
         Integer pageSize = orderBuySelectParam.getPageSize();
-        Integer  start = (startPage-1)*pageSize +1;
+        Integer  start = (startPage-1)*pageSize ;
         orderBuySelectParam.setStartPage(start);
         orderBuySelectParam.setBuyId(userId);
         //获取订单中的所有信息

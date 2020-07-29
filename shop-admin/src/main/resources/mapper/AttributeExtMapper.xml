@@ -3,6 +3,17 @@
 <mapper namespace="com.zc.shop.admin.mapper.AttributeExtMapper">
 
 
+    <resultMap id="AttributeVoMap" type="com.zc.shop.admin.vo.AttributeVo">
+
+        <!--品种品名表-->
+            <result column="attrPingZhong" jdbcType="VARCHAR" property="attrPingZhong" />
+            <result column="attrAttrName" jdbcType="VARCHAR" property="attrAttrName" />
+            <result column="attrSpecifications" jdbcType="VARCHAR" property="attrSpecifications" />
+            <result column="attrMaterial" jdbcType="VARCHAR" property="attrMaterial" />
+
+    </resultMap>
+
+
 
     <select id="selectAttributeCountExistByCreate" resultType="Short">
         select id from attribute
@@ -46,6 +57,17 @@
     </select>
 
 
+    <select id="AllAttributeVo" resultMap="AttributeVoMap">
+        select a1.attr_name as attrPingZhong,
+            a2.attr_name as attrAttrName,
+            a2.specifications as attrSpecifications,
+            a2.material as attrMaterial
+
+            from attribute a1
+            left join attribute a2
+            on a1.id = a2.parent_id
+            WHERE a1.parent_id = 0
+    </select>
 
 
 

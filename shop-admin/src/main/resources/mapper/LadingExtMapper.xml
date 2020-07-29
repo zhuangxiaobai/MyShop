@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zc.shop.admin.mapper.LadingExtMapper">
-    <resultMap id="OrdersAllVoMap" type="com.zc.shop.admin.vo.OrdersAllVo">
+    <resultMap id="LadingAllVoMap" type="com.zc.shop.admin.vo.LadingAllVo">
 
-        <!--提单表-->
-        <association property="ladingList" javaType="com.zc.shop.mbg.po.Lading">
-            <result column="ladingId" jdbcType="BIGINT" property="id" />
-            <result column="ladingCode" jdbcType="VARCHAR" property="code" />
-            <result column="ladingWeight" jdbcType="DECIMAL" property="weight" />
-            <result column="ladingStatus" jdbcType="INTEGER" property="status" />
-            <result column="ladingLadingedAt" jdbcType="TIMESTAMP" property="ladingedAt" />
-            <result column="ladingCreatedAt" jdbcType="TIMESTAMP" property="createdAt" />
-            <result column="ladingUpdatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
-            <result column="ladingRemark" jdbcType="LONGVARCHAR" property="remark" />
-            <result column="ladingPic" jdbcType="LONGVARCHAR" property="pic" />
-        </association>
 
 
         <!--订单表数据-->
@@ -65,6 +53,19 @@
         <!--用户表-->
         <result column="userUsername" jdbcType="VARCHAR" property="userUsername" />
         <result column="userNickname" jdbcType="VARCHAR" property="userNickname" />
+        <!--提单表-->
+        <association property="lading" javaType="com.zc.shop.mbg.po.Lading">
+            <result column="ladingId" jdbcType="BIGINT" property="id" />
+            <result column="ladingCode" jdbcType="VARCHAR" property="code" />
+            <result column="ladingWeight" jdbcType="DECIMAL" property="weight" />
+            <result column="ladingStatus" jdbcType="INTEGER" property="status" />
+            <result column="ladingLadingedAt" jdbcType="TIMESTAMP" property="ladingedAt" />
+            <result column="ladingCreatedAt" jdbcType="TIMESTAMP" property="createdAt" />
+            <result column="ladingUpdatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
+            <result column="ladingRemark" jdbcType="LONGVARCHAR" property="remark" />
+            <result column="ladingPic" jdbcType="LONGVARCHAR" property="pic" />
+        </association>
+
         <!--店铺表对象-->
         <association property="storeinfo" javaType="com.zc.shop.mbg.po.Storeinfo">
 
@@ -93,14 +94,7 @@
     </resultMap>
 
 
-
-
-
-
-
-
-
-    <select id="selectMyBuyLading"  parameterType="com.zc.shop.admin.dto.LadingBuySelectParam" resultMap="OrdersAllVoMap">
+    <select id="selectMySellLading"  parameterType="com.zc.shop.admin.dto.LadingSellSelectParam" resultMap="LadingAllVoMap">
         SELECT
         o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
         o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
@@ -119,7 +113,10 @@
         st.max_landweight as storeinfoMaxLandWeight,st.max_sellnum as storeinfoMaxSellNum,st.max_landnum as storeinfoMaxLandNum,st.created_at as storeinfoCreateAt,
         st.updated_at as storeinfoUpdatedAt,st.provinces as storeinfoProvinces,st.content as storeinfoContent
 
-        from `order` as o
+
+        from lading l
+        left join `order` as o
+        on o.id = l.order_id
         left join  goods as g
         on o.goods_id = g.id
         left join
@@ -133,8 +130,90 @@
         on a1.id = a2.parent_id
         WHERE a1.parent_id = 0) as attr
         on attr.attrnameid = g.cat_id
-        left join lading l
+        left join users u
+        on o.buy_id = u.id
+        left join storeinfo st
+        on st.user_id = o.supplier_id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="ladingCode != null">
+                and l.code = #{ladingCode,jdbcType=VARCHAR}
+            </if>
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+            <if test="attrName != null">
+                and attr.attrName = #{attrName,jdbcType=VARCHAR}
+            </if>
+            <if test="specifications != null">
+                and attr.specifications = #{specifications,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and l.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(l.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(l.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="supplierId != null">
+                and o.supplier_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by o.created_at desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+
+
+
+
+
+    <select id="selectMyBuyLading"  parameterType="com.zc.shop.admin.dto.LadingBuySelectParam" resultMap="LadingAllVoMap">
+        SELECT
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,
+        g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+        g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.goods_thumb as goodsGoodsThumb,g.goods_img as goodsGoodsImg,g.original_img as goodsOriginalImg,
+        g.is_on_sale as goodsIsOnSale,g.is_shipping as goodsIsShipping,g.add_time as goodsAddTime,g.attr1 as goodsAttr1,g.attr2 as goodsAttr2,g.suppliers_id as goodsSuppliersId,
+        g.ware_id as goodsWareId,g.trademark as goodsTrademark,g.remark as goodsRemark,
+        l.id as ladingId,l.code as ladingCode,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
+        l.updated_at as ladingUpdatedAt,l.remark as ladingRemark,l.pic as ladingPic,
+        w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
+        u.username as userUsername, u.nickname as userNickname,
+        attr.pingzhong as attrPingZhong,attr.attrname as attrAttrName,attr.material as attrMaterial,attr.specifications as attrSpecifications,
+        st.id as storeinfoId,st.title as storeinfoTitle,st.user_id as storeinfoUserId,st.name as storeinfoName,st.phone as storeinfoPhone,
+        st.business as storeinfoBusiness,st.city as storeinfoCity,st.address as storeinfoAddress,st.logo as storeinfoLogo,st.max_sellweight as storeMaxSellWeight,
+        st.max_landweight as storeinfoMaxLandWeight,st.max_sellnum as storeinfoMaxSellNum,st.max_landnum as storeinfoMaxLandNum,st.created_at as storeinfoCreateAt,
+        st.updated_at as storeinfoUpdatedAt,st.provinces as storeinfoProvinces,st.content as storeinfoContent
+
+
+        from lading l
+        left join `order` as o
         on o.id = l.order_id
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
         left join users u
         on o.supplier_id = u.id
         left join storeinfo st
@@ -142,27 +221,27 @@
         left join ware w
         on g.ware_id = w.id
         <where>
-            <if test="code != null">
-                and o.code = #{code,jdbcType=VARCHAR}
+            <if test="ladingCode != null">
+                and l.code = #{ladingCode,jdbcType=VARCHAR}
             </if>
-            <if test="username != null">
-                and u.username = #{username,jdbcType=VARCHAR}
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
             </if>
-            <if test="nickname != null">
-                and u.nickname = #{nickname,jdbcType=VARCHAR}
+            <if test="attrName != null">
+                and attr.attrName = #{attrName,jdbcType=VARCHAR}
             </if>
-            <if test="goodsName != null">
-                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            <if test="specifications != null">
+                and attr.specifications = #{specifications,jdbcType=VARCHAR}
             </if>
 
             <if test="status != null">
-                and o.status = #{status,jdbcType=INTEGER}
+                and l.status = #{status,jdbcType=INTEGER}
             </if>
             <if test="startTime != null">
-                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+                and date(l.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
             </if>
             <if test="endTime != null">
-                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+                and date(l.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
             </if>
             <if test="wareName != null">
                 and w.title = #{wareName,jdbcType=VARCHAR}

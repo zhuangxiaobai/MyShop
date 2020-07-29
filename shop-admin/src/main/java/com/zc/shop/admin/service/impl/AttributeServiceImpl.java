@@ -3,6 +3,7 @@ package com.zc.shop.admin.service.impl;
 
 import com.zc.shop.admin.mapper.AttributeExtMapper;
 import com.zc.shop.admin.service.AttributeService;
+import com.zc.shop.admin.vo.AttributeVo;
 import com.zc.shop.mbg.po.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,12 @@ public class AttributeServiceImpl implements AttributeService {
 
 
         return  attributeExtMapper.ListByPingZhong(pingZhong);
+    }
+
+    @Override
+    public List<AttributeVo> AllAttributeVo() {
+
+
+        return attributeExtMapper.AllAttributeVo();
     }
 }

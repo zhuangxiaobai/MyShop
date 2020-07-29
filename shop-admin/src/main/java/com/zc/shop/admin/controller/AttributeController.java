@@ -38,7 +38,15 @@ public class AttributeController {
 
     }
 
+    @ApiOperation(value = "首页全部商品分类")
+    @RequestMapping(value = "/AllAttributeVo", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult AllAttributeVo() {
 
+
+        return CommonResult.success(attributeService.AllAttributeVo());
+
+    }
 
 
 }
