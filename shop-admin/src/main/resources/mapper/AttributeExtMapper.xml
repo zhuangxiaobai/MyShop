@@ -68,11 +68,54 @@
             on a1.id = a2.parent_id
             WHERE a1.parent_id = 0
     </select>
+    <select id="selectAttrNameAll" resultType="string">
+        select distinct attr_name from
+        attribute where parent_id != 0
+    </select>
+    <select id="selectspecificationsAll" resultType="string">
+        select distinct specifications from
+        attribute where parent_id != 0
+    </select>
+    <select id="selectmaterialAll" resultType="string">
+        select distinct material from
+        attribute where parent_id != 0
+    </select>
 
+    <select id="selectmaterialAllByPingZhongAndAttrNameList" resultType="string">
+        select distinct
+        a2.material
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0
+        <if test="pingZhong != null">
+            and a1.attr_name = #{pingZhong,jdbcType=VARCHAR}
+        </if>
+        <if test="attrNameList != null and attrNameList.size != 0 ">
+        and a2.attr_name in
+        <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+               #{item, jdbcType=VARCHAR}
+        </foreach>
+        </if>
+    </select>
 
-
-
-
+    <select id="selectspecificationsAllByPingZhongAndAttrNameList" parameterType="com.zc.shop.admin.dto.GoodsSelectAttrChangeParam" resultType="string">
+        select distinct
+        a2.specifications
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0
+        <if test="pingZhong != null">
+            and a1.attr_name = #{pingZhong,jdbcType=VARCHAR}
+        </if>
+        <if test="attrNameList != null and attrNameList.size != 0 ">
+            and a2.attr_name in
+            <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </select>
 
 
 

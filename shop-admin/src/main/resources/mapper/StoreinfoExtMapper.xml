@@ -177,13 +177,13 @@
             g.shop_price desc
         </if>
         <if test="orderBy == 3">
-            g.created_at
+            g.add_time
         </if>
         <if test="orderBy == 4">
-            g.created_at desc
+            g.add_time desc
         </if>
         <if test="orderBy == null">
-            g.is_on_sale desc,g.created_at desc
+            g.is_on_sale desc,g.add_time desc
         </if>
 
        <!-- case when #{orderBy,jdbcType=INTEGER} = 1 then  g.shop_price

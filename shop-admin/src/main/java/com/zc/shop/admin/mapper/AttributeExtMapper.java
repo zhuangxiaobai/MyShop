@@ -1,5 +1,6 @@
 package com.zc.shop.admin.mapper;
 
+import com.zc.shop.admin.dto.GoodsSelectAttrChangeParam;
 import com.zc.shop.admin.vo.AttributeVo;
 import com.zc.shop.mbg.mapper.AttributeMapper;
 import com.zc.shop.mbg.po.Attribute;
@@ -38,4 +39,13 @@ public interface AttributeExtMapper extends AttributeMapper {
 
 
     List<AttributeVo> AllAttributeVo();
+
+    List<String> selectAttrNameAll();
+
+    List<String> selectmaterialAll();
+
+    List<String> selectspecificationsAll();
+
+    List<String> selectmaterialAllByPingZhongAndAttrNameList(GoodsSelectAttrChangeParam goodsSelectAttrChangeParam);
+    List<String> selectspecificationsAllByPingZhongAndAttrNameList(GoodsSelectAttrChangeParam goodsSelectAttrChangeParam);
 }

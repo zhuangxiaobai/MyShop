@@ -3,6 +3,7 @@ package com.zc.shop.admin.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.zc.shop.admin.dto.GoodsCreateParam;
+import com.zc.shop.admin.dto.GoodsSelectParam;
 import com.zc.shop.admin.dto.UsersParam;
 import com.zc.shop.admin.service.GoodsService;
 import com.zc.shop.admin.util.MyCacheUtil;
@@ -53,6 +54,17 @@ public class GoodsController {
     }
 
 
+    @ApiOperation(value = "商品搜索功能，带条件查现货商城里的商品")
+    @RequestMapping(value = "/goodslistIndex", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult goodslistIndex(@RequestBody GoodsSelectParam goodsSelectParam) {
+
+
+
+        return CommonResult.success(goodsService.goodslistIndex(goodsSelectParam));
+
+
+    }
 
 
 

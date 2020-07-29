@@ -1,9 +1,12 @@
 package com.zc.shop.admin.service.impl;
 
 import com.zc.shop.admin.dto.GoodsCreateParam;
+import com.zc.shop.admin.dto.GoodsSelectParam;
+import com.zc.shop.admin.dto.StoreinfoListParam;
 import com.zc.shop.admin.mapper.AttributeExtMapper;
 import com.zc.shop.admin.mapper.GoodsExtMapper;
 import com.zc.shop.admin.service.GoodsService;
+import com.zc.shop.admin.vo.GoodsAllInfoVo;
 import com.zc.shop.common.api.ResultCode;
 import com.zc.shop.common.exception.BusinessException;
 import com.zc.shop.mbg.po.Attribute;
@@ -15,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -96,5 +102,25 @@ public class GoodsServiceImpl implements GoodsService {
 
 
         return i ;
+    }
+
+    @Override
+    public Map goodslistIndex(GoodsSelectParam goodsSelectParam) {
+
+
+        //分页查询处理
+        Integer startPage = goodsSelectParam.getPageParam().getStartPage();
+        Integer pageSize = goodsSelectParam.getPageParam().getPageSize();
+        Integer  start = (startPage-1)*pageSize;
+        goodsSelectParam.getPageParam().setStartPage(start);
+
+
+        List<GoodsAllInfoVo> goodsAllInfoVoList =   goodsExtMapper.selectGoodsAllIndex(goodsSelectParam);
+        int goodsAllInfoVoListNum =   goodsExtMapper.selectGoodsAllIndexNum(goodsSelectParam);
+
+        Map map = new HashMap();
+        map.put("goodsAllInfoVoList",goodsAllInfoVoList);
+        map.put("total",goodsAllInfoVoListNum);
+        return map;
     }
 }

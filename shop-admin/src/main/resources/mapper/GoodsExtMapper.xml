@@ -27,6 +27,186 @@
         where suppliers_id = #{supplierId,jdbcType=SMALLINT}
 
     </select>
+    <select id="selectAttr1All" resultType="string">
+        select distinct attr1 from
+        goods where is_on_sale = 1
+    </select>
+    <select id="selectAttr2All" resultType="string">
+        select distinct attr2 from
+        goods where  is_on_sale = 1
+    </select>
 
 
+
+    <select id="selectGoodsAllIndex"  parameterType="com.zc.shop.admin.dto.GoodsSelectParam" resultMap="com.zc.shop.admin.mapper.StoreinfoExtMapper.GoodsAllInfoVoMap">
+        SELECT
+
+        g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+        g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.goods_thumb as goodsGoodsThumb,g.goods_img as goodsGoodsImg,g.original_img as goodsOriginalImg,
+        g.is_on_sale as goodsIsOnSale,g.is_shipping as goodsIsShipping,g.add_time as goodsAddTime,g.attr1 as goodsAttr1,g.attr2 as goodsAttr2,g.suppliers_id as goodsSuppliersId,
+        g.ware_id as goodsWareId,g.trademark as goodsTrademark,g.remark as goodsRemark,
+
+        w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
+        u.username as userUsername, u.nickname as userNickname,
+        attr.pingzhong as attrPingZhong,attr.attrname as attrAttrName,attr.material as attrMaterial,attr.specifications as attrSpecifications,
+        st.id as storeinfoId,st.title as storeinfoTitle,st.user_id as storeinfoUserId,st.name as storeinfoName,st.phone as storeinfoPhone,
+        st.business as storeinfoBusiness,st.city as storeinfoCity,st.address as storeinfoAddress,st.logo as storeinfoLogo,st.max_sellweight as storeMaxSellWeight,
+        st.max_landweight as storeinfoMaxLandWeight,st.max_sellnum as storeinfoMaxSellNum,st.max_landnum as storeinfoMaxLandNum,st.created_at as storeinfoCreateAt,
+        st.updated_at as storeinfoUpdatedAt,st.provinces as storeinfoProvinces,st.content as storeinfoContent
+
+        from goods as g
+        left join
+            (select a1.attr_name as pingzhong,
+            a2.attr_name as attrname,
+            a2.specifications as specifications,
+            a2.material as material,
+            a2.id as attrnameid
+            from attribute a1
+            left join attribute a2
+            on a1.id = a2.parent_id
+            WHERE a1.parent_id = 0) as attr
+            on attr.attrnameid = g.cat_id
+        left join users as u
+        on g.suppliers_id = u.id
+        left join storeinfo as st
+        on st.user_id =u.id
+        left join ware w
+        on g.ware_id = w.id
+
+        <where>
+            g.is_on_sale = 1
+            <if test="pingZhongList != null">
+                and attr.pingzhong in
+                <foreach item="item" collection="pingZhongList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attrNameList != null">
+                and attr.attrname  in
+                <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="materialList != null">
+                and attr.material in
+                <foreach item="item" collection="materialList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="specificationsList != null">
+                and attr.specifications in
+                <foreach item="item" collection="specificationsList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr1All != null">
+                and g.attr1 in
+                <foreach item="item" collection="attr1All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr2All != null">
+                and g.attr2 in
+                <foreach item="item" collection="attr2All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+            <if test="wareName != null">
+                and w.name = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="priceLow != null">
+                and g.shop_price  <![CDATA[>=]]> #{priceLow,jdbcType=DECIMAL}
+            </if>
+            <if test="priceHigh != null">
+                and g.shop_price  <![CDATA[<=]]> #{priceHigh,jdbcType=DECIMAL}
+            </if>
+        </where>
+        order by
+        <if test="orderBy == 1">
+            g.shop_price
+        </if>
+        <if test="orderBy == 2">
+            g.shop_price desc
+        </if>
+        <if test="orderBy == null">
+            g.add_time desc
+        </if>
+
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectGoodsAllIndexNum"  parameterType="com.zc.shop.admin.dto.GoodsSelectParam" resultType="int">
+        SELECT
+        count(*)
+        from goods as g
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join users as u
+        on g.suppliers_id = u.id
+        left join storeinfo as st
+        on st.user_id =u.id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            g.is_on_sale = 1
+            <if test="pingZhongList != null">
+                and attr.pingzhong in
+                <foreach item="item" collection="pingZhongList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attrNameList != null">
+                and attr.attrname  in
+                <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="materialList != null">
+                and attr.material in
+                <foreach item="item" collection="materialList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="specificationsList != null">
+                and attr.specifications in
+                <foreach item="item" collection="specificationsList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr1All != null">
+                and g.attr1 in
+                <foreach item="item" collection="attr1All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr2All != null">
+                and g.attr2 in
+                <foreach item="item" collection="attr2All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+            <if test="wareName != null">
+                and w.name = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="priceLow != null">
+                and g.shop_price  <![CDATA[>=]]> #{priceLow,jdbcType=DECIMAL}
+            </if>
+            <if test="priceHigh != null">
+                and g.shop_price  <![CDATA[<=]]> #{priceHigh,jdbcType=DECIMAL}
+            </if>
+        </where>
+     </select>
 </mapper>
