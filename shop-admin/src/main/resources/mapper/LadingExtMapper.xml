@@ -172,6 +172,64 @@
             limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
         </if>
     </select>
+    <select id="selectMySellLadingNum"   resultType="int">
+        SELECT
+         count(*)
+        from lading l
+        left join `order` as o
+        on o.id = l.order_id
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join users u
+        on o.buy_id = u.id
+        left join storeinfo st
+        on st.user_id = o.supplier_id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="ladingCode != null">
+                and l.code = #{ladingCode,jdbcType=VARCHAR}
+            </if>
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+            <if test="attrName != null">
+                and attr.attrName = #{attrName,jdbcType=VARCHAR}
+            </if>
+            <if test="specifications != null">
+                and attr.specifications = #{specifications,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and l.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(l.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(l.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="supplierId != null">
+                and o.supplier_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
 
 
 
@@ -256,5 +314,66 @@
             limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
         </if>
     </select>
+
+    <select id="selectMyBuyLadingNum"  resultType="int">
+        SELECT
+        count(*)
+        from lading l
+        left join `order` as o
+        on o.id = l.order_id
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join users u
+        on o.supplier_id = u.id
+        left join storeinfo st
+        on st.user_id = o.supplier_id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="ladingCode != null">
+                and l.code = #{ladingCode,jdbcType=VARCHAR}
+            </if>
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+            <if test="attrName != null">
+                and attr.attrName = #{attrName,jdbcType=VARCHAR}
+            </if>
+            <if test="specifications != null">
+                and attr.specifications = #{specifications,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and l.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(l.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(l.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="buyId != null">
+                and o.buy_id = #{buyId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+
+
 
 </mapper>

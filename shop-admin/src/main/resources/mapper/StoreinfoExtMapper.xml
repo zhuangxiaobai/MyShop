@@ -58,6 +58,7 @@
          </association>
         <!--仓库表-->
         <association property="ware" javaType="com.zc.shop.mbg.po.Ware">
+            <result column="wareId" jdbcType="SMALLINT" property="id" />
         <result column="wareTitle" jdbcType="VARCHAR" property="title" />
         <result column="wareName" jdbcType="VARCHAR" property="name" />
         <result column="warePhone" jdbcType="INTEGER" property="phone" />
@@ -66,6 +67,7 @@
         <result column="wareContent" jdbcType="LONGVARCHAR" property="content" />
         </association>
         <association property="usersVo" javaType="com.zc.shop.admin.vo.UsersVo">
+            <result column="userId" jdbcType="INTEGER" property="id" />
         <result column="userUsername" jdbcType="VARCHAR" property="username" />
         <result column="userNickname" jdbcType="VARCHAR" property="nickname" />
         </association>
@@ -117,13 +119,13 @@
     <select id="StoreinfoDetails"  parameterType="com.zc.shop.admin.dto.StoreinfoDetailParam" resultMap="GoodsAllInfoVoMap">
         SELECT
 
-        g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+        g.id as goodsId,g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
         g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.goods_thumb as goodsGoodsThumb,g.goods_img as goodsGoodsImg,g.original_img as goodsOriginalImg,
         g.is_on_sale as goodsIsOnSale,g.is_shipping as goodsIsShipping,g.add_time as goodsAddTime,g.attr1 as goodsAttr1,g.attr2 as goodsAttr2,g.suppliers_id as goodsSuppliersId,
         g.ware_id as goodsWareId,g.trademark as goodsTrademark,g.remark as goodsRemark,
 
-        w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
-        u.username as userUsername, u.nickname as userNickname,
+        w.id as wareId,w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
+        u.id as userId,u.username as userUsername, u.nickname as userNickname,
         attr.pingzhong as attrPingZhong,attr.attrname as attrAttrName,attr.material as attrMaterial,attr.specifications as attrSpecifications,
         st.id as storeinfoId,st.title as storeinfoTitle,st.user_id as storeinfoUserId,st.name as storeinfoName,st.phone as storeinfoPhone,
         st.business as storeinfoBusiness,st.city as storeinfoCity,st.address as storeinfoAddress,st.logo as storeinfoLogo,st.max_sellweight as storeMaxSellWeight,

@@ -18,7 +18,7 @@ public class LadingAllVo {
 
 
 
-    @ApiModelProperty(value = "提单表集合")
+    @ApiModelProperty(value = "提单表对象")
     private Lading lading;
 
     //订单部分

@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
 
       @Override
-      public List<OrdersAllVo> mySellOrder(OrderSellSelectParam orderSellSelectParam, Integer userId) {
+      public Map mySellOrder(OrderSellSelectParam orderSellSelectParam, Integer userId) {
 
            //分页查询处理
             Integer startPage = orderSellSelectParam.getStartPage();
@@ -51,13 +51,19 @@ public class OrderServiceImpl implements OrderService {
             orderSellSelectParam.setSupplierId(userId);
             //获取订单中的所有信息
             List<OrdersAllVo> orderGoodsVo  = orderExtMapper.selectMySellOrder(orderSellSelectParam);
+            int total  = orderExtMapper.selectMySellOrderNum(orderSellSelectParam);
 
-            return orderGoodsVo;
+             Map map = new HashMap();
+
+             map.put("orderGoodsVoList",orderGoodsVo);
+             map.put("total",total);
+
+            return map;
       }
 
 
     @Override
-    public List<OrdersAllVo> myBuyOrder(OrderBuySelectParam orderBuySelectParam, Integer userId) {
+    public Map myBuyOrder(OrderBuySelectParam orderBuySelectParam, Integer userId) {
         //分页查询处理
         Integer startPage = orderBuySelectParam.getStartPage();
         Integer pageSize = orderBuySelectParam.getPageSize();
@@ -66,9 +72,17 @@ public class OrderServiceImpl implements OrderService {
         orderBuySelectParam.setBuyId(userId);
         //获取订单中的所有信息
         List<OrdersAllVo> orderGoodsVo  = orderExtMapper.selectMyBuyOrder(orderBuySelectParam);
+        int total  = orderExtMapper.selectMyBuyOrderNum(orderBuySelectParam);
 
 
-        return orderGoodsVo;
+        Map map = new HashMap();
+
+        map.put("orderGoodsVoList",orderGoodsVo);
+        map.put("total",total);
+
+        return map;
+
+
     }
 
     @Override
@@ -81,8 +95,8 @@ public class OrderServiceImpl implements OrderService {
         BeanUtil.copyProperties(orderParam,order);
         order.setUpdatedAt(LocalDateTime.now());
         int i = orderExtMapper.updateByPrimaryKeySelective(order);
-        //修改成功并且修改为16，订单作废，这时候需要去修改增加goods表商品数量(没有付款前可以作废订单)
-        if(i>0 && order.getStatus().toString().equals("16")){
+        //修改成功并且修改为15，订单作废，这时候需要去修改增加goods表商品数量(没有付款前可以作废订单)
+        if(i>0 && order.getStatus().toString().equals("15")){
 
             Order orderZuoFei = orderExtMapper.selectByPrimaryKey(order.getId());
 

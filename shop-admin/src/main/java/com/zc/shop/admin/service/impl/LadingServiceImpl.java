@@ -21,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LadingServiceImpl implements LadingService {
@@ -115,8 +117,8 @@ public class LadingServiceImpl implements LadingService {
         lading.setUpdatedAt(LocalDateTime.now());
 
         int i = ladingExtMapper.updateByPrimaryKeySelective(lading);
-        //修改成功并且修改为16，订单作废，这时候需要去修改增加order表商品余量(没有提货可以作废提单单)
-        if(i>0 && lading.getStatus().toString().equals("16")){
+        //修改成功并且修改为15，订单作废，这时候需要去修改增加order表商品余量(没有提货可以作废提单单)
+        if(i>0 && lading.getStatus().toString().equals("15")){
 
             Lading ladingZuoFei = ladingExtMapper.selectByPrimaryKey(lading.getId());
 
@@ -140,7 +142,7 @@ public class LadingServiceImpl implements LadingService {
     }
 
     @Override
-    public List<LadingAllVo> mySellLading(LadingSellSelectParam ladingSelectParam, Integer userId) {
+    public Map mySellLading(LadingSellSelectParam ladingSelectParam, Integer userId) {
 
         //分页查询处理
         Integer startPage = ladingSelectParam.getStartPage();
@@ -150,13 +152,21 @@ public class LadingServiceImpl implements LadingService {
         ladingSelectParam.setSupplierId(userId);
         //获取订单中的所有信息
         List<LadingAllVo> ladingAllVos  = ladingExtMapper.selectMySellLading(ladingSelectParam);
+        int total  = ladingExtMapper.selectMySellLadingNum(ladingSelectParam);
 
 
-        return ladingAllVos;
+        Map map = new HashMap();
+
+       map.put("ladingAllVosList",ladingAllVos);
+       map.put("total",total);
+
+
+
+        return map;
     }
 
     @Override
-    public List<LadingAllVo> myBuyLading(LadingBuySelectParam ladingSelectParam, Integer userId) {
+    public Map myBuyLading(LadingBuySelectParam ladingSelectParam, Integer userId) {
 
 
 
@@ -168,9 +178,17 @@ public class LadingServiceImpl implements LadingService {
         ladingSelectParam.setBuyId(userId);
         //获取订单中的所有信息
         List<LadingAllVo> ladingAllVos  = ladingExtMapper.selectMyBuyLading(ladingSelectParam);
+        int total  = ladingExtMapper.selectMyBuyLadingNum(ladingSelectParam);
 
 
-        return ladingAllVos;
+        Map map = new HashMap();
+
+        map.put("ladingAllVosList",ladingAllVos);
+        map.put("total",total);
+
+
+
+        return map;
 
 
 

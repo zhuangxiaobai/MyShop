@@ -1,6 +1,8 @@
 package com.zc.shop.admin.mapper;
 
 import com.zc.shop.admin.dto.GoodsSelectParam;
+import com.zc.shop.admin.dto.GoodsSellListParam;
+import com.zc.shop.admin.dto.GoodsUpdateOnSaleParam;
 import com.zc.shop.admin.vo.GoodsAllInfoVo;
 import com.zc.shop.mbg.mapper.GoodsMapper;
 import com.zc.shop.mbg.po.Goods;
@@ -23,4 +25,10 @@ public interface GoodsExtMapper extends GoodsMapper {
     List<GoodsAllInfoVo> selectGoodsAllIndex(GoodsSelectParam goodsSelectParam);
 
     int selectGoodsAllIndexNum(GoodsSelectParam goodsSelectParam);
+
+    List<GoodsAllInfoVo> selectGoodsSelllist(GoodsSellListParam goodsSellListParam);
+
+   int selectGoodsSelllistNum(GoodsSellListParam goodsSellListParam);
+
+   // int updateGoodsIsOnSale(GoodsUpdateOnSaleParam goodsUpdateOnSaleParam);
 }

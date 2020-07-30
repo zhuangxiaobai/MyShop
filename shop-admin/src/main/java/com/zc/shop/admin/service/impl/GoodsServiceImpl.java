@@ -1,23 +1,25 @@
 package com.zc.shop.admin.service.impl;
 
-import com.zc.shop.admin.dto.GoodsCreateParam;
-import com.zc.shop.admin.dto.GoodsSelectParam;
-import com.zc.shop.admin.dto.StoreinfoListParam;
+import cn.hutool.core.bean.BeanUtil;
+import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.mapper.AttributeExtMapper;
 import com.zc.shop.admin.mapper.GoodsExtMapper;
+import com.zc.shop.admin.mapper.OrderExtMapper;
 import com.zc.shop.admin.service.GoodsService;
 import com.zc.shop.admin.vo.GoodsAllInfoVo;
 import com.zc.shop.common.api.ResultCode;
 import com.zc.shop.common.exception.BusinessException;
 import com.zc.shop.mbg.po.Attribute;
 import com.zc.shop.mbg.po.Goods;
-import io.swagger.models.auth.In;
+import com.zc.shop.mbg.po.Order;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,11 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private GoodsExtMapper goodsExtMapper;
+
+
+    @Autowired
+    private OrderExtMapper orderExtMapper;
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -116,11 +123,113 @@ public class GoodsServiceImpl implements GoodsService {
 
 
         List<GoodsAllInfoVo> goodsAllInfoVoList =   goodsExtMapper.selectGoodsAllIndex(goodsSelectParam);
-        int goodsAllInfoVoListNum =   goodsExtMapper.selectGoodsAllIndexNum(goodsSelectParam);
+        int total =   goodsExtMapper.selectGoodsAllIndexNum(goodsSelectParam);
 
         Map map = new HashMap();
         map.put("goodsAllInfoVoList",goodsAllInfoVoList);
-        map.put("total",goodsAllInfoVoListNum);
+        map.put("total",total);
         return map;
     }
-}
+
+    @Override
+    public Map goodsSelllist(GoodsSellListParam goodsSellListParam) {
+
+
+        //分页查询处理
+        Integer startPage = goodsSellListParam.getPageParam().getStartPage();
+        Integer pageSize = goodsSellListParam.getPageParam().getPageSize();
+        Integer  start = (startPage-1)*pageSize;
+        goodsSellListParam.getPageParam().setStartPage(start);
+
+
+
+        List<GoodsAllInfoVo> goodsAllInfoVoList =   goodsExtMapper.selectGoodsSelllist(goodsSellListParam);
+
+        int total  = goodsExtMapper.selectGoodsSelllistNum(goodsSellListParam);
+
+
+        List<Map> goodsAllInfoVoMap = new ArrayList<>();
+        for(GoodsAllInfoVo goodsAllInfoVo:goodsAllInfoVoList){
+            Map map = new HashMap();
+            //获取商品id查询订单表
+            Integer goodsId = goodsAllInfoVo.getGoods().getId();
+
+            //查询不为15 16状态的订单（废弃）
+            List<Order>  orderList = orderExtMapper.selectOrdersByGoodsId(goodsId);
+
+            Integer yishou = 0;
+
+            for(Order order : orderList){
+
+                Integer num = order.getNum();
+                yishou += num;
+
+            }
+
+          map.put("goodsAllInfoVo",goodsAllInfoVo);
+          map.put("yishoushuliang",yishou);
+          goodsAllInfoVoMap.add(map);
+
+        }
+
+
+
+
+
+        Map mapReturn = new HashMap();
+        mapReturn.put("goodsAllInfoVoListMap",goodsAllInfoVoMap);
+        mapReturn.put("total",total);
+        return mapReturn;
+    }
+
+    @Override
+    public int updateIsOnSale(GoodsUpdateOnSaleParam goodsUpdateOnSaleParam) {
+
+        Goods goods = new Goods();
+        goods.setId(goodsUpdateOnSaleParam.getGoodsId());
+        goods.setIsOnSale(goodsUpdateOnSaleParam.getIsOnsale());
+
+        return    goodsExtMapper.updateByPrimaryKeySelective(goods);
+
+
+
+    }
+
+    @Override
+    public Map selectGoodsById(Integer goodsId) {
+
+
+        Goods goods = goodsExtMapper.selectByPrimaryKey(goodsId);
+
+        Attribute attribute = attributeExtMapper.selectByPrimaryKey(goods.getCatId());
+
+
+        Attribute attribute1 = attributeExtMapper.selectByPrimaryKey(attribute.getParentId().shortValue());
+
+
+
+        Map map  = new HashMap();
+
+
+        map.put("goods",goods);
+        map.put("pingZhong",attribute1.getAttrName());
+        map.put("pingZhong",attribute.getAttrName());
+        map.put("specifications",attribute.getSpecifications());
+        map.put("material",attribute.getMaterial());
+
+
+        return map;
+    }
+
+    @Override
+    public int updateGoodsInfo(GoodsUpdateParam goodsUpdateParam) {
+
+
+        Goods goods = new Goods();
+
+        BeanUtil.copyProperties(goodsUpdateParam,goods);
+
+
+
+        return goodsExtMapper.updateByPrimaryKeySelective(goods);
+    }}

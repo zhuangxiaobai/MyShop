@@ -1,25 +1,17 @@
 package com.zc.shop.admin.controller;
 
 
-import cn.hutool.core.bean.BeanUtil;
-import com.zc.shop.admin.dto.GoodsCreateParam;
-import com.zc.shop.admin.dto.GoodsSelectParam;
-import com.zc.shop.admin.dto.UsersParam;
+import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.service.GoodsService;
-import com.zc.shop.admin.util.MyCacheUtil;
-import com.zc.shop.admin.vo.UsersVo;
 import com.zc.shop.common.api.CommonResult;
-import com.zc.shop.common.api.ResultCode;
+import com.zc.shop.mbg.po.Goods;
 import com.zc.shop.mbg.po.Users;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,6 +57,67 @@ public class GoodsController {
 
 
     }
+
+    @ApiOperation(value = "卖家获取自己的所有商品，带条件")
+    @RequestMapping(value = "/goodsSelllist", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult goodslistIndex(@RequestBody GoodsSellListParam goodsSelectParam) {
+
+
+
+        return CommonResult.success(goodsService.goodsSelllist(goodsSelectParam));
+
+
+    }
+    @ApiOperation(value = "修改上下架")
+    @RequestMapping(value = "/updateIsOnSale", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIsOnSale(@RequestBody GoodsUpdateOnSaleParam goodsUpdateOnSaleParam) {
+
+
+       int count  = goodsService.updateIsOnSale(goodsUpdateOnSaleParam);
+
+        if(count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+
+
+
+    }
+
+
+    @ApiOperation(value = "卖家通过id获取商品信息")
+    @RequestMapping(value = "/selectGoodsById", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult selectGoodsById(@RequestParam("goodsId")Integer goodsId) {
+
+
+        return CommonResult.success(goodsService.selectGoodsById(goodsId));
+
+    }
+
+
+    @ApiOperation(value = "卖家修改商品信息")
+    @RequestMapping(value = "/updateGoodsInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult selectGoodsById(@RequestBody GoodsUpdateParam goodsUpdateParam) {
+
+
+        int count = goodsService.updateGoodsInfo(goodsUpdateParam);
+        if(count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+
+
+
+    }
+
+
+
 
 
 

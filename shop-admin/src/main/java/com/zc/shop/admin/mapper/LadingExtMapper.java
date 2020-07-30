@@ -13,4 +13,8 @@ public interface LadingExtMapper extends LadingMapper {
     List<LadingAllVo> selectMyBuyLading(LadingBuySelectParam ladingSelectParam);
 
     List<LadingAllVo> selectMySellLading(LadingSellSelectParam ladingSelectParam);
+
+    int selectMySellLadingNum(LadingSellSelectParam ladingSelectParam);
+
+    int selectMyBuyLadingNum(LadingBuySelectParam ladingSelectParam);
 }

@@ -13,7 +13,7 @@ public class Goods implements Serializable {
     @ApiModelProperty(value = "关联节点Attribute表用于分类展示")
     private Short catId;
 
-    @ApiModelProperty(value = "商品货号，SZ+即将插入产生的6位goods_id，不足6位于SZ和goods_id间补0，如SZ003329")
+    @ApiModelProperty(value = "商品货号")
     private String goodsSn;
 
     @ApiModelProperty(value = "商品品名，对应atribute表品名")

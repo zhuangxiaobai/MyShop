@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.zc.shop.admin.dto.StoreinfoCreateParam;
 import com.zc.shop.admin.dto.StoreinfoDetailParam;
 import com.zc.shop.admin.dto.StoreinfoListParam;
+import com.zc.shop.admin.dto.StoreinfoUpdateParam;
 import com.zc.shop.admin.mapper.GoodsExtMapper;
 import com.zc.shop.admin.mapper.StoreinfoExtMapper;
 import com.zc.shop.admin.mapper.WareExtMapper;
@@ -153,5 +154,17 @@ public class StoreinfoServiceImpl implements StoreinfoService {
 
 
         return map;
+    }
+
+    @Override
+    public int updateStoreinfo(StoreinfoUpdateParam storeinfoUpdateParam) {
+
+
+        Storeinfo storeinfo = new Storeinfo();
+        BeanUtil.copyProperties(storeinfoUpdateParam,storeinfo);
+        storeinfo.setUpdatedAt(LocalDateTime.now());
+
+
+        return storeinfoExtMapper.updateByPrimaryKeyWithBLOBs(storeinfo);
     }
 }

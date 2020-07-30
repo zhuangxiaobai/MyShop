@@ -97,7 +97,7 @@
         <result column="ladingUpdatedAt" jdbcType="TIMESTAMP" property="ladingUpdatedAt" />
         <result column="ladingRemark" jdbcType="LONGVARCHAR" property="ladingRemark" />
         <result column="ladingPic" jdbcType="LONGVARCHAR" property="ladingPic" />
--->
+      -->
     </resultMap>
 
     <select id="selectMySellOrder"  parameterType="com.zc.shop.admin.dto.OrderSellSelectParam" resultMap="OrdersAllVoMap">
@@ -172,6 +172,64 @@
         </if>
     </select>
 
+    <select id="selectMySellOrderNum"  resultType="int">
+        SELECT count(*)
+        from `order` as o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+
+        left join lading l
+        on o.id = l.order_id
+        left join users u
+        on o.buy_id = u.id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="username != null">
+                and u.username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="nickname != null">
+                and u.nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="supplierId != null">
+                and g.suppliers_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+
+
     <select id="selectMyBuyOrder"  parameterType="com.zc.shop.admin.dto.OrderBuySelectParam" resultMap="OrdersAllVoMap">
         SELECT
         o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
@@ -181,7 +239,7 @@
         g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.goods_thumb as goodsGoodsThumb,g.goods_img as goodsGoodsImg,g.original_img as goodsOriginalImg,
         g.is_on_sale as goodsIsOnSale,g.is_shipping as goodsIsShipping,g.add_time as goodsAddTime,g.attr1 as goodsAttr1,g.attr2 as goodsAttr2,g.suppliers_id as goodsSuppliersId,
         g.ware_id as goodsWareId,g.trademark as goodsTrademark,g.remark as goodsRemark,
-          l.id as ladingId,l.code as ladingCode,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
+        l.id as ladingId,l.code as ladingCode,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
         l.updated_at as ladingUpdatedAt,l.remark as ladingRemark,l.pic as ladingPic,
         w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
         u.username as userUsername, u.nickname as userNickname,
@@ -248,6 +306,78 @@
         <if test="startPage != null and PageSize != null">
             limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
         </if>
+    </select>
+
+    <select id="selectMyBuyOrderNum"  resultType="int">
+        SELECT
+        count(*)
+        from `order` as o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join lading l
+        on o.id = l.order_id
+        left join users u
+        on o.supplier_id = u.id
+        left join storeinfo st
+        on st.user_id = o.supplier_id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="username != null">
+                and u.username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="nickname != null">
+                and u.nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="buyId != null">
+                and o.buy_id = #{buyId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <select id="selectOrdersByGoodsId"  resultType="com.zc.shop.mbg.po.Order">
+
+        select
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Blob_Column_List" />
+        from `order`
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+              and status != 15 and status != 16
+
     </select>
 
 

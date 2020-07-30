@@ -2,12 +2,10 @@ package com.zc.shop.admin.controller;
 
 
 
-import com.zc.shop.admin.dto.StoreinfoCreateParam;
-import com.zc.shop.admin.dto.PageParam;
-import com.zc.shop.admin.dto.StoreinfoDetailParam;
-import com.zc.shop.admin.dto.StoreinfoListParam;
+import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.service.StoreinfoService;
 import com.zc.shop.common.api.CommonResult;
+import com.zc.shop.mbg.po.Shopcart;
 import com.zc.shop.mbg.po.Users;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -72,6 +70,20 @@ public class StoreInfoController {
 
 
     }
+
+
+
+    @ApiOperation("修改店铺信息")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult update(@RequestBody StoreinfoUpdateParam storeinfoUpdateParam) {
+        int count = storeinfoService.updateStoreinfo(storeinfoUpdateParam);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
 
 
 

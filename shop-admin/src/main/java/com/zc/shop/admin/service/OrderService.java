@@ -4,16 +4,16 @@ import com.zc.shop.admin.dto.OrderBuySelectParam;
 import com.zc.shop.admin.dto.OrderParam;
 import com.zc.shop.admin.dto.OrderSellSelectParam;
 import com.zc.shop.admin.dto.ShopcartParam;
-import com.zc.shop.admin.vo.OrdersAllVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
-    List<OrdersAllVo> mySellOrder(OrderSellSelectParam orderSellSelectParam, Integer userId);
+    Map mySellOrder(OrderSellSelectParam orderSellSelectParam, Integer userId);
 
     int create(List<ShopcartParam> shopcartList);
 
-    List<OrdersAllVo> myBuyOrder(OrderBuySelectParam orderBuySelectParam, Integer userId);
+    Map myBuyOrder(OrderBuySelectParam orderBuySelectParam, Integer userId);
 
     int updateShopcart(OrderParam orderParam);
 }
