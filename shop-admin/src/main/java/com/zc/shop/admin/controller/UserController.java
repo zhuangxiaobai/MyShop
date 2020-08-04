@@ -244,9 +244,8 @@ public class UserController {
         }
 
 
-
        //没注册发验证码
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4FgVL9JFiWNBCwNUssip", "rvX9vOLcH5Ng7MRKqlNhM5wRFw9D6P");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4G1tUujv578myWMzCgCt", "qVGipmNyZ9grpNyjjiR7IayteOEMfq");
         IAcsClient client = new DefaultAcsClient(profile);
 
         //生成4位随机数,random为左闭右开的
@@ -264,9 +263,9 @@ public class UserController {
         request.setSysAction("SendSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumbers", mobileSendMessageParam.getMobile());
-        request.putQueryParameter("SignName", "StoryForest");
-        request.putQueryParameter("TemplateCode", "SMS_175544438");
-        request.putQueryParameter("TemplateParam", "{'start':'2020-07-08 16:50','end':'2020-07-08 16:50','remark':"+yanzhengma+"}");
+        request.putQueryParameter("SignName", "精益管理");
+        request.putQueryParameter("TemplateCode", "SMS_197871345");
+        request.putQueryParameter("TemplateParam", "{'code':"+yanzhengma+"}");
         try {
             CommonResponse response = client.getCommonResponse(request);
             System.out.println(response.getData());
