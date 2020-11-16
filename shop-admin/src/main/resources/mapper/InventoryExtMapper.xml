@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.InventoryExtMapper">
+    <update id="updateNumWeight">
+
+      update inventory
+      set
+      goods_number = goods_number + #{number,jdbcType=SMALLINT},
+      goods_weight = goods_weight +  #{weight,jdbcType=DECIMAL}
+
+      where id = #{inventoryExistId,jdbcType=BIGINT}
+
+
+
+
+    </update>
+
+
+    <select id="selectByNameGuigeCaizhi"  resultMap="com.zc.shop.mbg.mapper.InventoryMapper.BaseResultMap">
+    select
+    <include refid="com.zc.shop.mbg.mapper.InventoryMapper.Base_Column_List" />
+    from inventory
+    where goods_name = #{name,jdbcType=VARCHAR}
+        and guige = #{guige,jdbcType=VARCHAR}
+        and caizhi = #{caizhi,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByInventoryParam"  parameterType="com.zc.shop.admin.dto.InventorySelectParam"  resultMap="com.zc.shop.mbg.mapper.InventoryMapper.BaseResultMap" >
+
+
+        select
+        <include refid="com.zc.shop.mbg.mapper.InventoryMapper.Base_Column_List" />
+        from inventory i
+        <where>
+            <if test="name != null">
+                and  goods_name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and  guige= #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and  caizhi= #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and  factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="ware != null">
+                and  warehouse = #{ware,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and  type= #{type,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(add_time) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(add_time) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+
+            <if test="supplierId != null">
+                and suppliers_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by add_time desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+
+
+
+
+
+
+
+    </select>
+    <select id="selectByInventoryParamNum" resultType="java.lang.Integer">
+        select
+        count(*)
+        from inventory i
+
+        <where>
+            <if test="name != null">
+                and  goods_name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and  guige= #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and  caizhi= #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and  factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="ware != null">
+                and  warehouse = #{ware,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and  type= #{type,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(add_time) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(add_time) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+
+            <if test="supplierId != null">
+                and suppliers_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+
+
+
+    </select>
+</mapper>

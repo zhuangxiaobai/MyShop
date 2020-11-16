@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.AttributeExtMapper">
+
+
+    <resultMap id="AttributeVoMap" type="com.zc.shop.admin.vo.AttributeVo">
+
+        <!--品种品名表-->
+            <result column="attrPingZhong" jdbcType="VARCHAR" property="attrPingZhong" />
+            <result column="attrAttrName" jdbcType="VARCHAR" property="attrAttrName" />
+            <result column="attrSpecifications" jdbcType="VARCHAR" property="attrSpecifications" />
+            <result column="attrMaterial" jdbcType="VARCHAR" property="attrMaterial" />
+
+    </resultMap>
+
+
+
+    <select id="selectAttributeCountExistByCreate" resultType="Short">
+        select id from attribute
+        where attr_name =  #{attribute.attrName,jdbcType=VARCHAR}
+        and  specifications = #{attribute.specifications,jdbcType=VARCHAR}
+        and  material = #{attribute.material,jdbcType=VARCHAR}
+        and  parent_id =
+        (
+        select
+        id
+        from attribute
+        where attr_name = #{pingZhong,jdbcType=VARCHAR} and parent_id = 0
+        )
+    </select>
+
+    <select id="selectIdByAttrName" resultType="Short">
+        select id from attribute
+        where attr_name =  #{pingZhong,jdbcType=VARCHAR}
+        and parent_id = 0
+
+    </select>
+
+
+    <select id="selectPingZhongAll" resultType="String">
+        select attr_name from attribute
+        where parent_id = 0
+    </select>
+
+
+    <select id="ListByPingZhong" resultMap="com.zc.shop.mbg.mapper.AttributeMapper.BaseResultMap">
+        select
+        <include refid="com.zc.shop.mbg.mapper.AttributeMapper.Base_Column_List" />
+         from attribute
+        where parent_id =
+         (
+        select
+        id
+        from attribute
+        where attr_name = #{pingZhong,jdbcType=VARCHAR} and parent_id = 0
+        )
+    </select>
+
+
+    <select id="AllAttributeVo" resultMap="AttributeVoMap">
+        select a1.attr_name as attrPingZhong,
+            a2.attr_name as attrAttrName,
+            a2.specifications as attrSpecifications,
+            a2.material as attrMaterial
+
+            from attribute a1
+            left join attribute a2
+            on a1.id = a2.parent_id
+            WHERE a1.parent_id = 0
+    </select>
+    <select id="selectAttrNameAll" resultType="string">
+        select distinct attr_name from
+        attribute where parent_id != 0
+    </select>
+    <select id="selectspecificationsAll" resultType="string">
+        select distinct specifications from
+        attribute where parent_id != 0
+    </select>
+    <select id="selectmaterialAll" resultType="string">
+        select distinct material from
+        attribute where parent_id != 0
+    </select>
+
+    <select id="selectmaterialAllByPingZhongAndAttrNameList" resultType="string">
+        select distinct
+        a2.material
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0
+        <if test="pingZhong != null">
+            and a1.attr_name = #{pingZhong,jdbcType=VARCHAR}
+        </if>
+        <if test="attrNameList != null and attrNameList.size != 0 ">
+        and a2.attr_name in
+        <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+               #{item, jdbcType=VARCHAR}
+        </foreach>
+        </if>
+    </select>
+
+    <select id="selectspecificationsAllByPingZhongAndAttrNameList" parameterType="com.zc.shop.admin.dto.GoodsSelectAttrChangeParam" resultType="string">
+        select distinct
+        a2.specifications
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0
+        <if test="pingZhong != null">
+            and a1.attr_name = #{pingZhong,jdbcType=VARCHAR}
+        </if>
+        <if test="attrNameList != null and attrNameList.size != 0 ">
+            and a2.attr_name in
+            <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectattrnameAllByPingZhongAndAttrNameList" parameterType="com.zc.shop.admin.dto.GoodsSelectAttrChangeParam" resultType="string">
+        select distinct
+        a2.attr_name
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0
+        <if test="pingZhong != null">
+            and a1.attr_name = #{pingZhong,jdbcType=VARCHAR}
+        </if>
+        <if test="attrNameList != null and attrNameList.size != 0 ">
+            and a2.attr_name in
+            <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </select>
+
+
+
+
+
+
+</mapper>

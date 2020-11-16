@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.CertificationExtMapper">
+
+
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="com.zc.shop.mbg.mapper.CertificationMapper.ResultMapWithBLOBs">
+        select
+        <include refid="com.zc.shop.mbg.mapper.CertificationMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.CertificationMapper.Blob_Column_List" />
+        from `certification`
+        where userid = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByCompanyName" parameterType="java.lang.String" resultMap="com.zc.shop.mbg.mapper.CertificationMapper.ResultMapWithBLOBs">
+        select
+        <include refid="com.zc.shop.mbg.mapper.CertificationMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.CertificationMapper.Blob_Column_List" />
+        from `certification`
+        where company = #{guohu,jdbcType=VARCHAR}
+    </select>
+
+
+</mapper>

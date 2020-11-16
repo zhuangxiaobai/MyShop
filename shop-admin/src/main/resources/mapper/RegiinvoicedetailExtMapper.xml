@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.RegiinvoicedetailExtMapper">
+
+
+
+    <resultMap id="regiinvoice_base" type="com.zc.shop.admin.vo.RegiinvoiceDetailChaKanVo">
+        <!--订单表数据-->
+        <id column="orderId" jdbcType="BIGINT" property="order.id" />
+        <result column="orderCode" jdbcType="VARCHAR" property="order.code" />
+        <result column="orderSupplierId" jdbcType="INTEGER" property="order.supplierId" />
+        <result column="orderGoodsId" jdbcType="INTEGER" property="order.goodsId" />
+        <result column="orderNum" jdbcType="INTEGER" property="order.num" />
+        <result column="orderWeight" jdbcType="DECIMAL" property="order.weight" />
+        <result column="orderStatus" jdbcType="INTEGER" property="order.status" />
+        <result column="orderBuyId" jdbcType="INTEGER" property="order.buyId" />
+        <result column="orderCreatedAt" jdbcType="TIMESTAMP" property="order.createdAt" />
+        <result column="orderUpdatedAt" jdbcType="TIMESTAMP" property="order.updatedAt" />
+        <result column="orderRemaining" jdbcType="DECIMAL" property="order.remaining" />
+        <result column="orderRemark" jdbcType="LONGVARCHAR" property="order.remark" />
+        <result column="orderPayment" jdbcType="DECIMAL" property="order.payment" />
+        <result column="orderMargin" jdbcType="DECIMAL" property="order.margin" />
+        <result column="orderType" jdbcType="INTEGER" property="order.type" />
+        <result column="orderRemainnumber" jdbcType="INTEGER" property="order.remainnumber" />
+        <!--</association>-->
+
+        <!--商品表数据集合-->
+        <result column="goodsId" jdbcType="INTEGER" property="goods.id" />
+        <result column="goodsGoodsSn" jdbcType="VARCHAR" property="goods.goodsSn" />
+        <result column="goodsGoodsName" jdbcType="VARCHAR" property="goods.goodsName" />
+        <result column="goodsGoodsNumber" jdbcType="SMALLINT" property="goods.goodsNumber" />
+        <result column="goodsGoodsWeight" jdbcType="DECIMAL" property="goods.goodsWeight" />
+        <result column="goodsWeightUnit" jdbcType="SMALLINT" property="goods.weightUnit" />
+        <result column="goodsShopPrice" jdbcType="DECIMAL" property="goods.shopPrice" />
+        <result column="goodsIsOnSale" jdbcType="TINYINT" property="goods.isOnSale" />
+        <result column="goodsAddTime" jdbcType="TIMESTAMP" property="goods.addTime" />
+        <result column="goodsAddress" jdbcType="VARCHAR" property="goods.address" />
+        <result column="goodsSuppliersId" jdbcType="SMALLINT" property="goods.suppliersId" />
+        <result column="goodsWarehouse" jdbcType="VARCHAR" property="goods.warehouse" />
+        <result column="goodsRemark" jdbcType="VARCHAR" property="goods.remark" />
+        <result column="goodsWeitype" jdbcType="INTEGER" property="goods.weitype" />
+        <result column="goodsType" jdbcType="VARCHAR" property="goods.type" />
+        <result column="goodsGuige" jdbcType="VARCHAR" property="goods.guige" />
+        <result column="goodsCaizhi" jdbcType="VARCHAR" property="goods.caizhi" />
+        <result column="goodsFactory" jdbcType="VARCHAR" property="goods.factory" />
+        <result column="goodsDanwei" jdbcType="VARCHAR" property="goods.danwei" />
+        <result column="goodsIsDelete" jdbcType="INTEGER" property="goods.isDelete" />
+        <result column="goodsRemainNumber" jdbcType="SMALLINT" property="goods.remainNumber" />
+        <result column="goodsRemainWeight" jdbcType="DECIMAL" property="goods.remainWeight" />
+
+
+        <!--认证表卖家数据集合-->
+        <result column="certificationId" jdbcType="INTEGER" property="certificationSell.id" />
+        <result column="certificationCompany" jdbcType="VARCHAR" property="certificationSell.company" />
+        <result column="certificationXinyong" jdbcType="VARCHAR" property="certificationSell.xinyong" />
+        <result column="certificationFaren" jdbcType="VARCHAR" property="certificationSell.faren" />
+        <result column="certificationCompanytype" jdbcType="VARCHAR" property="certificationSell.companytype" />
+        <result column="certificationBuilddate" jdbcType="TIMESTAMP" property="certificationSell.builddate" />
+        <result column="certificationZiben" jdbcType="VARCHAR" property="certificationSell.ziben" />
+        <result column="certificationQixian" jdbcType="VARCHAR" property="certificationSell.qixian" />
+        <result column="certificationIdcard" jdbcType="VARCHAR" property="certificationSell.idcard" />
+        <result column="certificationAddress" jdbcType="VARCHAR" property="certificationSell.address" />
+        <result column="certificationLianxiren" jdbcType="VARCHAR" property="certificationSell.lianxiren" />
+        <result column="certificationLxridcard" jdbcType="VARCHAR" property="certificationSell.lxridcard" />
+        <result column="certificationRemark" jdbcType="VARCHAR" property="certificationSell.remark" />
+        <result column="certificationBack" jdbcType="VARCHAR" property="certificationSell.back" />
+        <result column="certificationAccount" jdbcType="VARCHAR" property="certificationSell.account" />
+        <result column="certificationShuihao" jdbcType="VARCHAR" property="certificationSell.shuihao" />
+        <result column="certificationPhone" jdbcType="VARCHAR" property="certificationSell.phone" />
+        <result column="certificationCompanyaddress" jdbcType="VARCHAR" property="certificationSell.companyaddress" />
+        <result column="certificationIsSanzheng" jdbcType="INTEGER" property="certificationSell.isSanzheng" />
+        <result column="certificationStatus" jdbcType="INTEGER" property="certificationSell.status" />
+        <result column="certificationUserid" jdbcType="INTEGER" property="certificationSell.userid" />
+        <result column="certificationYinyezhizhao" jdbcType="LONGVARCHAR" property="certificationSell.yinyezhizhao" />
+        <result column="certificationShouquanshu" jdbcType="LONGVARCHAR" property="certificationSell.shouquanshu" />
+        <result column="certificationKaipiaoziliao" jdbcType="LONGVARCHAR" property="certificationSell.kaipiaoziliao" />
+
+
+
+        <!--认证表买家数据集合-->
+        <result column="certificationBuyId" jdbcType="INTEGER" property="certificationBuy.id" />
+        <result column="certificationBuyCompany" jdbcType="VARCHAR" property="certificationBuy.company" />
+        <result column="certificationBuyXinyong" jdbcType="VARCHAR" property="certificationBuy.xinyong" />
+        <result column="certificationBuyFaren" jdbcType="VARCHAR" property="certificationBuy.faren" />
+        <result column="certificationBuyCompanytype" jdbcType="VARCHAR" property="certificationBuy.companytype" />
+        <result column="certificationBuyBuilddate" jdbcType="TIMESTAMP" property="certificationBuy.builddate" />
+        <result column="certificationBuyZiben" jdbcType="VARCHAR" property="certificationBuy.ziben" />
+        <result column="certificationBuyQixian" jdbcType="VARCHAR" property="certificationBuy.qixian" />
+        <result column="certificationBuyIdcard" jdbcType="VARCHAR" property="certificationBuy.idcard" />
+        <result column="certificationBuyAddress" jdbcType="VARCHAR" property="certificationBuy.address" />
+        <result column="certificationBuyLianxiren" jdbcType="VARCHAR" property="certificationBuy.lianxiren" />
+        <result column="certificationBuyLxridcard" jdbcType="VARCHAR" property="certificationBuy.lxridcard" />
+        <result column="certificationBuyRemark" jdbcType="VARCHAR" property="certificationBuy.remark" />
+        <result column="certificationBuyBack" jdbcType="VARCHAR" property="certificationBuy.back" />
+        <result column="certificationBuyAccount" jdbcType="VARCHAR" property="certificationBuy.account" />
+        <result column="certificationBuyShuihao" jdbcType="VARCHAR" property="certificationBuy.shuihao" />
+        <result column="certificationBuyPhone" jdbcType="VARCHAR" property="certificationBuy.phone" />
+        <result column="certificationBuyCompanyaddress" jdbcType="VARCHAR" property="certificationBuy.companyaddress" />
+        <result column="certificationIsBuySanzheng" jdbcType="INTEGER" property="certificationBuy.isSanzheng" />
+        <result column="certificationBuyStatus" jdbcType="INTEGER" property="certificationBuy.status" />
+        <result column="certificationBuyUserid" jdbcType="INTEGER" property="certificationBuy.userid" />
+        <result column="certificationBuyYinyezhizhao" jdbcType="LONGVARCHAR" property="certificationBuy.yinyezhizhao" />
+        <result column="certificationBuyShouquanshu" jdbcType="LONGVARCHAR" property="certificationBuy.shouquanshu" />
+        <result column="certificationBuyKaipiaoziliao" jdbcType="LONGVARCHAR" property="certificationBuy.kaipiaoziliao" />
+
+
+
+
+        <!--开票详情表集合-->
+        <result column="regiinvoicedetailId" jdbcType="BIGINT" property="regiinvoicedetail.id" />
+        <result column="regiinvoicedetailOrderId" jdbcType="INTEGER" property="regiinvoicedetail.orderId" />
+        <result column="regiinvoicedetailMakeWeight" jdbcType="DECIMAL" property="regiinvoicedetail.makeWeight"/>
+        <result column="regiinvoicedetailMakeMoney" jdbcType="DECIMAL" property="regiinvoicedetail.makeMoney"/>
+        <result column="regiinvoicedetailOrderCode" jdbcType="VARCHAR" property="regiinvoicedetail.orderCode" />
+
+        <!--结算详情表集合-->
+        <result column="settlementId" jdbcType="BIGINT" property="settlement.id" />
+        <result column="settlementOrderId" jdbcType="BIGINT" property="settlement.orderId" />
+        <result column="settlementGoodsId" jdbcType="INTEGER" property="settlement.goodsId"/>
+        <result column="settlementWeight" jdbcType="DECIMAL" property="settlement.weight"/>
+        <result column="settlementPrice" jdbcType="DECIMAL" property="settlement.price" />
+        <result column="settlementCreatedAt" jdbcType="TIMESTAMP" property="settlement.createdAt" />
+        <result column="settlementUpdatedAt" jdbcType="TIMESTAMP" property="settlement.updatedAt" />
+        <result column="settlementOrderCode" jdbcType="VARCHAR" property="settlement.orderCode" />
+        <result column="settlementNum" jdbcType="INTEGER" property="settlement.num"/>
+        <result column="settlementPriceAll" jdbcType="DECIMAL" property="settlement.priceAll"/>
+        <result column="settlementWeightPrice" jdbcType="DECIMAL" property="settlement.weightPrice" />
+
+
+
+    </resultMap>
+
+    <select id="selectRegiinvoiceInDetailChaKan"  parameterType="com.zc.shop.admin.dto.RegiinvoiceInChaKanParam" resultMap="regiinvoice_base">
+
+
+        SELECT
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,o.payment as orderPayment,o.margin as orderMargin,o.type as orderType,o.remainnumber as orderRemainnumber,
+
+
+        g.id as goodsId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_weight as goodsGoodsWeight,g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,
+        g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,
+        g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,g.guige as goodsGuige,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        g.is_delete as goodsIsDelete,g.remain_number as goodsRemainNumber,g.remain_weight  as goodsRemainWeight,
+
+        c.id as certificationId,c.company as certificationCompany,c.xinyong as certificationXinyong,c.faren as certificationFaren,c.companytype as certificationCompanytype,
+        c.builddate as certificationBuilddate,c.ziben as certificationZiben,c.qixian as certificationQixian,c.idcard as certificationIdcard,c.address as certificationAddress,
+        c.lianxiren as certificationLianxiren,c.lxridcard as certificationLxridcard,c.remark as certificationRemark,c.back as certificationBack,c.account as certificationAccount,
+        c.shuihao as certificationShuihao,c.phone as certificationPhone,c.companyaddress as certificationCompanyaddress,c.is_sanzheng as certificationIsSanzheng,c.yinyezhizhao as certificationYinyezhizhao,
+        c.shouquanshu as certificationShouquanshu,c.kaipiaoziliao  as certificationKaipiaoziliao,c.status as certificationStatus,c.userid as certificationUserid,
+
+
+        cbuy.id as certificationBuyId,cbuy.company as certificationBuyCompany,cbuy.xinyong as certificationBuyXinyong,cbuy.faren as certificationBuyFaren,cbuy.companytype as certificationBuyCompanytype,
+        cbuy.builddate as certificationBuyBuilddate,cbuy.ziben as certificationZiben,cbuy.qixian as certificationQixian,cbuy.idcard as certificationIdcard,cbuy.address as certificationAddress,
+        cbuy.lianxiren as certificationLianxiren,cbuy.lxridcard as certificationLxridcard,cbuy.remark as certificationRemark,cbuy.back as certificationBack,cbuy.account as certificationAccount,
+        cbuy.shuihao as certificationShuihao,cbuy.phone as certificationPhone,cbuy.companyaddress as certificationCompanyaddress,cbuy.is_sanzheng as certificationIsSanzheng,cbuy.yinyezhizhao as certificationYinyezhizhao,
+        cbuy.shouquanshu as certificationShouquanshu,cbuy.kaipiaoziliao  as certificationKaipiaoziliao,cbuy.status as certificationStatus,cbuy.userid as certificationUserid,
+
+
+
+        sett.id as settlementId,sett.order_id as settlementOrderId,sett.goods_id as settlementOrderId,sett.weight as settlementWeight,
+        sett.price as settlementPrice,sett.created_at as settlementCreatedAt,sett.updated_at as settlementUpdatedAt,
+        sett.order_code as settlementOrderCode, sett.num as settlementNum , sett.price_all as settlementPriceAll,sett.weight_price as settlementWeightPrice,
+
+
+        regd.id as regiinvoicedetailId,regd.order_id as regiinvoicedetailOrderId,regd.make_weight as regiinvoicedetailMakeWeight,
+        regd.make_money as  regiinvoicedetailMakeMoney,regd.order_code as regiinvoicedetailOrderCode
+
+        from `order` as o
+
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.supplier_id = c.userid
+        left join certification as cbuy
+        on  o.buy_id = cbuy.userid
+        left join regiinvoicedetail as regd
+        on o.id = regd.order_id
+        left join settlement as sett
+        on o.id = sett.order_id
+
+        <where>
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+            <if test="kaidanwei != null">
+                and c.company = #{kaidanwei,jdbcType=VARCHAR}
+            </if>
+            <if test="danwei != null">
+                and cbuy.company = #{danwei,jdbcType=VARCHAR}
+            </if>
+
+
+        </where>
+        order by o.created_at desc
+
+
+    </select>
+    <select id="selectRegiinvoiceOutDetailChaKan" parameterType="com.zc.shop.admin.dto.RegiinvoiceOutChaKanParam" resultMap="regiinvoice_base">
+        SELECT
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,o.payment as orderPayment,o.margin as orderMargin,o.type as orderType,o.remainnumber as orderRemainnumber,
+
+
+        g.id as goodsId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_weight as goodsGoodsWeight,g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,
+        g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,
+        g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,g.guige as goodsGuige,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        g.is_delete as goodsIsDelete,g.remain_number as goodsRemainNumber,g.remain_weight  as goodsRemainWeight,
+
+        c.id as certificationId,c.company as certificationCompany,c.xinyong as certificationXinyong,c.faren as certificationFaren,c.companytype as certificationCompanytype,
+        c.builddate as certificationBuilddate,c.ziben as certificationZiben,c.qixian as certificationQixian,c.idcard as certificationIdcard,c.address as certificationAddress,
+        c.lianxiren as certificationLianxiren,c.lxridcard as certificationLxridcard,c.remark as certificationRemark,c.back as certificationBack,c.account as certificationAccount,
+        c.shuihao as certificationShuihao,c.phone as certificationPhone,c.companyaddress as certificationCompanyaddress,c.is_sanzheng as certificationIsSanzheng,c.yinyezhizhao as certificationYinyezhizhao,
+        c.shouquanshu as certificationShouquanshu,c.kaipiaoziliao  as certificationKaipiaoziliao,c.status as certificationStatus,c.userid as certificationUserid,
+
+
+        cbuy.id as certificationBuyId,cbuy.company as certificationBuyCompany,cbuy.xinyong as certificationBuyXinyong,cbuy.faren as certificationBuyFaren,cbuy.companytype as certificationBuyCompanytype,
+        cbuy.builddate as certificationBuyBuilddate,cbuy.ziben as certificationZiben,cbuy.qixian as certificationQixian,cbuy.idcard as certificationIdcard,cbuy.address as certificationAddress,
+        cbuy.lianxiren as certificationLianxiren,cbuy.lxridcard as certificationLxridcard,cbuy.remark as certificationRemark,cbuy.back as certificationBack,cbuy.account as certificationAccount,
+        cbuy.shuihao as certificationShuihao,cbuy.phone as certificationPhone,cbuy.companyaddress as certificationCompanyaddress,cbuy.is_sanzheng as certificationIsSanzheng,cbuy.yinyezhizhao as certificationYinyezhizhao,
+        cbuy.shouquanshu as certificationShouquanshu,cbuy.kaipiaoziliao  as certificationKaipiaoziliao,cbuy.status as certificationStatus,cbuy.userid as certificationUserid,
+
+
+
+        sett.id as settlementId,sett.order_id as settlementOrderId,sett.goods_id as settlementOrderId,sett.weight as settlementWeight,
+        sett.price as settlementPrice,sett.created_at as settlementCreatedAt,sett.updated_at as settlementUpdatedAt,
+        sett.order_code as settlementOrderCode, sett.num as settlementNum , sett.price_all as settlementPriceAll,sett.weight_price as settlementWeightPrice,
+
+
+        regd.id as regiinvoicedetailId,regd.order_id as regiinvoicedetailOrderId,regd.make_weight as regiinvoicedetailMakeWeight,
+        regd.make_money as  regiinvoicedetailMakeMoney,regd.order_code as regiinvoicedetailOrderCode
+
+        from `order` as o
+
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.supplier_id = c.userid
+        left join certification as cbuy
+        on  o.buy_id = cbuy.userid
+        left join regiinvoicedetail as regd
+        on o.id = regd.order_id
+        left join settlement as sett
+        on o.id = sett.order_id
+
+        <where>
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+            <if test="kaidanwei != null">
+                and c.company = #{kaidanwei,jdbcType=VARCHAR}
+            </if>
+            <if test="danwei != null">
+                and cbuy.company = #{danwei,jdbcType=VARCHAR}
+            </if>
+
+
+        </where>
+        order by o.created_at desc
+
+
+
+
+    </select>
+
+
+</mapper>

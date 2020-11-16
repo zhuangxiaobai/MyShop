@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.DepartmentExtMapper">
+
+
+    <!-- 映射结果 -->
+    <resultMap id="departmentTreeMap" type="com.zc.shop.admin.vo.DepartmentVo">
+        <result column="labelName" jdbcType="VARCHAR" property="label" />
+        <association property="department" javaType="com.zc.shop.mbg.po.Department">
+            <id column="departmentId" jdbcType="BIGINT" property="id" />
+            <result column="departmentName" jdbcType="VARCHAR" property="name" />
+            <result column="departmentParentId" jdbcType="INTEGER" property="parentId" />
+            <result column="departmentCId" jdbcType="INTEGER" property="cId" />
+            <result column="departmentPaixu" jdbcType="INTEGER" property="paixu" />
+            <result column="departmentIsOn" jdbcType="INTEGER" property="isOn" />
+            <result column="departmentCreatedAt" jdbcType="TIMESTAMP" property="createdAt" />
+            <result column="departmentUpdatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
+
+        </association>
+        <!--<id column="departmentId" jdbcType="BIGINT" property="department.id" />-->
+        <!--<result column="departmentName" jdbcType="VARCHAR" property="department.name" />-->
+        <!--<result column="departmentParentId" jdbcType="INTEGER" property="department.parentId" />-->
+        <!--<result column="departmentCId" jdbcType="INTEGER" property="department.cId" />-->
+        <!--<result column="departmentPaixu" jdbcType="INTEGER" property="department.paixu" />-->
+        <!--<result column="departmentIsOn" jdbcType="INTEGER" property="department.isOn" />-->
+        <!--<result column="departmentCreatedAt" jdbcType="TIMESTAMP" property="department.createdAt" />-->
+        <!--<result column="departmentUpdatedAt" jdbcType="TIMESTAMP" property="department.updatedAt" />-->
+        <!--<collection property="departmentVoList" column="departmentId" select="selectChild"/>-->
+        <collection property="departmentVoList" column="departmentId" select="selectChild"/>
+    </resultMap>
+
+    <!-- 查询子节点 -->
+    <select id="selectChild" resultMap="departmentTreeMap" >
+        SELECT
+        dep.id  as departmentId ,dep.name as departmentName,dep.name as labelName,dep.parent_id as departmentParentId,dep.c_id as departmentCId,
+        dep.paixu as departmentPaixu,dep.is_on  as departmentIsOn,dep.created_at as departmentCreatedAt,dep.updated_at as departmentUpdatedAt
+        FROM department dep
+        WHERE  parent_id = #{departmentId}
+          and  is_on = 0
+
+    </select>
+
+
+    <!-- 查询父节点 -->
+    <select id="selectMenuTree" resultMap="departmentTreeMap" >
+        SELECT
+        dep.id  as departmentId ,dep.name as departmentName,dep.name as labelName,dep.parent_id as departmentParentId,dep.c_id as departmentCId,
+        dep.paixu as departmentPaixu,dep.is_on  as departmentIsOn,dep.created_at as departmentCreatedAt,dep.updated_at as departmentUpdatedAt
+        FROM department dep
+        WHERE  parent_id = 0
+          and  is_on = 0
+          and  c_id = #{c_id}
+        ORDER BY created_at asc
+    </select>
+
+
+
+
+
+
+
+    <!--<select id="selectDepartmentMenu" resultMap="DepartmentVoMap">-->
+
+
+        <!--select-->
+       <!--dep.id  as departmentId ,dep.name as departmentName,dep.parent_id as departmentParentId,dep.c_id as departmentCId,-->
+       <!--dep.paixu as departmentPaixu,dep.is_on  as departmentIsOn,dep.created_at as departmentCreatedAt,dep.updated_at as departmentUpdatedAt,-->
+       <!--dep1.parent_id-->
+        <!--from-->
+        <!--department dep-->
+        <!--left join department dep1-->
+        <!--on dep.id = dep1.parent_id-->
+
+
+        <!--where-->
+            <!--dep.c_id = #{c_id,jdbcType=INTEGER}-->
+
+
+    <!--</select>-->
+</mapper>

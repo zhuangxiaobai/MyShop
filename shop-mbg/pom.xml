@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zc.shop</groupId>
+    <artifactId>shop-mbg</artifactId>
+    <version>1.0.0</version>
+    <name>shop-mbg</name>
+    <description>mbgs生成代码</description>
+
+    <parent>
+        <groupId>com.zc</groupId>
+        <artifactId>shop</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zc.shop</groupId>
+            <artifactId>shop-common</artifactId>
+
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+    </dependencies>
+
+
+
+</project>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.RegiinvoiceMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.Regiinvoice">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="invoice_number" jdbcType="VARCHAR" property="invoiceNumber" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="courier" jdbcType="VARCHAR" property="courier" />
+    <result column="danwei" jdbcType="VARCHAR" property="danwei" />
+    <result column="courier_code" jdbcType="VARCHAR" property="courierCode" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="make_weight" jdbcType="DECIMAL" property="makeWeight" />
+    <result column="make_money" jdbcType="DECIMAL" property="makeMoney" />
+    <result column="kaidanwei" jdbcType="VARCHAR" property="kaidanwei" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_code, invoice_number, `date`, courier, danwei, courier_code, `status`, 
+    make_weight, make_money, kaidanwei
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `regiinvoice`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `regiinvoice`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.Regiinvoice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `regiinvoice` (order_code, invoice_number, `date`, 
+      courier, danwei, courier_code, 
+      `status`, make_weight, make_money, 
+      kaidanwei)
+    values (#{orderCode,jdbcType=VARCHAR}, #{invoiceNumber,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
+      #{courier,jdbcType=VARCHAR}, #{danwei,jdbcType=VARCHAR}, #{courierCode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{makeWeight,jdbcType=DECIMAL}, #{makeMoney,jdbcType=DECIMAL}, 
+      #{kaidanwei,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Regiinvoice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `regiinvoice`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="courier != null">
+        courier,
+      </if>
+      <if test="danwei != null">
+        danwei,
+      </if>
+      <if test="courierCode != null">
+        courier_code,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="makeWeight != null">
+        make_weight,
+      </if>
+      <if test="makeMoney != null">
+        make_money,
+      </if>
+      <if test="kaidanwei != null">
+        kaidanwei,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="courier != null">
+        #{courier,jdbcType=VARCHAR},
+      </if>
+      <if test="danwei != null">
+        #{danwei,jdbcType=VARCHAR},
+      </if>
+      <if test="courierCode != null">
+        #{courierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="makeWeight != null">
+        #{makeWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="makeMoney != null">
+        #{makeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="kaidanwei != null">
+        #{kaidanwei,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Regiinvoice">
+    update `regiinvoice`
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        `date` = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="courier != null">
+        courier = #{courier,jdbcType=VARCHAR},
+      </if>
+      <if test="danwei != null">
+        danwei = #{danwei,jdbcType=VARCHAR},
+      </if>
+      <if test="courierCode != null">
+        courier_code = #{courierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="makeWeight != null">
+        make_weight = #{makeWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="makeMoney != null">
+        make_money = #{makeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="kaidanwei != null">
+        kaidanwei = #{kaidanwei,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Regiinvoice">
+    update `regiinvoice`
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      `date` = #{date,jdbcType=TIMESTAMP},
+      courier = #{courier,jdbcType=VARCHAR},
+      danwei = #{danwei,jdbcType=VARCHAR},
+      courier_code = #{courierCode,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      make_weight = #{makeWeight,jdbcType=DECIMAL},
+      make_money = #{makeMoney,jdbcType=DECIMAL},
+      kaidanwei = #{kaidanwei,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

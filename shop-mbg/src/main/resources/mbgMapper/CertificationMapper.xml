@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.CertificationMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.Certification">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="xinyong" jdbcType="VARCHAR" property="xinyong" />
+    <result column="faren" jdbcType="VARCHAR" property="faren" />
+    <result column="companytype" jdbcType="VARCHAR" property="companytype" />
+    <result column="builddate" jdbcType="TIMESTAMP" property="builddate" />
+    <result column="ziben" jdbcType="VARCHAR" property="ziben" />
+    <result column="qixian" jdbcType="VARCHAR" property="qixian" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="lianxiren" jdbcType="VARCHAR" property="lianxiren" />
+    <result column="lxridcard" jdbcType="VARCHAR" property="lxridcard" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="back" jdbcType="VARCHAR" property="back" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="shuihao" jdbcType="VARCHAR" property="shuihao" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="companyaddress" jdbcType="VARCHAR" property="companyaddress" />
+    <result column="is_sanzheng" jdbcType="INTEGER" property="isSanzheng" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zc.shop.mbg.po.Certification">
+    <result column="yinyezhizhao" jdbcType="LONGVARCHAR" property="yinyezhizhao" />
+    <result column="shouquanshu" jdbcType="LONGVARCHAR" property="shouquanshu" />
+    <result column="kaipiaoziliao" jdbcType="LONGVARCHAR" property="kaipiaoziliao" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, company, xinyong, faren, companytype, builddate, ziben, qixian, idcard, address, 
+    lianxiren, lxridcard, remark, back, account, shuihao, phone, companyaddress, is_sanzheng, 
+    `status`, userid
+  </sql>
+  <sql id="Blob_Column_List">
+    yinyezhizhao, shouquanshu, kaipiaoziliao
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `certification`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `certification`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.Certification">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `certification` (company, xinyong, faren, 
+      companytype, builddate, ziben, 
+      qixian, idcard, address, 
+      lianxiren, lxridcard, remark, 
+      back, account, shuihao, 
+      phone, companyaddress, is_sanzheng, 
+      `status`, userid, yinyezhizhao, 
+      shouquanshu, kaipiaoziliao)
+    values (#{company,jdbcType=VARCHAR}, #{xinyong,jdbcType=VARCHAR}, #{faren,jdbcType=VARCHAR}, 
+      #{companytype,jdbcType=VARCHAR}, #{builddate,jdbcType=TIMESTAMP}, #{ziben,jdbcType=VARCHAR}, 
+      #{qixian,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{lianxiren,jdbcType=VARCHAR}, #{lxridcard,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{back,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{shuihao,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{companyaddress,jdbcType=VARCHAR}, #{isSanzheng,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{yinyezhizhao,jdbcType=LONGVARCHAR}, 
+      #{shouquanshu,jdbcType=LONGVARCHAR}, #{kaipiaoziliao,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Certification">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `certification`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="company != null">
+        company,
+      </if>
+      <if test="xinyong != null">
+        xinyong,
+      </if>
+      <if test="faren != null">
+        faren,
+      </if>
+      <if test="companytype != null">
+        companytype,
+      </if>
+      <if test="builddate != null">
+        builddate,
+      </if>
+      <if test="ziben != null">
+        ziben,
+      </if>
+      <if test="qixian != null">
+        qixian,
+      </if>
+      <if test="idcard != null">
+        idcard,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="lianxiren != null">
+        lianxiren,
+      </if>
+      <if test="lxridcard != null">
+        lxridcard,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="back != null">
+        back,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="shuihao != null">
+        shuihao,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="companyaddress != null">
+        companyaddress,
+      </if>
+      <if test="isSanzheng != null">
+        is_sanzheng,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="yinyezhizhao != null">
+        yinyezhizhao,
+      </if>
+      <if test="shouquanshu != null">
+        shouquanshu,
+      </if>
+      <if test="kaipiaoziliao != null">
+        kaipiaoziliao,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="xinyong != null">
+        #{xinyong,jdbcType=VARCHAR},
+      </if>
+      <if test="faren != null">
+        #{faren,jdbcType=VARCHAR},
+      </if>
+      <if test="companytype != null">
+        #{companytype,jdbcType=VARCHAR},
+      </if>
+      <if test="builddate != null">
+        #{builddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ziben != null">
+        #{ziben,jdbcType=VARCHAR},
+      </if>
+      <if test="qixian != null">
+        #{qixian,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lianxiren != null">
+        #{lianxiren,jdbcType=VARCHAR},
+      </if>
+      <if test="lxridcard != null">
+        #{lxridcard,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="back != null">
+        #{back,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="shuihao != null">
+        #{shuihao,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null">
+        #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isSanzheng != null">
+        #{isSanzheng,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="yinyezhizhao != null">
+        #{yinyezhizhao,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shouquanshu != null">
+        #{shouquanshu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="kaipiaoziliao != null">
+        #{kaipiaoziliao,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Certification">
+    update `certification`
+    <set>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="xinyong != null">
+        xinyong = #{xinyong,jdbcType=VARCHAR},
+      </if>
+      <if test="faren != null">
+        faren = #{faren,jdbcType=VARCHAR},
+      </if>
+      <if test="companytype != null">
+        companytype = #{companytype,jdbcType=VARCHAR},
+      </if>
+      <if test="builddate != null">
+        builddate = #{builddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ziben != null">
+        ziben = #{ziben,jdbcType=VARCHAR},
+      </if>
+      <if test="qixian != null">
+        qixian = #{qixian,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lianxiren != null">
+        lianxiren = #{lianxiren,jdbcType=VARCHAR},
+      </if>
+      <if test="lxridcard != null">
+        lxridcard = #{lxridcard,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="back != null">
+        back = #{back,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="shuihao != null">
+        shuihao = #{shuihao,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null">
+        companyaddress = #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isSanzheng != null">
+        is_sanzheng = #{isSanzheng,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="yinyezhizhao != null">
+        yinyezhizhao = #{yinyezhizhao,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shouquanshu != null">
+        shouquanshu = #{shouquanshu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="kaipiaoziliao != null">
+        kaipiaoziliao = #{kaipiaoziliao,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zc.shop.mbg.po.Certification">
+    update `certification`
+    set company = #{company,jdbcType=VARCHAR},
+      xinyong = #{xinyong,jdbcType=VARCHAR},
+      faren = #{faren,jdbcType=VARCHAR},
+      companytype = #{companytype,jdbcType=VARCHAR},
+      builddate = #{builddate,jdbcType=TIMESTAMP},
+      ziben = #{ziben,jdbcType=VARCHAR},
+      qixian = #{qixian,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      lianxiren = #{lianxiren,jdbcType=VARCHAR},
+      lxridcard = #{lxridcard,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      back = #{back,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      shuihao = #{shuihao,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      companyaddress = #{companyaddress,jdbcType=VARCHAR},
+      is_sanzheng = #{isSanzheng,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      yinyezhizhao = #{yinyezhizhao,jdbcType=LONGVARCHAR},
+      shouquanshu = #{shouquanshu,jdbcType=LONGVARCHAR},
+      kaipiaoziliao = #{kaipiaoziliao,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Certification">
+    update `certification`
+    set company = #{company,jdbcType=VARCHAR},
+      xinyong = #{xinyong,jdbcType=VARCHAR},
+      faren = #{faren,jdbcType=VARCHAR},
+      companytype = #{companytype,jdbcType=VARCHAR},
+      builddate = #{builddate,jdbcType=TIMESTAMP},
+      ziben = #{ziben,jdbcType=VARCHAR},
+      qixian = #{qixian,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      lianxiren = #{lianxiren,jdbcType=VARCHAR},
+      lxridcard = #{lxridcard,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      back = #{back,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      shuihao = #{shuihao,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      companyaddress = #{companyaddress,jdbcType=VARCHAR},
+      is_sanzheng = #{isSanzheng,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.RegiinvoiceExtMapper">
+
+
+    <select id="selectRegiinvoiceIn" parameterType="com.zc.shop.admin.dto.RegiinvoiceInParam" resultMap="com.zc.shop.mbg.mapper.RegiinvoiceMapper.BaseResultMap">
+
+        select
+        <include refid="com.zc.shop.mbg.mapper.RegiinvoiceMapper.Base_Column_List" />
+        from `regiinvoice` r
+        <where>
+            r.kaidanwei = #{kaiCompanyName,jdbcType=VARCHAR}
+            <if test="invoiceNumber != null">
+                and r.invoice_number = #{invoiceNumber,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and r.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(r.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(r.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="companyName != null">
+                and r.danwei = #{companyName,jdbcType=VARCHAR}
+            </if>
+
+
+        </where>
+        order by r.date desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+
+    </select>
+
+    <select id="selectRegiinvoiceInTotal" parameterType="com.zc.shop.admin.dto.RegiinvoiceInParam" resultType="java.lang.Integer">
+
+        select count(*)
+        from `regiinvoice` r
+        <where>
+            r.kaidanwei = #{kaiCompanyName,jdbcType=VARCHAR}
+            <if test="invoiceNumber != null">
+                and r.invoice_number = #{invoiceNumber,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and r.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(r.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(r.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="companyName != null">
+                and r.danwei = #{companyName,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+
+
+
+    </select>
+
+
+    <select id="selectRegiinvoiceOut" parameterType="com.zc.shop.admin.dto.RegiinvoiceInParam" resultMap="com.zc.shop.mbg.mapper.RegiinvoiceMapper.BaseResultMap">
+
+    select
+    <include refid="com.zc.shop.mbg.mapper.RegiinvoiceMapper.Base_Column_List" />
+    from `regiinvoice` r
+    <where>
+        r.danwei = #{companyName,jdbcType=VARCHAR}
+        <if test="invoiceNumber != null">
+            and r.invoice_number = #{invoiceNumber,jdbcType=VARCHAR}
+        </if>
+
+        <if test="status != null">
+            and r.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and date(r.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+        </if>
+        <if test="endTime != null">
+            and date(r.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+        </if>
+        <if test="kaiCompanyName != null">
+            and r.kaidanwei = #{kaiCompanyName,jdbcType=VARCHAR}
+        </if>
+
+    </where>
+    order by r.date desc
+    <if test="startPage != null and PageSize != null">
+        limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+    </if>
+
+    </select>
+    <select id="selectRegiinvoiceOutTotal" parameterType="com.zc.shop.admin.dto.RegiinvoiceInParam" resultType="java.lang.Integer">
+
+        select
+        count(*)
+        from `regiinvoice` r
+        <where>
+            r.danwei = #{companyName,jdbcType=VARCHAR}
+            <if test="invoiceNumber != null">
+                and r.invoice_number = #{invoiceNumber,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and r.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(r.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(r.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="kaiCompanyName != null">
+                and r.kaidanwei = #{kaiCompanyName,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+
+
+    </select>
+
+
+    <select id="selectSearchOrderCode" parameterType="com.zc.shop.admin.dto.RegiinvoiceSearchParam" resultType="java.lang.String">
+
+
+        SELECT distinct o.code FROM `order` o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.buy_id = c.userid
+
+        <where>
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.`status` = #{status,jdbcType=INTEGER}
+            </if>
+
+            <if test="supplierId != null">
+                and o.supplier_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by o.code desc
+
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+
+
+
+
+    </select>
+
+
+    <select id="selectSearchOrderCodeNum"  resultType="java.lang.Integer">
+
+        select count(*) from
+        ( SELECT distinct o.code FROM `order` o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.buy_id = c.userid
+
+        <where>
+            <if test="orderCode != null">
+                and o.code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.`status` = #{status,jdbcType=INTEGER}
+            </if>
+
+            <if test="supplierId != null">
+                and o.supplier_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+        )aa
+    </select>
+
+</mapper>

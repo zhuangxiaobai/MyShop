@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+       enabled: true #开启文件上传
+       max-file-size: 10MB #限制单个文件上传大小为10M
+       max-request-size: 100MB #设置多文件上传时，单次内多个文件的总量的最大值，单位可以是 MB、KB，默认为 10 M
+
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:mbgMapper/*.xml
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: good-shop-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer ' #JWT负载中拿到开头
+
+logging:
+  level:
+    root: WARN
+    com:
+      zc:
+        shop:
+          admin:
+            mapper: debug

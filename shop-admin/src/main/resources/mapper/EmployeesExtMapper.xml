@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.EmployeesExtMapper">
+
+
+    <resultMap id="employeesVoMap" type="com.zc.shop.admin.vo.EmployeesVo">
+
+
+        <!--用户表-->
+        <result column="usersId" jdbcType="INTEGER" property="usersVo.id" />
+        <result column="usersUsername" jdbcType="VARCHAR" property="usersVo.username" />
+        <result column="usersNickname" jdbcType="VARCHAR" property="usersVo.nickname" />
+        <result column="usersCreatedAt" jdbcType="TIMESTAMP" property="usersVo.createdAt" />
+        <result column="usersUpdatedAt" jdbcType="TIMESTAMP" property="usersVo.updatedAt" />
+        <result column="usersApiToken" jdbcType="VARCHAR" property="usersVo.apiToken" />
+        <result column="usersRoleId" jdbcType="BIGINT" property="usersVo.roleId" />
+        <result column="usersIsDelete" jdbcType="INTEGER" property="usersVo.isDelete" />
+        <result column="usersCId" jdbcType="INTEGER" property="usersVo.cId" />
+        <!--认证表-->
+        <result column="certificationId" jdbcType="INTEGER" property="certification.id" />
+        <result column="certificationCompany" jdbcType="VARCHAR" property="certification.company" />
+        <result column="certificationXinyong" jdbcType="VARCHAR" property="certification.xinyong" />
+        <result column="certificationFaren" jdbcType="VARCHAR" property="certification.faren" />
+        <result column="certificationCompanytype" jdbcType="VARCHAR" property="certification.companytype" />
+        <result column="certificationBuilddate" jdbcType="TIMESTAMP" property="certification.builddate" />
+        <result column="certificationZiben" jdbcType="VARCHAR" property="certification.ziben" />
+        <result column="certificationQixian" jdbcType="VARCHAR" property="certification.qixian" />
+        <result column="certificationIdcard" jdbcType="VARCHAR" property="certification.idcard" />
+        <result column="certificationAddress" jdbcType="VARCHAR" property="certification.address" />
+        <result column="certificationLianxiren" jdbcType="VARCHAR" property="certification.lianxiren" />
+        <result column="certificationLxridcard" jdbcType="VARCHAR" property="certification.lxridcard" />
+        <result column="certificationRemark" jdbcType="VARCHAR" property="certification.remark" />
+        <result column="certificationBack" jdbcType="VARCHAR" property="certification.back" />
+        <result column="certificationAccount" jdbcType="VARCHAR" property="certification.account" />
+        <result column="certificationShuihao" jdbcType="VARCHAR" property="certification.shuihao" />
+        <result column="certificationPhone" jdbcType="VARCHAR" property="certification.phone" />
+        <result column="certificationCompanyaddress" jdbcType="VARCHAR" property="certification.companyaddress" />
+        <result column="certificationIsSanzheng" jdbcType="INTEGER" property="certification.isSanzheng" />
+        <result column="certificationStatus" jdbcType="INTEGER" property="certification.status" />
+        <result column="certificationUserid" jdbcType="INTEGER" property="certification.userid" />
+        <result column="certificationYinyezhizhao" jdbcType="LONGVARCHAR" property="certification.yinyezhizhao" />
+        <result column="certificationShouquanshu" jdbcType="LONGVARCHAR" property="certification.shouquanshu" />
+        <result column="certificationKaipiaoziliao" jdbcType="LONGVARCHAR" property="certification.kaipiaoziliao" />
+
+        <!--部门表-->
+        <result column="departmentId" jdbcType="BIGINT" property="department.id" />
+        <result column="departmentName" jdbcType="VARCHAR" property="department.name" />
+        <result column="departmentParentId" jdbcType="INTEGER" property="department.parentId" />
+        <result column="departmentCId" jdbcType="INTEGER" property="department.cId" />
+        <result column="departmentPaixu" jdbcType="INTEGER" property="department.paixu" />
+        <result column="departmentIsOn" jdbcType="INTEGER" property="department.isOn" />
+        <result column="departmentCreatedAt" jdbcType="TIMESTAMP" property="department.createdAt" />
+        <result column="departmentUpdatedAt" jdbcType="TIMESTAMP" property="department.updatedAt" />
+
+        <!--员工权限表-->
+        <result column="employeesId" jdbcType="BIGINT" property="employees.id" />
+        <result column="employeesUserId" jdbcType="INTEGER" property="employees.userId" />
+        <result column="employeesCId" jdbcType="INTEGER" property="employees.cId" />
+        <result column="employeesPositionId" jdbcType="INTEGER" property="employees.positionId" />
+        <result column="employeesDepartmentId" jdbcType="INTEGER" property="employees.departmentId" />
+        <result column="employeesRoleId" jdbcType="INTEGER" property="employees.roleId" />
+        <result column="employeesGender" jdbcType="INTEGER" property="employees.gender" />
+        <result column="employeesName" jdbcType="VARCHAR" property="employees.name" />
+        <result column="employeesIsOn" jdbcType="INTEGER" property="employees.isOn" />
+        <result column="employeesCreatedAt" jdbcType="TIMESTAMP" property="employees.createdAt" />
+        <result column="employeesUpdatedAt" jdbcType="TIMESTAMP" property="employees.updatedAt" />
+
+       <!--岗位表-->
+        <result column="positionId" jdbcType="BIGINT" property="position.id" />
+        <result column="positionPaixu" jdbcType="VARCHAR" property="position.paixu" />
+        <result column="positionCId" jdbcType="INTEGER" property="position.cId" />
+        <result column="positionName" jdbcType="VARCHAR" property="position.name" />
+        <result column="positionIsOn" jdbcType="INTEGER" property="position.isOn" />
+        <result column="positionCreatedAt" jdbcType="TIMESTAMP" property="position.createdAt" />
+        <result column="positionUpdatedAt" jdbcType="TIMESTAMP" property="position.updatedAt" />
+
+      <!--角色表-->
+        <result column="rolesId" jdbcType="BIGINT" property="roles.id" />
+        <result column="rolesName" jdbcType="VARCHAR" property="roles.name" />
+        <result column="rolesPermission" jdbcType="VARCHAR" property="roles.permission" />
+        <result column="rolesCId" jdbcType="INTEGER" property="roles.cId" />
+        <result column="rolesLevel" jdbcType="INTEGER" property="roles.level" />
+        <result column="rolesRemark" jdbcType="VARCHAR" property="roles.remark" />
+        <result column="rolesCreatedAt" jdbcType="TIMESTAMP" property="roles.createdAt" />
+        <result column="rolesUpdatedAt" jdbcType="TIMESTAMP" property="roles.updatedAt" />
+
+
+
+    </resultMap>
+
+
+
+
+
+
+    <select id="selectEmployeesVoList" resultMap="employeesVoMap">
+
+
+      select
+     u.id as usersId,u.username as usersUsername,u.nickname as usersNickname,u.created_at as usersCreatedAt,u.updated_at as usersUpdatedAt,
+     u.api_token as usersApiToken,u.role_id as usersRoleId,u.is_delete as usersIsDelete,u.c_id as usersCId,
+
+     c.id as certificationId,c.company as certificationCompany,c.xinyong as certificationXinyong,c.faren as certificationFaren,c.companytype as certificationCompanytype,
+     c.builddate as certificationBuilddate,c.ziben as certificationZiben,c.qixian as certificationQixian,c.idcard as certificationIdcard,c.address as certificationAddress,
+     c.lianxiren as certificationLianxiren,c.lxridcard as certificationLxridcard,c.remark as certificationRemark,c.back as certificationBack,c.account as certificationAccount,
+     c.shuihao as certificationShuihao,c.phone as certificationPhone,c.companyaddress as certificationCompanyaddress,c.is_sanzheng as certificationIsSanzheng,c.yinyezhizhao as certificationYinyezhizhao,
+     c.shouquanshu as certificationShouquanshu,c.kaipiaoziliao  as certificationKaipiaoziliao,c.status as certificationStatus,c.userid as certificationUserid,
+
+     dep.id  as departmentId ,dep.name as departmentName,dep.parent_id as departmentParentId,dep.c_id as departmentCId,
+     dep.paixu as departmentPaixu,dep.is_on  as departmentIsOn,dep.created_at as departmentCreatedAt,dep.updated_at as departmentUpdatedAt,
+
+     emp.id as employeesId,emp.user_id as employeesUserId,emp.c_id as employeesCId,emp.department_id as employeesDepartmentId,emp.role_id as employeesRoleId,
+     emp.gender as employeesGender,emp.name as employeesName,emp.is_on as employeesIsOn,emp.position_id as employeesPositionId,emp.created_at as employeesCreatedAt,emp.updated_at as employeesUpdatedAt,
+
+     pos.id as positionId,pos.paixu as positionPaixu,pos.c_id as positionCId,pos.name as positionName,pos.is_on as positionIsOn,
+     pos.created_at as positionCreatedAt,pos.updated_at as positionUpdatedAt,
+
+     r.id as rolesId,r.name as rolesName,r.permission as rolesPermission,r.c_id as rolesCId,r.level as rolesLevel,r.remark as rolesRemark,
+     r.created_at as rolesCreatedAt,r.updated_at as rolesUpdatedAt
+
+        from
+        employees emp
+        left join users u
+        on emp.user_id = u.id
+        left join certification c
+        on  emp.c_id = c.id
+        left join department dep
+        on emp.department_id = dep.id
+        left join `position` pos
+        on emp.position_id = pos.id
+        left join `roles` r
+        on emp.role_id = r.id
+        <where>
+            emp.c_id = #{c_id}
+            <if test="name != null">
+                and emp.`name` = #{name,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+        order by emp.created_at asc
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+
+
+
+      </select>
+    <select id="selectEmployeesVoListNum" resultType="java.lang.Integer">
+
+        select count(*)
+        from
+        employees emp
+        left join users u
+        on emp.user_id = u.id
+        left join certification c
+        on  emp.c_id = c.id
+        left join department dep
+        on emp.department_id = dep.id
+        left join `position` pos
+        on emp.position_id = pos.id
+        left join `roles` r
+        on emp.role_id = r.id
+        <where>
+            emp.c_id = #{c_id}
+            <if test="name != null">
+                and emp.`name` = #{name,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+
+
+
+    </select>
+</mapper>

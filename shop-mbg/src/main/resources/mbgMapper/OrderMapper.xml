@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="supplier_id" jdbcType="INTEGER" property="supplierId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="buy_id" jdbcType="INTEGER" property="buyId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="remaining" jdbcType="DECIMAL" property="remaining" />
+    <result column="payment" jdbcType="DECIMAL" property="payment" />
+    <result column="margin" jdbcType="DECIMAL" property="margin" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="remainnumber" jdbcType="INTEGER" property="remainnumber" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zc.shop.mbg.po.Order">
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, supplier_id, goods_id, num, weight, `status`, buy_id, created_at, updated_at, 
+    remaining, payment, margin, `type`, remainnumber
+  </sql>
+  <sql id="Blob_Column_List">
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `order`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `order`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.Order">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `order` (code, supplier_id, goods_id, 
+      num, weight, `status`, 
+      buy_id, created_at, updated_at, 
+      remaining, payment, margin, 
+      `type`, remainnumber, remark
+      )
+    values (#{code,jdbcType=VARCHAR}, #{supplierId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{num,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{buyId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{remaining,jdbcType=DECIMAL}, #{payment,jdbcType=DECIMAL}, #{margin,jdbcType=DECIMAL}, 
+      #{type,jdbcType=INTEGER}, #{remainnumber,jdbcType=INTEGER}, #{remark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Order">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `order`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="buyId != null">
+        buy_id,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="remaining != null">
+        remaining,
+      </if>
+      <if test="payment != null">
+        payment,
+      </if>
+      <if test="margin != null">
+        margin,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="remainnumber != null">
+        remainnumber,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="buyId != null">
+        #{buyId,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remaining != null">
+        #{remaining,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null">
+        #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="margin != null">
+        #{margin,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="remainnumber != null">
+        #{remainnumber,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Order">
+    update `order`
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplier_id = #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="buyId != null">
+        buy_id = #{buyId,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remaining != null">
+        remaining = #{remaining,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null">
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="margin != null">
+        margin = #{margin,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="remainnumber != null">
+        remainnumber = #{remainnumber,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zc.shop.mbg.po.Order">
+    update `order`
+    set code = #{code,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=INTEGER},
+      buy_id = #{buyId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      remaining = #{remaining,jdbcType=DECIMAL},
+      payment = #{payment,jdbcType=DECIMAL},
+      margin = #{margin,jdbcType=DECIMAL},
+      `type` = #{type,jdbcType=INTEGER},
+      remainnumber = #{remainnumber,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Order">
+    update `order`
+    set code = #{code,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=INTEGER},
+      buy_id = #{buyId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      remaining = #{remaining,jdbcType=DECIMAL},
+      payment = #{payment,jdbcType=DECIMAL},
+      margin = #{margin,jdbcType=DECIMAL},
+      `type` = #{type,jdbcType=INTEGER},
+      remainnumber = #{remainnumber,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

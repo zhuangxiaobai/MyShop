@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.RegiinvoicedetailMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.Regiinvoicedetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="make_weight" jdbcType="DECIMAL" property="makeWeight" />
+    <result column="make_money" jdbcType="DECIMAL" property="makeMoney" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, make_weight, make_money, order_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `regiinvoicedetail`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `regiinvoicedetail`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.Regiinvoicedetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `regiinvoicedetail` (order_id, make_weight, make_money, 
+      order_code)
+    values (#{orderId,jdbcType=INTEGER}, #{makeWeight,jdbcType=DECIMAL}, #{makeMoney,jdbcType=DECIMAL}, 
+      #{orderCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Regiinvoicedetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `regiinvoicedetail`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="makeWeight != null">
+        make_weight,
+      </if>
+      <if test="makeMoney != null">
+        make_money,
+      </if>
+      <if test="orderCode != null">
+        order_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="makeWeight != null">
+        #{makeWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="makeMoney != null">
+        #{makeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Regiinvoicedetail">
+    update `regiinvoicedetail`
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="makeWeight != null">
+        make_weight = #{makeWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="makeMoney != null">
+        make_money = #{makeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Regiinvoicedetail">
+    update `regiinvoicedetail`
+    set order_id = #{orderId,jdbcType=INTEGER},
+      make_weight = #{makeWeight,jdbcType=DECIMAL},
+      make_money = #{makeMoney,jdbcType=DECIMAL},
+      order_code = #{orderCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

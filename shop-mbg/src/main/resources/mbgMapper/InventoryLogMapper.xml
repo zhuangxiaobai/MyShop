@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.InventoryLogMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.InventoryLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="inv_id" jdbcType="BIGINT" property="invId" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="inu_id" jdbcType="INTEGER" property="inuId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_id, inv_id, num, inu_id, `type`, created_at, weight
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `inventory_log`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `inventory_log`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.InventoryLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `inventory_log` (goods_id, inv_id, num, 
+      inu_id, `type`, created_at, 
+      weight)
+    values (#{goodsId,jdbcType=INTEGER}, #{invId,jdbcType=BIGINT}, #{num,jdbcType=INTEGER}, 
+      #{inuId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{weight,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.InventoryLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `inventory_log`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="invId != null">
+        inv_id,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="inuId != null">
+        inu_id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="invId != null">
+        #{invId,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="inuId != null">
+        #{inuId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.InventoryLog">
+    update `inventory_log`
+    <set>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="invId != null">
+        inv_id = #{invId,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="inuId != null">
+        inu_id = #{inuId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.InventoryLog">
+    update `inventory_log`
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      inv_id = #{invId,jdbcType=BIGINT},
+      num = #{num,jdbcType=INTEGER},
+      inu_id = #{inuId,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      weight = #{weight,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

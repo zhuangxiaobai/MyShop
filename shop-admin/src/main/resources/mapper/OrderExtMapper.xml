@@ -1,0 +1,1146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.OrderExtMapper">
+
+    <resultMap id="OrdersAllVoMap" type="com.zc.shop.admin.vo.OrdersAllVo">
+        <!--订单表数据-->
+        <result column="orderId" jdbcType="BIGINT" property="orderId" />
+        <result column="orderCode" jdbcType="VARCHAR" property="orderCode" />
+        <result column="orderSupplierId" jdbcType="INTEGER" property="orderSupplierId" />
+        <result column="orderGoodsId" jdbcType="INTEGER" property="orderGoodsId" />
+        <result column="orderNum" jdbcType="INTEGER" property="orderNum" />
+        <result column="orderWeight" jdbcType="DECIMAL" property="orderWeight" />
+        <result column="orderStatus" jdbcType="INTEGER" property="orderStatus" />
+        <result column="orderBuyId" jdbcType="INTEGER" property="orderBuyId" />
+        <result column="orderCreatedAt" jdbcType="TIMESTAMP" property="orderCreatedAt" />
+        <result column="orderUpdatedAt" jdbcType="TIMESTAMP" property="orderUpdatedAt" />
+        <result column="orderRemaining" jdbcType="DECIMAL" property="orderRemaining" />
+        <result column="orderRemark" jdbcType="LONGVARCHAR" property="orderRemark" />
+      <!--商品表部分-->
+        <result column="goodsCatId" jdbcType="SMALLINT" property="goodsCatId" />
+        <result column="goodsGoodsSn" jdbcType="VARCHAR" property="goodsGoodsSn" />
+        <result column="goodsGoodsName" jdbcType="VARCHAR" property="goodsGoodsName" />
+        <result column="goodsGoodsNumber" jdbcType="SMALLINT" property="goodsGoodsNumber" />
+        <result column="goodsGoodsWeight" jdbcType="DECIMAL" property="goodsGoodsWeight" />
+        <result column="goodsWeightUnit" jdbcType="SMALLINT" property="goodsWeightUnit" />
+        <result column="goodsShopPrice" jdbcType="DECIMAL" property="goodsShopPrice" />
+        <result column="goodsGoodsThumb" jdbcType="VARCHAR" property="goodsGoodsThumb" />
+        <result column="goodsGoodsImg" jdbcType="VARCHAR" property="goodsGoodsImg" />
+        <result column="goodsOriginalImg" jdbcType="VARCHAR" property="goodsOriginalImg" />
+        <result column="goodsIsOnSale" jdbcType="TINYINT" property="goodsIsOnSale" />
+        <result column="goodsIsShipping" jdbcType="TINYINT" property="goodsIsShipping" />
+        <result column="goodsAddTime" jdbcType="TIMESTAMP" property="goodsAddTime" />
+        <result column="goodsAttr1" jdbcType="VARCHAR" property="goodsAttr1" />
+        <result column="goodsAttr2" jdbcType="VARCHAR" property="goodsAttr2" />
+        <result column="goodsSuppliersId" jdbcType="SMALLINT" property="goodsSuppliersId" />
+        <result column="goodsWareId" jdbcType="INTEGER" property="goodsWareId" />
+        <result column="goodsTrademark" jdbcType="VARCHAR" property="goodsTrademark" />
+        <result column="goodsRemark" jdbcType="VARCHAR" property="goodsRemark" />
+      <!--品种品名表-->
+        <result column="attrPingZhong" jdbcType="VARCHAR" property="attrPingZhong" />
+        <result column="attrAttrName" jdbcType="VARCHAR" property="attrAttrName" />
+        <result column="attrSpecifications" jdbcType="VARCHAR" property="attrSpecifications" />
+        <result column="attrMaterial" jdbcType="VARCHAR" property="attrMaterial" />
+      <!--仓库表-->
+        <result column="wareTitle" jdbcType="VARCHAR" property="wareTitle" />
+        <result column="wareName" jdbcType="VARCHAR" property="wareName" />
+        <result column="warePhone" jdbcType="INTEGER" property="warePhone" />
+        <result column="wareCity" jdbcType="VARCHAR" property="wareCity" />
+        <result column="wareAddress" jdbcType="VARCHAR" property="wareAddress" />
+        <result column="wareContent" jdbcType="LONGVARCHAR" property="wareContent" />
+      <!--用户表-->
+        <result column="userUsername" jdbcType="VARCHAR" property="userUsername" />
+        <result column="userNickname" jdbcType="VARCHAR" property="userNickname" />
+        <!--店铺表对象-->
+        <association property="storeinfo" javaType="com.zc.shop.mbg.po.Storeinfo">
+
+            <id column="storeinfoId" jdbcType="SMALLINT" property="id" />
+            <result column="storeinfoUserId" jdbcType="INTEGER" property="userId" />
+            <result column="storeinfoTitle" jdbcType="VARCHAR" property="title" />
+            <result column="storeinfoName" jdbcType="VARCHAR" property="name" />
+            <result column="storeinfoPhone" jdbcType="INTEGER" property="phone" />
+            <result column="storeinfoBusiness" jdbcType="VARCHAR" property="business" />
+            <result column="storeinfoCity" jdbcType="VARCHAR" property="city" />
+            <result column="storeinfoAddress" jdbcType="VARCHAR" property="address" />
+            <result column="storeinfoLogo" jdbcType="VARCHAR" property="logo" />
+            <result column="storeMaxSellWeight" jdbcType="DECIMAL" property="maxSellweight" />
+            <result column="storeinfoMaxLandWeight" jdbcType="DECIMAL" property="maxLandweight" />
+            <result column="storeinfoMaxSellNum" jdbcType="INTEGER" property="maxSellnum" />
+            <result column="storeinfoMaxLandNum" jdbcType="INTEGER" property="maxLandnum" />
+            <result column="storeinfoCreateAt" jdbcType="TIMESTAMP" property="createdAt" />
+            <result column="storeinfoUpdatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
+            <result column="storeinfoProvinces" jdbcType="VARCHAR" property="provinces" />
+            <result column="storeinfoContent" jdbcType="LONGVARCHAR" property="content" />
+
+        </association>
+        <!--提单表集合-->
+        <collection property="ladingList" ofType="com.zc.shop.mbg.po.Lading" >
+
+            <result column="ladingId" jdbcType="BIGINT" property="id" />
+            <result column="ladingCode" jdbcType="VARCHAR" property="code" />
+            <result column="ladingWeight" jdbcType="DECIMAL" property="weight" />
+            <result column="ladingStatus" jdbcType="INTEGER" property="status" />
+            <result column="ladingLadingedAt" jdbcType="TIMESTAMP" property="ladingedAt" />
+            <result column="ladingCreatedAt" jdbcType="TIMESTAMP" property="createdAt" />
+            <result column="ladingUpdatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
+            <result column="ladingRemark" jdbcType="LONGVARCHAR" property="remark" />
+            <result column="ladingPic" jdbcType="LONGVARCHAR" property="pic" />
+
+        </collection>
+
+      <!--  <result column="ladingId" jdbcType="BIGINT" property="ladingId" />
+        <result column="ladingCode" jdbcType="VARCHAR" property="ladingCode" />
+        <result column="ladingWeight" jdbcType="DECIMAL" property="ladingWeight" />
+        <result column="ladingStatus" jdbcType="INTEGER" property="ladingStatus" />
+        <result column="ladingLadingedAt" jdbcType="TIMESTAMP" property="ladingLadingedAt" />
+        <result column="ladingCreatedAt" jdbcType="TIMESTAMP" property="ladingCreatedAt" />
+        <result column="ladingUpdatedAt" jdbcType="TIMESTAMP" property="ladingUpdatedAt" />
+        <result column="ladingRemark" jdbcType="LONGVARCHAR" property="ladingRemark" />
+        <result column="ladingPic" jdbcType="LONGVARCHAR" property="ladingPic" />
+      -->
+    </resultMap>
+
+    <resultMap id="OrdersGaiMap" type="com.zc.shop.admin.vo.OrdersGaiVo">
+        <!--<association property="order" javaType="com.zc.shop.mbg.po.Order">-->
+            <!--订单表数据-->
+            <id column="orderId" jdbcType="BIGINT" property="order.id" />
+            <result column="orderCode" jdbcType="VARCHAR" property="order.code" />
+            <result column="orderSupplierId" jdbcType="INTEGER" property="order.supplierId" />
+            <result column="orderGoodsId" jdbcType="INTEGER" property="order.goodsId" />
+            <result column="orderNum" jdbcType="INTEGER" property="order.num" />
+            <result column="orderWeight" jdbcType="DECIMAL" property="order.weight" />
+            <result column="orderStatus" jdbcType="INTEGER" property="order.status" />
+            <result column="orderBuyId" jdbcType="INTEGER" property="order.buyId" />
+            <result column="orderCreatedAt" jdbcType="TIMESTAMP" property="order.createdAt" />
+            <result column="orderUpdatedAt" jdbcType="TIMESTAMP" property="order.updatedAt" />
+            <result column="orderRemaining" jdbcType="DECIMAL" property="order.remaining" />
+            <result column="orderRemark" jdbcType="LONGVARCHAR" property="order.remark" />
+            <result column="orderPayment" jdbcType="DECIMAL" property="order.payment" />
+            <result column="orderMargin" jdbcType="DECIMAL" property="order.margin" />
+            <result column="orderType" jdbcType="INTEGER" property="order.type" />
+            <result column="orderRemainnumber" jdbcType="INTEGER" property="order.remainnumber" />
+        <!--</association>-->
+
+        <!--商品表数据集合-->
+            <result column="goodsId" jdbcType="INTEGER" property="goods.id" />
+            <result column="goodsGoodsSn" jdbcType="VARCHAR" property="goods.goodsSn" />
+            <result column="goodsGoodsName" jdbcType="VARCHAR" property="goods.goodsName" />
+            <result column="goodsGoodsNumber" jdbcType="SMALLINT" property="goods.goodsNumber" />
+            <result column="goodsGoodsWeight" jdbcType="DECIMAL" property="goods.goodsWeight" />
+            <result column="goodsWeightUnit" jdbcType="SMALLINT" property="goods.weightUnit" />
+            <result column="goodsShopPrice" jdbcType="DECIMAL" property="goods.shopPrice" />
+            <result column="goodsIsOnSale" jdbcType="TINYINT" property="goods.isOnSale" />
+            <result column="goodsAddTime" jdbcType="TIMESTAMP" property="goods.addTime" />
+            <result column="goodsAddress" jdbcType="VARCHAR" property="goods.address" />
+            <result column="goodsSuppliersId" jdbcType="SMALLINT" property="goods.suppliersId" />
+            <result column="goodsWarehouse" jdbcType="VARCHAR" property="goods.warehouse" />
+            <result column="goodsRemark" jdbcType="VARCHAR" property="goods.remark" />
+            <result column="goodsWeitype" jdbcType="INTEGER" property="goods.weitype" />
+            <result column="goodsType" jdbcType="VARCHAR" property="goods.type" />
+            <result column="goodsGuige" jdbcType="VARCHAR" property="goods.guige" />
+            <result column="goodsCaizhi" jdbcType="VARCHAR" property="goods.caizhi" />
+            <result column="goodsFactory" jdbcType="VARCHAR" property="goods.factory" />
+            <result column="goodsDanwei" jdbcType="VARCHAR" property="goods.danwei" />
+            <result column="goodsIsDelete" jdbcType="INTEGER" property="goods.isDelete" />
+            <result column="goodsRemainNumber" jdbcType="SMALLINT" property="goods.remainNumber" />
+            <result column="goodsRemainWeight" jdbcType="DECIMAL" property="goods.remainWeight" />
+
+
+           <!--认证表数据集合-->
+            <result column="certificationId" jdbcType="INTEGER" property="certification.id" />
+            <result column="certificationCompany" jdbcType="VARCHAR" property="certification.company" />
+            <result column="certificationXinyong" jdbcType="VARCHAR" property="certification.xinyong" />
+            <result column="certificationFaren" jdbcType="VARCHAR" property="certification.faren" />
+            <result column="certificationCompanytype" jdbcType="VARCHAR" property="certification.companytype" />
+            <result column="certificationBuilddate" jdbcType="TIMESTAMP" property="certification.builddate" />
+            <result column="certificationZiben" jdbcType="VARCHAR" property="certification.ziben" />
+            <result column="certificationQixian" jdbcType="VARCHAR" property="certification.qixian" />
+            <result column="certificationIdcard" jdbcType="VARCHAR" property="certification.idcard" />
+            <result column="certificationAddress" jdbcType="VARCHAR" property="certification.address" />
+            <result column="certificationLianxiren" jdbcType="VARCHAR" property="certification.lianxiren" />
+            <result column="certificationLxridcard" jdbcType="VARCHAR" property="certification.lxridcard" />
+            <result column="certificationRemark" jdbcType="VARCHAR" property="certification.remark" />
+            <result column="certificationBack" jdbcType="VARCHAR" property="certification.back" />
+            <result column="certificationAccount" jdbcType="VARCHAR" property="certification.account" />
+            <result column="certificationShuihao" jdbcType="VARCHAR" property="certification.shuihao" />
+            <result column="certificationPhone" jdbcType="VARCHAR" property="certification.phone" />
+            <result column="certificationCompanyaddress" jdbcType="VARCHAR" property="certification.companyaddress" />
+            <result column="certificationIsSanzheng" jdbcType="INTEGER" property="certification.isSanzheng" />
+            <result column="certificationStatus" jdbcType="INTEGER" property="certification.status" />
+            <result column="certificationUserid" jdbcType="INTEGER" property="certification.userid" />
+            <result column="certificationYinyezhizhao" jdbcType="LONGVARCHAR" property="certification.yinyezhizhao" />
+            <result column="certificationShouquanshu" jdbcType="LONGVARCHAR" property="certification.shouquanshu" />
+            <result column="certificationKaipiaoziliao" jdbcType="LONGVARCHAR" property="certification.kaipiaoziliao" />
+
+
+        <!--保证金表-->
+        <result column="marginId" jdbcType="BIGINT" property="margin.id" />
+        <result column="marginOCode" jdbcType="VARCHAR" property="margin.oCode" />
+        <result column="marginMoney" jdbcType="DECIMAL" property="margin.money" />
+        <result column="marginPingzheng" jdbcType="DECIMAL" property="margin.pingzheng" />
+        <result column="marginDate" jdbcType="TIMESTAMP" property="margin.date" />
+        <result column="marginBank" jdbcType="VARCHAR" property="margin.bank" />
+        <result column="marginAccount" jdbcType="VARCHAR" property="margin.account" />
+        <result column="marginCreateAt" jdbcType="TIMESTAMP" property="margin.createdAt" />
+        <result column="marginUpdatedAt" jdbcType="TIMESTAMP" property="margin.updatedAt" />
+        <result column="marginPic" jdbcType="LONGVARCHAR" property="margin.pic" />
+
+        <!--结算表-->
+        <result column="settlementId" jdbcType="BIGINT" property="statements.id" />
+        <result column="statementsOrderCode" jdbcType="VARCHAR" property="statements.orderCode" />
+        <result column="statementsBuyNumber" jdbcType="INTEGER" property="statements.buyNumber" />
+        <result column="statementsBuyWeight" jdbcType="DECIMAL" property="statements.buyWeight" />
+        <result column="statementsLandNumber" jdbcType="INTEGER" property="statements.landNumber" />
+        <result column="statementsLandWeight" jdbcType="DECIMAL" property="statements.landWeight" />
+        <result column="statementsDiffNumber" jdbcType="INTEGER" property="statements.diffNumber" />
+        <result column="statementsDiffWeight" jdbcType="DECIMAL" property="statements.diffWeight" />
+        <result column="statementsMoney" jdbcType="DECIMAL" property="statements.money" />
+
+
+       <!--结算详情表-->
+        <result column="settlementId" jdbcType="BIGINT" property="settlement.id" />
+        <result column="settlementOrderId" jdbcType="BIGINT" property="settlement.orderId" />
+        <result column="settlementGoodsId" jdbcType="INTEGER" property="settlement.goodsId" />
+        <result column="settlementWeight" jdbcType="DECIMAL" property="settlement.weight" />
+        <result column="settlementPrice" jdbcType="DECIMAL" property="settlement.price" />
+        <result column="settlementCreatedAt" jdbcType="TIMESTAMP" property="settlement.createdAt" />
+        <result column="settlementUpdatedAt" jdbcType="TIMESTAMP" property="settlement.updatedAt" />
+        <result column="settlementOrderCode" jdbcType="VARCHAR" property="settlement.orderCode" />
+        <result column="settlementNum" jdbcType="INTEGER" property="settlement.num" />
+        <result column="settlementPriceAll" jdbcType="DECIMAL" property="settlement.priceAll" />
+        <result column="settlementWeightPrice" jdbcType="DECIMAL" property="settlement.weightPrice" />
+
+
+       <!--发票表-->
+        <result column="regiinvoiceId" jdbcType="BIGINT" property="regiinvoice.id" />
+        <result column="regiinvoiceOrderCode" jdbcType="VARCHAR" property="regiinvoice.orderCode" />
+        <result column="regiinvoiceInvoiceNumber" jdbcType="VARCHAR" property="regiinvoice.invoiceNumber" />
+        <result column="regiinvoiceDate" jdbcType="TIMESTAMP" property="regiinvoice.date" />
+        <result column="regiinvoiceCourier" jdbcType="VARCHAR" property="regiinvoice.courier" />
+        <result column="regiinvoiceDanwei" jdbcType="VARCHAR" property="regiinvoice.danwei" />
+        <result column="regiinvoiceCourierCode" jdbcType="VARCHAR" property="regiinvoice.courierCode" />
+        <result column="regiinvoiceStatus" jdbcType="INTEGER" property="regiinvoice.status" />
+        <result column="regiinvoiceMakeWeight" jdbcType="DECIMAL" property="regiinvoice.makeWeight" />
+        <result column="regiinvoiceMakeMoney" jdbcType="DECIMAL" property="regiinvoice.makeMoney" />
+        <result column="regiinvoiceKaidanwei" jdbcType="VARCHAR" property="regiinvoice.kaidanwei" />
+
+      <!--发票详情表-->
+        <result column="regiinvoicedetailId" jdbcType="BIGINT" property="regiinvoicedetail.id" />
+        <result column="regiinvoicedetailOrderId" jdbcType="INTEGER" property="regiinvoicedetail.orderId" />
+        <result column="regiinvoicedetailMakeWeight" jdbcType="DECIMAL" property="regiinvoicedetail.makeWeight" />
+        <result column="regiinvoicedetailMakeMoney" jdbcType="DECIMAL" property="regiinvoicedetail.makeMoney" />
+        <result column="regiinvoicedetailOrderCode" jdbcType="VARCHAR" property="regiinvoicedetail.orderCode" />
+
+
+
+        <!--提单表集合-->
+        <collection property="ladingList" ofType="com.zc.shop.mbg.po.Lading">
+
+            <result column="ladingId" jdbcType="BIGINT" property="id" />
+            <result column="ladingCode" jdbcType="VARCHAR" property="code" />
+            <result column="ladingNum" jdbcType="INTEGER" property="num" />
+            <result column="ladingWeight" jdbcType="DECIMAL" property="weight" />
+            <result column="ladingStatus" jdbcType="INTEGER" property="status" />
+            <result column="ladingLadingedAt" jdbcType="TIMESTAMP" property="ladingedAt" />
+            <result column="ladingCreatedAt" jdbcType="TIMESTAMP" property="createdAt" />
+            <result column="ladingUpdatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
+            <result column="ladingRemark" jdbcType="LONGVARCHAR" property="remark" />
+            <result column="ladingPic" jdbcType="LONGVARCHAR" property="pic" />
+
+
+            <result column="ladingOrderCode" jdbcType="VARCHAR" property="orderCode" />
+            <result column="ladingSupplierId" jdbcType="INTEGER" property="supplierId" />
+            <result column="ladingGoodsId" jdbcType="INTEGER" property="goodsId" />
+            <result column="ladingOrderId" jdbcType="INTEGER" property="orderId" />
+            <result column="ladingType" jdbcType="INTEGER" property="type" />
+            <result column="ladingGuohu" jdbcType="VARCHAR" property="guohu" />
+            <result column="ladingRealNum" jdbcType="INTEGER" property="realNum" />
+            <result column="ladingRealWeight" jdbcType="DECIMAL" property="realWeight" />
+            <result column="ladingInformation" jdbcType="LONGVARCHAR" property="information" />
+            <result column="ladingShouquanshu" jdbcType="LONGVARCHAR" property="shouquanshu" />
+        </collection>
+
+
+    </resultMap>
+
+
+
+
+    <select id="selectMySellOrderCodeGai"  parameterType="com.zc.shop.admin.dto.OrderSellSelectParam" resultType="java.lang.String">
+
+
+         SELECT distinct o.code FROM `order` o
+            left join  goods as g
+            on o.goods_id = g.id
+            left join certification as c
+            on  o.buy_id = c.userid
+
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="companyPhone != null">
+                and c.phone = #{companyPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.`status` = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and g.warehouse = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="supplierId != null">
+                and o.supplier_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by o.code desc
+
+
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+
+
+
+
+     </select>
+
+    <select id="selectMySellOrderCodeGaiNum" resultType="int">
+        select count(*) from
+        (
+        SELECT distinct o.code FROM `order` o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.buy_id = c.userid
+
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="companyPhone != null">
+                and c.phone = #{companyPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.`status` = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and g.warehouse = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="supplierId != null">
+                and o.supplier_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        ) a
+
+    </select>
+
+    <select id="selectMySellOrderGai"  resultMap="OrdersGaiMap">
+        SELECT
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,o.payment as orderPayment,o.margin as orderMargin,o.type as orderType,o.remainnumber as orderRemainnumber,
+
+        l.id as ladingId,l.code as ladingCode,l.num as ladingNum,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
+        l.updated_at as ladingUpdatedAt,l.remark as ladingRemark,l.pic as ladingPic,l.order_code as ladingOrderCode,l.supplier_id as ladingSupplierId,
+        l.goods_id as ladingGoodsId,l.order_id as ladingOrderId,l.type as ladingType,l.guohu as ladingGuohu,l.real_num as ladingRealNum,l.real_weight as ladingRealWeight,
+        l.information as ladingInformation,l.shouquanshu as ladingShouquanshu,
+
+
+        g.id as goodsId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,
+        g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,
+        g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,g.caizhi as goodsCaizhi,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        g.is_delete as goodsIsDelete,g.remain_number as goodsRemainNumber,g.remain_weight  as goodsRemainWeight,
+
+        c.id as certificationId,c.company as certificationCompany,c.xinyong as certificationXinyong,c.faren as certificationFaren,c.companytype as certificationCompanytype,
+        c.builddate as certificationBuilddate,c.ziben as certificationZiben,c.qixian as certificationQixian,c.idcard as certificationIdcard,c.address as certificationAddress,
+        c.lianxiren as certificationLianxiren,c.lxridcard as certificationLxridcard,c.remark as certificationRemark,c.back as certificationBack,c.account as certificationAccount,
+        c.shuihao as certificationShuihao,c.phone as certificationPhone,c.companyaddress as certificationCompanyaddress,c.is_sanzheng as certificationIsSanzheng,c.yinyezhizhao as certificationYinyezhizhao,
+        c.shouquanshu as certificationShouquanshu,c.kaipiaoziliao  as certificationKaipiaoziliao,c.status as certificationStatus,c.userid as certificationUserid,
+
+        m.id as marginId,m.o_code as marginOCode,m.account as marginAccount,m.bank as marginBank,m.created_at as marginCreatedAt,m.`date`as marginDate,
+        m.money as marginMoney,m.pic as marginPic,m.pingzheng as marginPingzheng,m.updated_at as marginUpdatedAt,
+
+
+        sta.money as statementsMoney,sta.order_code as statementsOrderCode,sta.id as statementsId,sta.buy_number as statementsBuyNumber,sta.buy_weight as statementsBuyWeight,
+        sta.diff_number as statementsDiffNumber, sta.diff_weight as statementsDiffWeight,sta.land_number as statementsLandNumber,sta.land_weight as statementsLandWeight,
+
+        sett.id as settlementId,sett.order_id as settlementOrderId,sett.goods_id as settlementOrderId,sett.weight as settlementWeight,
+        sett.price as settlementPrice,sett.created_at as settlementCreatedAt,sett.updated_at as settlementUpdatedAt,
+        sett.order_code as settlementOrderCode, sett.num as settlementNum , sett.price_all as settlementPriceAll,sett.weight_price as settlementWeightPrice,
+
+
+        reg.order_code as regiinvoiceOrderCode,reg.id as regiinvoiceId,reg.`date` as regiinvoiceDate,reg.courier as regiinvoiceCourier,reg.courier_code as regiinvoiceCourierCode,
+        reg.danwei as regiinvoiceDanwei,reg.invoice_number as regiinvoiceInvoiceNumber,reg.kaidanwei as regiinvoiceKaidanwei,reg.make_money as regiinvoiceMakeMoney,
+        reg.make_weight as regiinvoiceMakeWeight,reg.status as regiinvoiceStatus,
+
+
+        regd.id as regiinvoicedetailId,regd.order_id as regiinvoicedetailOrderId,regd.make_weight as regiinvoicedetailMakeWeight,
+        regd.make_money as  regiinvoicedetailMakeMoney,regd.order_code as regiinvoicedetailOrderCode
+
+
+        from `order` as o
+
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.buy_id = c.userid
+        left join lading as l
+        on  o.id = l.order_id
+        left join margin m
+        on  o.code = m.o_code
+        left join  statements sta
+        on o.code = sta.order_code
+        left join settlement sett
+        on o.id = sett.order_id
+        left join regiinvoice reg
+        on o.code = reg.order_code
+        left join regiinvoicedetail as regd
+        on o.id = regd.order_id
+        <where>
+            <if test="orderCodeGaiList!=null and orderCodeGaiList.size()&gt; 0">
+                <foreach collection="orderCodeGaiList" item="ordercode" separator="," open="o.code in(" close=")">
+                    #{ordercode,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+
+
+    <select id="selectMyBuyOrderCodeGai"  parameterType="com.zc.shop.admin.dto.OrderBuySelectParam" resultType="java.lang.String">
+
+           SELECT distinct o.code FROM `order` o
+            left join  goods as g
+            on o.goods_id = g.id
+            left join certification as c
+            on o.supplier_id = c.userid
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="companyPhone != null">
+                and c.phone = #{companyPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.`status` = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and g.warehouse = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="buyId != null">
+                and o.buy_id = #{buyId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by o.code desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectMyBuyOrderCodeGaiNum" resultType="int">
+        select count(*) from
+        (
+        SELECT distinct o.code FROM `order` o
+        left join goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on o.supplier_id = c.userid
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="companyPhone != null">
+                and c.phone = #{companyPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.`status` = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and g.warehouse = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="buyId != null">
+                and o.buy_id = #{buyId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+         ) a
+
+    </select>
+
+    <select id="selectMyBuyOrderGai"  resultMap="OrdersGaiMap">
+
+        SELECT
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,o.payment as orderPayment,o.margin as orderMargin,o.type as orderType,o.remainnumber as orderRemainnumber,
+
+        l.id as ladingId,l.code as ladingCode,l.num as ladingNum,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
+        l.updated_at as ladingUpdatedAt,l.remark as ladingRemark,l.pic as ladingPic,l.order_code as ladingOrderCode,l.supplier_id as ladingSupplierId,
+        l.goods_id as ladingGoodsId,l.order_id as ladingOrderId,l.type as ladingType,l.guohu as ladingGuohu,l.real_num as ladingRealNum,l.real_weight as ladingRealWeight,
+        l.information as ladingInformation,l.shouquanshu as ladingShouquanshu,
+
+
+        g.id as goodsId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,
+        g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,
+        g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,g.caizhi as goodsCaizhi,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        g.is_delete as goodsIsDelete,g.remain_number as goodsRemainNumber,g.remain_weight  as goodsRemainWeight,
+
+        c.id as certificationId,c.company as certificationCompany,c.xinyong as certificationXinyong,c.faren as certificationFaren,c.companytype as certificationCompanytype,
+        c.builddate as certificationBuilddate,c.ziben as certificationZiben,c.qixian as certificationQixian,c.idcard as certificationIdcard,c.address as certificationAddress,
+        c.lianxiren as certificationLianxiren,c.lxridcard as certificationLxridcard,c.remark as certificationRemark,c.back as certificationBack,c.account as certificationAccount,
+        c.shuihao as certificationShuihao,c.phone as certificationPhone,c.companyaddress as certificationCompanyaddress,c.is_sanzheng as certificationIsSanzheng,c.yinyezhizhao as certificationYinyezhizhao,
+        c.shouquanshu as certificationShouquanshu,c.kaipiaoziliao  as certificationKaipiaoziliao,c.status as certificationStatus,c.userid as certificationUserid,
+
+
+
+        m.id as marginId,m.o_code as marginOCode,m.account as marginAccount,m.bank as marginBank,m.created_at as marginCreatedAt,m.`date`as marginDate,
+        m.money as marginMoney,m.pic as marginPic,m.pingzheng as marginPingzheng,m.updated_at as marginUpdatedAt,
+
+
+        sta.money as statementsMoney,sta.order_code as statementsOrderCode,sta.id as statementsId,sta.buy_number as statementsBuyNumber,sta.buy_weight as statementsBuyWeight,
+        sta.diff_number as statementsDiffNumber, sta.diff_weight as statementsDiffWeight,sta.land_number as statementsLandNumber,sta.land_weight as statementsLandWeight,
+
+        sett.id as settlementId,sett.order_id as settlementOrderId,sett.goods_id as settlementOrderId,sett.weight as settlementWeight,
+        sett.price as settlementPrice,sett.created_at as settlementCreatedAt,sett.updated_at as settlementUpdatedAt,
+        sett.order_code as settlementOrderCode, sett.num as settlementNum , sett.price_all as settlementPriceAll,sett.weight_price as settlementWeightPrice,
+
+
+        reg.order_code as regiinvoiceOrderCode,reg.id as regiinvoiceId,reg.`date` as regiinvoiceDate,reg.courier as regiinvoiceCourier,reg.courier_code as regiinvoiceCourierCode,
+        reg.danwei as regiinvoiceDanwei,reg.invoice_number as regiinvoiceInvoiceNumber,reg.kaidanwei as regiinvoiceKaidanwei,reg.make_money as regiinvoiceMakeMoney,
+        reg.make_weight as regiinvoiceMakeWeight,reg.status as regiinvoiceStatus,
+
+
+        regd.id as regiinvoicedetailId,regd.order_id as regiinvoicedetailOrderId,regd.make_weight as regiinvoicedetailMakeWeight,
+        regd.make_money as  regiinvoicedetailMakeMoney,regd.order_code as regiinvoicedetailOrderCode
+
+
+        from `order` as o
+
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.supplier_id = c.userid
+        left join lading as l
+        on  o.id = l.order_id
+        left join margin m
+        on  o.code = m.o_code
+        left join  statements sta
+        on o.code = sta.order_code
+        left join settlement sett
+        on o.id = sett.order_id
+        left join regiinvoice reg
+        on o.code = reg.order_code
+        left join regiinvoicedetail as regd
+        on o.id = regd.order_id
+        <where>
+            <if test="orderCodeGaiList!=null and orderCodeGaiList.size()&gt; 0">
+                <foreach collection="orderCodeGaiList" item="ordercode" separator="," open="o.code in(" close=")">
+                    #{ordercode,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+        </where>
+
+
+    </select>
+
+
+
+
+    <select id="selectMySellOrderNumGai"   parameterType="com.zc.shop.admin.dto.OrderSellSelectParam" resultType="java.lang.Integer">
+
+        SELECT count(*)
+        from `order` as o
+
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.buy_id = c.userid
+--         left join lading as l
+--         on  o.id = l.order_id
+
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="companyPhone != null">
+                and c.phone = #{companyPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and g.warehouse = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="supplierId != null">
+                and g.suppliers_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+
+    </select>
+
+
+    <select id="selectMyBuyOrderGai1"  parameterType="com.zc.shop.admin.dto.OrderBuySelectParam" resultMap="OrdersGaiMap">
+        SELECT
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,o.payment as orderPayment,o.margin as orderMargin,o.type as orderType,o.remainnumber as orderRemainnumber,
+
+        l.id as ladingId,l.code as ladingCode,l.num as ladingNum,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
+        l.updated_at as ladingUpdatedAt,l.remark as ladingRemark,l.pic as ladingPic,l.order_code as ladingOrderCode,l.supplier_id as ladingSupplierId,
+        l.goods_id as ladingGoodsId,l.order_id as ladingOrderId,l.type as ladingType,l.guohu as ladingGuohu,l.real_num as ladingRealNum,l.real_weight as ladingRealWeight,
+        l.information as ladingInformation,l.shouquanshu as ladingShouquanshu,
+
+
+        g.id as goodsId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_weight as goodsGoodsWeight,g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,
+        g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,
+        g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,g.guige as goodsGuige,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        g.is_delete as goodsIsDelete,g.remain_number as goodsRemainNumber,g.remain_weight  as goodsRemainWeight,
+
+        c.id as certificationId,c.company as certificationCompany,c.xinyong as certificationXinyong,c.faren as certificationFaren,c.companytype as certificationCompanytype,
+        c.builddate as certificationBuilddate,c.ziben as certificationZiben,c.qixian as certificationQixian,c.idcard as certificationIdcard,c.address as certificationAddress,
+        c.lianxiren as certificationLianxiren,c.lxridcard as certificationLxridcard,c.remark as certificationRemark,c.back as certificationBack,c.account as certificationAccount,
+        c.shuihao as certificationShuihao,c.phone as certificationPhone,c.companyaddress as certificationCompanyaddress,c.is_sanzheng as certificationIsSanzheng,c.yinyezhizhao as certificationYinyezhizhao,
+        c.shouquanshu as certificationShouquanshu,c.kaipiaoziliao  as certificationKaipiaoziliao,c.status as certificationStatus,c.userid as certificationUserid,
+
+
+
+        m.id as marginId,m.o_code as marginOCode,m.account as marginAccount,m.bank as marginBank,m.created_at as marginCreatedAt,m.`date`as marginDate,
+        m.money as marginMoney,m.pic as marginPic,m.pingzheng as marginPingzheng,m.updated_at as marginUpdatedAt,
+
+
+        sta.money as statementsMoney,sta.order_code as statementsOrderCode,sta.id as statementsId,sta.buy_number as statementsBuyNumber,sta.buy_weight as statementsBuyWeight,
+        sta.diff_number as statementsDiffNumber, sta.diff_weight as statementsDiffWeight,sta.land_number as statementsLandNumber,sta.land_weight as statementsLandWeight,
+
+        sett.id as settlementId,sett.order_id as settlementOrderId,sett.goods_id as settlementOrderId,sett.weight as settlementWeight,
+        sett.price as settlementPrice,sett.created_at as settlementCreatedAt,sett.updated_at as settlementUpdatedAt,
+        sett.order_code as settlementOrderCode, sett.num as settlementNum , sett.price_all as settlementPriceAll,sett.weight_price as settlementWeightPrice,
+
+
+        reg.order_code as regiinvoiceOrderCode,reg.id as regiinvoiceId,reg.`date` as regiinvoiceDate,reg.courier as regiinvoiceCourier,reg.courier_code as regiinvoiceCourierCode,
+        reg.danwei as regiinvoiceDanwei,reg.invoice_number as regiinvoiceInvoiceNumber,reg.kaidanwei as regiinvoiceKaidanwei,reg.make_money as regiinvoiceMakeMoney,
+        reg.make_weight as regiinvoiceMakeWeight,reg.status as regiinvoiceStatus,
+
+
+        regd.id as regiinvoicedetailId,regd.order_id as regiinvoicedetailOrderId,regd.make_weight as regiinvoicedetailMakeWeight,
+        regd.make_money as  regiinvoicedetailMakeMoney,regd.order_code as regiinvoicedetailOrderCode
+
+
+
+
+
+
+        from `order` as o
+
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.supplier_id = c.userid
+        left join lading as l
+        on  o.id = l.order_id
+        left join margin m
+        on  o.code = m.o_code
+        left join  statements sta
+        on o.code = sta.order_code
+        left join settlement sett
+        on o.id = sett.order_id
+        left join regiinvoice reg
+        on o.code = reg.order_code
+        left join regiinvoicedetail as regd
+        on o.id = regd.order_id
+
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="companyPhone != null">
+                and c.phone = #{companyPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                and c.company = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and g.warehouse = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="buyId != null">
+                and o.buy_id = #{buyId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by orderCreatedAt desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectMyBuyOrderNumGai" parameterType="com.zc.shop.admin.dto.OrderBuySelectParam" resultType="java.lang.Integer">
+
+        SELECT count(*)
+        from `order` as o
+
+
+        left join  goods as g
+        on o.goods_id = g.id
+        left join certification as c
+        on  o.supplier_id = c.userid
+--         left join lading as l
+--         on  o.id = l.order_id
+
+        <where>
+        <if test="code != null">
+            and o.code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="companyPhone != null">
+            and c.phone = #{companyPhone,jdbcType=VARCHAR}
+        </if>
+        <if test="companyName != null">
+            and c.company = #{companyName,jdbcType=VARCHAR}
+        </if>
+        <if test="goodsName != null">
+            and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+        </if>
+
+        <if test="status != null">
+            and o.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+        </if>
+        <if test="endTime != null">
+            and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+        </if>
+        <if test="wareName != null">
+            and g.warehouse = #{wareName,jdbcType=VARCHAR}
+        </if>
+        <if test="buyId != null">
+            and o.buy_id = #{buyId,jdbcType=INTEGER}
+        </if>
+
+        </where>
+    </select>
+
+
+
+
+
+
+
+
+
+
+    <select id="selectMySellOrder"  parameterType="com.zc.shop.admin.dto.OrderSellSelectParam" resultMap="OrdersAllVoMap">
+      	SELECT
+      	o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,
+      	g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+      	g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.goods_thumb as goodsGoodsThumb,g.goods_img as goodsGoodsImg,g.original_img as goodsOriginalImg,
+      	g.is_on_sale as goodsIsOnSale,g.is_shipping as goodsIsShipping,g.add_time as goodsAddTime,g.attr1 as goodsAttr1,g.attr2 as goodsAttr2,g.suppliers_id as goodsSuppliersId,
+      	g.ware_id as goodsWareId,g.trademark as goodsTrademark,g.remark as goodsRemark,
+        l.id as ladingId,l.code as ladingCode,l.num as ladingNum,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
+        l.updated_at as ladingUpdatedAt,l.remark as ladingRemark,l.pic as ladingPic,
+        w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
+        u.username as userUsername, u.nickname as userNickname,
+        attr.pingzhong as attrPingZhong,attr.attrname as attrAttrName,attr.material as attrMaterial,attr.specifications as attrSpecifications
+      	from `order` as o
+		left join  goods as g
+		on o.goods_id = g.id
+        left join
+           (select a1.attr_name as pingzhong,
+            a2.attr_name as attrname,
+            a2.specifications as specifications,
+            a2.material as material,
+            a2.id as attrnameid
+            from attribute a1
+            left join attribute a2
+            on a1.id = a2.parent_id
+            WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+
+        left join lading l
+        on o.id = l.order_id
+        left join users u
+		on o.buy_id = u.id
+		left join ware w
+		on g.ware_id = w.id
+		<where>
+        <if test="code != null">
+         and o.code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="username != null">
+		and u.username = #{username,jdbcType=VARCHAR}
+        </if>
+        <if test="nickname != null">
+		and u.nickname = #{nickname,jdbcType=VARCHAR}
+        </if>
+        <if test="goodsName != null">
+		and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+        </if>
+
+        <if test="status != null">
+          and o.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+		and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+        </if>
+        <if test="endTime != null">
+         and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+        </if>
+        <if test="wareName != null">
+		and w.title = #{wareName,jdbcType=VARCHAR}
+        </if>
+        <if test="supplierId != null">
+		and g.suppliers_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+
+        </where>
+        order by orderCreatedAt desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectMySellOrderNum"  resultType="int">
+        SELECT count(*)
+        from `order` as o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+
+        left join lading l
+        on o.id = l.order_id
+        left join users u
+        on o.buy_id = u.id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="username != null">
+                and u.username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="nickname != null">
+                and u.nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="supplierId != null">
+                and g.suppliers_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <select id="selectMyBuyOrder"  parameterType="com.zc.shop.admin.dto.OrderBuySelectParam" resultMap="OrdersAllVoMap">
+        SELECT
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,
+        g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+        g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.goods_thumb as goodsGoodsThumb,g.goods_img as goodsGoodsImg,g.original_img as goodsOriginalImg,
+        g.is_on_sale as goodsIsOnSale,g.is_shipping as goodsIsShipping,g.add_time as goodsAddTime,g.attr1 as goodsAttr1,g.attr2 as goodsAttr2,g.suppliers_id as goodsSuppliersId,
+        g.ware_id as goodsWareId,g.trademark as goodsTrademark,g.remark as goodsRemark,
+        l.id as ladingId,l.code as ladingCode,l.num as ladingNum,l.weight as ladingWeight,l.status as ladingStatus,l.ladinged_at as ladingLadingedAt,l.created_at as ladingCreatedAt,
+        l.updated_at as ladingUpdatedAt,l.remark as ladingRemark,l.pic as ladingPic,
+        w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
+        u.username as userUsername, u.nickname as userNickname,
+        attr.pingzhong as attrPingZhong,attr.attrname as attrAttrName,attr.material as attrMaterial,attr.specifications as attrSpecifications,
+        st.id as storeinfoId,st.title as storeinfoTitle,st.user_id as storeinfoUserId,st.name as storeinfoName,st.phone as storeinfoPhone,
+        st.business as storeinfoBusiness,st.city as storeinfoCity,st.address as storeinfoAddress,st.logo as storeinfoLogo,st.max_sellweight as storeMaxSellWeight,
+        st.max_landweight as storeinfoMaxLandWeight,st.max_sellnum as storeinfoMaxSellNum,st.max_landnum as storeinfoMaxLandNum,st.created_at as storeinfoCreateAt,
+        st.updated_at as storeinfoUpdatedAt,st.provinces as storeinfoProvinces,st.content as storeinfoContent
+
+        from `order` as o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join lading l
+        on o.id = l.order_id
+        left join users u
+        on o.supplier_id = u.id
+        left join storeinfo st
+        on st.user_id = o.supplier_id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="username != null">
+                and u.username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="nickname != null">
+                and u.nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="buyId != null">
+                and o.buy_id = #{buyId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by o.created_at desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectMyBuyOrderNum"  resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from `order` as o
+        left join  goods as g
+        on o.goods_id = g.id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join lading l
+        on o.id = l.order_id
+        left join users u
+        on o.supplier_id = u.id
+        left join storeinfo st
+        on st.user_id = o.supplier_id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            <if test="code != null">
+                and o.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="username != null">
+                and u.username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="nickname != null">
+                and u.nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+            <if test="wareName != null">
+                and w.title = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="buyId != null">
+                and o.buy_id = #{buyId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <select id="selectOrdersByGoodsId"  resultMap="com.zc.shop.mbg.mapper.OrderMapper.ResultMapWithBLOBs">
+
+        select
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Blob_Column_List" />
+        from `order`
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+              and status != 15 and status != 16
+
+    </select>
+    <select id="selectOrderBySupplierOrBuyUserId" resultMap="com.zc.shop.mbg.mapper.OrderMapper.ResultMapWithBLOBs">
+
+        select
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Blob_Column_List" />
+        from `order`
+        where supplier_id = #{userId,jdbcType=INTEGER}
+        or  buy_id = #{userId,jdbcType=INTEGER}
+
+    </select>
+    <select id="selectOrderByOrderCode" resultMap="com.zc.shop.mbg.mapper.OrderMapper.ResultMapWithBLOBs">
+
+        select
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.OrderMapper.Blob_Column_List" />
+        from `order`
+        where code = #{code,jdbcType=VARCHAR}
+
+
+
+    </select>
+
+
+    <update id="updateOrderRemaing">
+      update `order`
+      set
+      remaining = remaining + #{tiNum,jdbcType=DECIMAL}
+      where id = #{orderId,jdbcType=BIGINT}
+
+    </update>
+
+    <update id="updateOrderNumAndWeight">
+      update `order`
+      set
+      remainnumber = num + #{remainnumber,jdbcType=INTEGER},
+      remaining = remaining +  #{remainWeight,jdbcType=DECIMAL}
+
+      where id = #{orderId,jdbcType=BIGINT}
+
+
+    </update>
+
+
+
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.mbg.mapper.StatementsMapper">
+  <resultMap id="BaseResultMap" type="com.zc.shop.mbg.po.Statements">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="buy_number" jdbcType="INTEGER" property="buyNumber" />
+    <result column="buy_weight" jdbcType="DECIMAL" property="buyWeight" />
+    <result column="land_number" jdbcType="INTEGER" property="landNumber" />
+    <result column="land_weight" jdbcType="DECIMAL" property="landWeight" />
+    <result column="diff_number" jdbcType="INTEGER" property="diffNumber" />
+    <result column="diff_weight" jdbcType="DECIMAL" property="diffWeight" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_code, buy_number, buy_weight, land_number, land_weight, diff_number, diff_weight, 
+    money
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `statements`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `statements`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zc.shop.mbg.po.Statements">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `statements` (order_code, buy_number, buy_weight, 
+      land_number, land_weight, diff_number, 
+      diff_weight, money)
+    values (#{orderCode,jdbcType=VARCHAR}, #{buyNumber,jdbcType=INTEGER}, #{buyWeight,jdbcType=DECIMAL}, 
+      #{landNumber,jdbcType=INTEGER}, #{landWeight,jdbcType=DECIMAL}, #{diffNumber,jdbcType=INTEGER}, 
+      #{diffWeight,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Statements">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `statements`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="buyNumber != null">
+        buy_number,
+      </if>
+      <if test="buyWeight != null">
+        buy_weight,
+      </if>
+      <if test="landNumber != null">
+        land_number,
+      </if>
+      <if test="landWeight != null">
+        land_weight,
+      </if>
+      <if test="diffNumber != null">
+        diff_number,
+      </if>
+      <if test="diffWeight != null">
+        diff_weight,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyNumber != null">
+        #{buyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyWeight != null">
+        #{buyWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="landNumber != null">
+        #{landNumber,jdbcType=INTEGER},
+      </if>
+      <if test="landWeight != null">
+        #{landWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="diffNumber != null">
+        #{diffNumber,jdbcType=INTEGER},
+      </if>
+      <if test="diffWeight != null">
+        #{diffWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zc.shop.mbg.po.Statements">
+    update `statements`
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyNumber != null">
+        buy_number = #{buyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyWeight != null">
+        buy_weight = #{buyWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="landNumber != null">
+        land_number = #{landNumber,jdbcType=INTEGER},
+      </if>
+      <if test="landWeight != null">
+        land_weight = #{landWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="diffNumber != null">
+        diff_number = #{diffNumber,jdbcType=INTEGER},
+      </if>
+      <if test="diffWeight != null">
+        diff_weight = #{diffWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zc.shop.mbg.po.Statements">
+    update `statements`
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      buy_number = #{buyNumber,jdbcType=INTEGER},
+      buy_weight = #{buyWeight,jdbcType=DECIMAL},
+      land_number = #{landNumber,jdbcType=INTEGER},
+      land_weight = #{landWeight,jdbcType=DECIMAL},
+      diff_number = #{diffNumber,jdbcType=INTEGER},
+      diff_weight = #{diffWeight,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.PagesExtMapper">
+
+
+    <!-- 映射结果 -->
+    <resultMap id="pagesTreeMap" type="com.zc.shop.admin.vo.PagesVo">
+        <result column="labelName" jdbcType="VARCHAR" property="label" />
+        <association property="pages" javaType="com.zc.shop.mbg.po.Pages">
+            <id column="id" jdbcType="BIGINT" property="id" />
+            <result column="router" jdbcType="VARCHAR" property="router" />
+            <result column="name" jdbcType="VARCHAR" property="name" />
+            <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+            <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+            <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+        </association>
+        <collection property="pagesVoList" column="id" select="selectChild"/>
+    </resultMap>
+
+    <!-- 查询子节点 -->
+    <select id="selectChild" resultMap="pagesTreeMap" >
+        SELECT
+        <include refid="com.zc.shop.mbg.mapper.PagesMapper.Base_Column_List" />
+        ,`name` as labelName
+        FROM pages
+        WHERE  parent_id = #{id}
+
+    </select>
+
+
+    <!-- 查询父节点 -->
+    <select id="selectMenuTree" resultMap="pagesTreeMap" >
+        SELECT
+        <include refid="com.zc.shop.mbg.mapper.PagesMapper.Base_Column_List" />
+        ,`name` as labelName
+        FROM pages
+        WHERE  parent_id = 0
+        ORDER BY created_at asc
+    </select>
+
+
+
+</mapper>

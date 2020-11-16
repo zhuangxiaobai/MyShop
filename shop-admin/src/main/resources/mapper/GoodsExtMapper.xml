@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.GoodsExtMapper">
+
+ <!--   <sql id="Base_Column_List_Ext">
+    id, goods_sn, goods_name, goods_number, CAST(goods_weight AS CHAR) goods_weight, weight_unit, CAST(shop_price AS CHAR) shop_price, is_on_sale,
+    add_time, address, suppliers_id, warehouse, remark, weitype, `type`, guige, caizhi,
+    factory, danwei, is_delete
+  </sql>-->
+
+
+
+    <select id="selectByNameGuigeCaizhi" resultMap="com.zc.shop.mbg.mapper.GoodsMapper.BaseResultMap">
+        select
+        <include refid="com.zc.shop.mbg.mapper.GoodsMapper.Base_Column_List" />
+        from goods
+        where goods_name = #{name,jdbcType=VARCHAR}
+        and   guige = #{name,jdbcType=VARCHAR}
+        and   caizhi = #{name,jdbcType=VARCHAR}
+        and  suppliers_id = #{supplierId,jdbcType=SMALLINT}
+       -- and is_delete = 0
+    </select>
+
+
+
+    <update id="updateGoodsNum">
+      update goods
+      set
+      remain_number = #{num,jdbcType=SMALLINT},
+      remain_weight = #{remainWeight,jdbcType = DECIMAL}
+
+      where id = #{goodId,jdbcType=INTEGER}
+
+
+    </update>
+
+
+
+    <update id="updateGoodsNumAll">
+      update goods
+      set
+      goods_number = goods_number + #{numberAdd,jdbcType=SMALLINT},
+      goods_weight = goods_weight +  #{weightAdd,jdbcType=DECIMAL},
+
+      remain_number = remain_number + #{numberAdd,jdbcType=SMALLINT},
+      remain_weight = remain_weight +  #{weightAdd,jdbcType=DECIMAL}
+
+      where id = #{goodId,jdbcType=INTEGER}
+
+
+    </update>
+
+    <update id="updateGoodsNumPlus">
+      update goods
+      set
+      remain_number = remain_number + #{remainNum,jdbcType=SMALLINT},
+      remain_weight = remain_weight +  #{remainWeight,jdbcType=DECIMAL}
+
+      where id = #{goodId,jdbcType=INTEGER}
+
+
+    </update>
+    <select id="selectGoodsBuSupplierId" resultMap="com.zc.shop.mbg.mapper.GoodsMapper.BaseResultMap">
+        select
+        <include refid="com.zc.shop.mbg.mapper.GoodsMapper.Base_Column_List" />
+        from goods
+        where suppliers_id = #{supplierId,jdbcType=SMALLINT}
+
+    </select>
+    <select id="selectAttr1All" resultType="string">
+        select distinct attr1 from
+        goods where is_on_sale = 1
+    </select>
+    <select id="selectAttr2All" resultType="string">
+        select distinct attr2 from
+        goods where  is_on_sale = 1
+    </select>
+
+
+    <select id="selectGoodsAllIndex"  parameterType="com.zc.shop.admin.dto.GoodsSelectGaiParam" resultMap="com.zc.shop.mbg.mapper.GoodsMapper.BaseResultMap">
+        SELECT
+        <include refid="com.zc.shop.mbg.mapper.GoodsMapper.Base_Column_List" />
+        from goods as g
+        <where>
+            is_delete = 0
+            <if test="type != null">
+                and g.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsNameList != null">
+                and g.goods_name in
+                <foreach item="item" collection="goodsNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="caizhiList != null">
+                and g.caizhi in
+                <foreach item="item" collection="caizhiList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="guigeList != null">
+                and g.guige  in
+                <foreach item="item" collection="guigeList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="addressList != null">
+                and g.address  in
+                <foreach item="item" collection="addressList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="factoryList != null">
+                and g.factory in
+                <foreach item="item" collection="factoryList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="danwei != null">
+                and g.danwei = #{danwei,jdbcType=VARCHAR}
+            </if>
+            <if test="isOnSale != null">
+                and g.is_on_sale = #{isOnSale,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by g.add_time DESC
+
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+
+    </select>
+
+    <select id="selectGoodsAllIndexNum"  parameterType="com.zc.shop.admin.dto.GoodsSelectGaiParam" resultType="int">
+        SELECT
+        count(*)
+        from goods as g
+        <where>
+            is_delete = 0
+            <if test="type != null">
+                and g.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsNameList != null">
+                and g.goods_name in
+                <foreach item="item" collection="goodsNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="caizhiList != null">
+                and g.caizhi in
+                <foreach item="item" collection="caizhiList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="guigeList != null">
+                and g.guige  in
+                <foreach item="item" collection="guigeList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="addressList != null">
+                and g.address  in
+                <foreach item="item" collection="addressList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="factoryList != null">
+                and g.factory in
+                <foreach item="item" collection="factoryList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="danwei != null">
+                and g.danwei = #{danwei,jdbcType=VARCHAR}
+            </if>
+            <if test="isOnSale != null">
+                and g.is_on_sale = #{isOnSale,jdbcType=INTEGER}
+            </if>
+
+        </where>
+    </select>
+
+
+    <!--作废-->
+    <select id="selectGoodsAllIndex2"  parameterType="com.zc.shop.admin.dto.GoodsSelectParam" resultMap="com.zc.shop.admin.mapper.StoreinfoExtMapper.GoodsAllInfoVoMap">
+        SELECT
+
+        g.id as goodsId,g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+        g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,
+        g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,
+        g.caizhi as goodsCaizhi,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        u.id as userId,u.username as userUsername, u.nickname as userNickname,
+        from goods as g
+        left join users as u
+        on g.suppliers_id = u.id
+        <where>
+            <if test="type != null">
+                and g.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="pingZhongList != null">
+                and attr.pingzhong in
+                <foreach item="item" collection="pingZhongList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+
+
+
+            g.is_on_sale = 1
+            <if test="pingZhongList != null">
+                and attr.pingzhong in
+                <foreach item="item" collection="pingZhongList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attrNameList != null">
+                and attr.attrname  in
+                <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="materialList != null">
+                and attr.material in
+                <foreach item="item" collection="materialList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="specificationsList != null">
+                and attr.specifications in
+                <foreach item="item" collection="specificationsList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr1All != null">
+                and g.attr1 in
+                <foreach item="item" collection="attr1All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr2All != null">
+                and g.attr2 in
+                <foreach item="item" collection="attr2All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="wareName != null">
+                and w.name = #{wareName,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+        order by
+
+
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+    <!--作废-->
+    <select id="selectGoodsAllIndexNum2"  parameterType="com.zc.shop.admin.dto.GoodsSelectParam" resultType="int">
+        SELECT
+        count(*)
+        from goods as g
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join users as u
+        on g.suppliers_id = u.id
+        left join storeinfo as st
+        on st.user_id =u.id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            g.is_on_sale = 1
+            <if test="pingZhongList != null">
+                and attr.pingzhong in
+                <foreach item="item" collection="pingZhongList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attrNameList != null">
+                and attr.attrname  in
+                <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="materialList != null">
+                and attr.material in
+                <foreach item="item" collection="materialList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="specificationsList != null">
+                and attr.specifications in
+                <foreach item="item" collection="specificationsList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr1All != null">
+                and g.attr1 in
+                <foreach item="item" collection="attr1All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr2All != null">
+                and g.attr2 in
+                <foreach item="item" collection="attr2All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+            <if test="wareName != null">
+                and w.name = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="priceLow != null">
+                and g.shop_price  <![CDATA[>=]]> #{priceLow,jdbcType=DECIMAL}
+            </if>
+            <if test="priceHigh != null">
+                and g.shop_price  <![CDATA[<=]]> #{priceHigh,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </select>
+
+
+
+    <!--作废-->
+    <select id="selectGoodsAllIndex1"  parameterType="com.zc.shop.admin.dto.GoodsSelectParam" resultMap="com.zc.shop.admin.mapper.StoreinfoExtMapper.GoodsAllInfoVoMap">
+        SELECT
+
+        g.id as goodsId,g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+        g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,
+        g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,
+        g.caizhi as goodsCaizhi,g.factory as goodsFactory,g.danwei as goodsDanwei,
+
+--         w.id as wareId,w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
+        u.id as userId,u.username as userUsername, u.nickname as userNickname,
+--         attr.pingzhong as attrPingZhong,attr.attrname as attrAttrName,attr.material as attrMaterial,attr.specifications as attrSpecifications,
+--         st.id as storeinfoId,st.title as storeinfoTitle,st.user_id as storeinfoUserId,st.name as storeinfoName,st.phone as storeinfoPhone,
+--         st.business as storeinfoBusiness,st.city as storeinfoCity,st.address as storeinfoAddress,st.logo as storeinfoLogo,st.max_sellweight as storeMaxSellWeight,
+--         st.max_landweight as storeinfoMaxLandWeight,st.max_sellnum as storeinfoMaxSellNum,st.max_landnum as storeinfoMaxLandNum,st.created_at as storeinfoCreateAt,
+--         st.updated_at as storeinfoUpdatedAt,st.provinces as storeinfoProvinces,st.content as storeinfoContent
+
+        from goods as g
+--         left join
+--             (select a1.attr_name as pingzhong,
+--             a2.attr_name as attrname,
+--             a2.specifications as specifications,
+--             a2.material as material,
+--             a2.id as attrnameid
+--             from attribute a1
+--             left join attribute a2
+--             on a1.id = a2.parent_id
+--             WHERE a1.parent_id = 0) as attr
+--             on attr.attrnameid = g.cat_id
+        left join users as u
+        on g.suppliers_id = u.id
+--         left join storeinfo as st
+--         on st.user_id =u.id
+--         left join ware w
+--         on g.ware_id = w.id
+
+        <where>
+            g.is_on_sale = 1
+            <if test="pingZhongList != null">
+                and attr.pingzhong in
+                <foreach item="item" collection="pingZhongList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attrNameList != null">
+                and attr.attrname  in
+                <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="materialList != null">
+                and attr.material in
+                <foreach item="item" collection="materialList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="specificationsList != null">
+                and attr.specifications in
+                <foreach item="item" collection="specificationsList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr1All != null">
+                and g.attr1 in
+                <foreach item="item" collection="attr1All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr2All != null">
+                and g.attr2 in
+                <foreach item="item" collection="attr2All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+            <if test="wareName != null">
+                and w.name = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="priceLow != null">
+                and g.shop_price  <![CDATA[>=]]> #{priceLow,jdbcType=DECIMAL}
+            </if>
+            <if test="priceHigh != null">
+                and g.shop_price  <![CDATA[<=]]> #{priceHigh,jdbcType=DECIMAL}
+            </if>
+        </where>
+        order by
+        <if test="orderBy == 1">
+            g.shop_price
+        </if>
+        <if test="orderBy == 2">
+            g.shop_price desc
+        </if>
+        <if test="orderBy == null">
+            g.add_time desc
+        </if>
+
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+    <!--作废-->
+    <select id="selectGoodsAllIndexNum1"  parameterType="com.zc.shop.admin.dto.GoodsSelectParam" resultType="int">
+        SELECT
+        count(*)
+        from goods as g
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join users as u
+        on g.suppliers_id = u.id
+        left join storeinfo as st
+        on st.user_id =u.id
+        left join ware w
+        on g.ware_id = w.id
+        <where>
+            g.is_on_sale = 1
+            <if test="pingZhongList != null">
+                and attr.pingzhong in
+                <foreach item="item" collection="pingZhongList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attrNameList != null">
+                and attr.attrname  in
+                <foreach item="item" collection="attrNameList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="materialList != null">
+                and attr.material in
+                <foreach item="item" collection="materialList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="specificationsList != null">
+                and attr.specifications in
+                <foreach item="item" collection="specificationsList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr1All != null">
+                and g.attr1 in
+                <foreach item="item" collection="attr1All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="attr2All != null">
+                and g.attr2 in
+                <foreach item="item" collection="attr2All" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+
+            <if test="wareName != null">
+                and w.name = #{wareName,jdbcType=VARCHAR}
+            </if>
+            <if test="priceLow != null">
+                and g.shop_price  <![CDATA[>=]]> #{priceLow,jdbcType=DECIMAL}
+            </if>
+            <if test="priceHigh != null">
+                and g.shop_price  <![CDATA[<=]]> #{priceHigh,jdbcType=DECIMAL}
+            </if>
+        </where>
+     </select>
+
+
+    <select id="selectGoodsSelllist"  parameterType="com.zc.shop.admin.dto.GoodsSellListParam" resultMap="com.zc.shop.mbg.mapper.GoodsMapper.BaseResultMap">
+        SELECT
+        <include refid="com.zc.shop.mbg.mapper.GoodsMapper.Base_Column_List" />
+        from goods as g
+        <where>
+
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and g.guige = #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and g.caizhi = #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and g.factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="warehouse != null">
+                and g.warehouse = #{warehouse,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete != null">
+                and g.is_delete = #{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="suppliersId != null">
+                and g.suppliers_id = #{suppliersId,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by g.add_time DESC
+
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectGoodsSelllistNum"  parameterType="com.zc.shop.admin.dto.GoodsSellListParam" resultType="int">
+        SELECT
+        count(*)
+        from goods as g
+        <where>
+
+            <if test="goodsName != null">
+                and g.goods_name = #{goodsName,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and g.guige = #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and g.caizhi = #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and g.factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="warehouse != null">
+                and g.warehouse = #{warehouse,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete != null">
+                and g.is_delete = #{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="suppliersId != null">
+                and g.suppliers_id = #{suppliersId,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by g.add_time DESC
+
+
+    </select>
+
+
+
+
+
+</mapper>

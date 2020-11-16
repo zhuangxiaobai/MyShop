@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.StoreinfoExtMapper">
+
+
+    <resultMap id="GoodsAllInfoVoMap" type="com.zc.shop.admin.vo.GoodsAllInfoVo">
+
+
+        <!--店铺表对象-->
+        <association property="storeinfo" javaType="com.zc.shop.mbg.po.Storeinfo">
+            <result column="storeinfoId" jdbcType="SMALLINT" property="id" />
+            <result column="storeinfoUserId" jdbcType="INTEGER" property="userId" />
+            <result column="storeinfoTitle" jdbcType="VARCHAR" property="title" />
+            <result column="storeinfoName" jdbcType="VARCHAR" property="name" />
+            <result column="storeinfoPhone" jdbcType="INTEGER" property="phone" />
+            <result column="storeinfoBusiness" jdbcType="VARCHAR" property="business" />
+            <result column="storeinfoCity" jdbcType="VARCHAR" property="city" />
+            <result column="storeinfoAddress" jdbcType="VARCHAR" property="address" />
+            <result column="storeinfoLogo" jdbcType="VARCHAR" property="logo" />
+            <result column="storeMaxSellWeight" jdbcType="DECIMAL" property="maxSellweight" />
+            <result column="storeinfoMaxLandWeight" jdbcType="DECIMAL" property="maxLandweight" />
+            <result column="storeinfoMaxSellNum" jdbcType="INTEGER" property="maxSellnum" />
+            <result column="storeinfoMaxLandNum" jdbcType="INTEGER" property="maxLandnum" />
+            <result column="storeinfoCreateAt" jdbcType="TIMESTAMP" property="createdAt" />
+            <result column="storeinfoUpdatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
+            <result column="storeinfoProvinces" jdbcType="VARCHAR" property="provinces" />
+            <result column="storeinfoContent" jdbcType="LONGVARCHAR" property="content" />
+        </association>
+        <!--商品表部分-->
+        <association property="goods" javaType="com.zc.shop.mbg.po.Goods">
+        <result column="goodsId" jdbcType="SMALLINT" property="id" />
+            <result column="goodsCatId" jdbcType="SMALLINT" property="catId" />
+        <result column="goodsGoodsSn" jdbcType="VARCHAR" property="goodsSn" />
+        <result column="goodsGoodsName" jdbcType="VARCHAR" property="goodsName" />
+        <result column="goodsGoodsNumber" jdbcType="SMALLINT" property="goodsNumber" />
+        <result column="goodsGoodsWeight" jdbcType="DECIMAL" property="goodsWeight" />
+        <result column="goodsWeightUnit" jdbcType="SMALLINT" property="weightUnit" />
+        <result column="goodsShopPrice" jdbcType="DECIMAL" property="shopPrice" />
+
+        <result column="goodsIsOnSale" jdbcType="TINYINT" property="isOnSale" />
+
+        <result column="goodsAddTime" jdbcType="TIMESTAMP" property="addTime" />
+
+        <result column="goodsSuppliersId" jdbcType="SMALLINT" property="suppliersId" />
+
+        <result column="goodsRemark" jdbcType="VARCHAR" property="remark" />
+        </association>
+        <!--品种品名表-->
+        <association property="attributeVo" javaType="com.zc.shop.admin.vo.AttributeVo">
+            <result column="attrPingZhong" jdbcType="VARCHAR" property="attrPingZhong" />
+            <result column="attrAttrName" jdbcType="VARCHAR" property="attrAttrName" />
+            <result column="attrSpecifications" jdbcType="VARCHAR" property="attrSpecifications" />
+            <result column="attrMaterial" jdbcType="VARCHAR" property="attrMaterial" />
+         </association>
+        <!--仓库表-->
+        <association property="ware" javaType="com.zc.shop.mbg.po.Ware">
+            <result column="wareId" jdbcType="SMALLINT" property="id" />
+        <result column="wareTitle" jdbcType="VARCHAR" property="title" />
+        <result column="wareName" jdbcType="VARCHAR" property="name" />
+        <result column="warePhone" jdbcType="INTEGER" property="phone" />
+        <result column="wareCity" jdbcType="VARCHAR" property="city" />
+        <result column="wareAddress" jdbcType="VARCHAR" property="address" />
+        <result column="wareContent" jdbcType="LONGVARCHAR" property="content" />
+        </association>
+        <association property="usersVo" javaType="com.zc.shop.admin.vo.UsersVo">
+            <result column="userId" jdbcType="INTEGER" property="id" />
+        <result column="userUsername" jdbcType="VARCHAR" property="username" />
+        <result column="userNickname" jdbcType="VARCHAR" property="nickname" />
+        </association>
+
+
+
+
+    </resultMap>
+
+
+
+
+
+    <select id="selectStoreinfoByUserId" resultMap="com.zc.shop.mbg.mapper.StoreinfoMapper.ResultMapWithBLOBs">
+        select
+        <include refid="com.zc.shop.mbg.mapper.StoreinfoMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.StoreinfoMapper.Blob_Column_List" />
+        from storeinfo
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectStoreinfoList"  parameterType="com.zc.shop.admin.dto.StoreinfoListParam" resultMap="com.zc.shop.mbg.mapper.StoreinfoMapper.ResultMapWithBLOBs">
+        select
+        <include refid="com.zc.shop.mbg.mapper.StoreinfoMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.StoreinfoMapper.Blob_Column_List" />
+        from storeinfo
+        <where>
+            <if test=" storeinfoName!= null">
+                and title like  concat('%',#{storeinfoName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        order by created_at desc
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="selectStoreinfoListNum" parameterType="com.zc.shop.admin.dto.StoreinfoListParam" resultType="int">
+        select count(*)
+        from storeinfo
+        <where>
+            <if test=" storeinfoName!= null">
+                and title like  concat('%',#{storeinfoName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="StoreinfoDetails"  parameterType="com.zc.shop.admin.dto.StoreinfoDetailParam" resultMap="GoodsAllInfoVoMap">
+        SELECT
+
+        g.id as goodsId,g.cat_id as goodsCatId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_number as goodsGoodsNumber,g.goods_weight as goodsGoodsWeight,
+        g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,g.goods_thumb as goodsGoodsThumb,g.goods_img as goodsGoodsImg,g.original_img as goodsOriginalImg,
+        g.is_on_sale as goodsIsOnSale,g.is_shipping as goodsIsShipping,g.add_time as goodsAddTime,g.attr1 as goodsAttr1,g.attr2 as goodsAttr2,g.suppliers_id as goodsSuppliersId,
+        g.ware_id as goodsWareId,g.trademark as goodsTrademark,g.remark as goodsRemark,
+
+        w.id as wareId,w.title as wareTitle,w.name as wareName,w.phone as warePhone,w.city as wareCity,w.address as wareAddress,w.content as wareContent,
+        u.id as userId,u.username as userUsername, u.nickname as userNickname,
+        attr.pingzhong as attrPingZhong,attr.attrname as attrAttrName,attr.material as attrMaterial,attr.specifications as attrSpecifications,
+        st.id as storeinfoId,st.title as storeinfoTitle,st.user_id as storeinfoUserId,st.name as storeinfoName,st.phone as storeinfoPhone,
+        st.business as storeinfoBusiness,st.city as storeinfoCity,st.address as storeinfoAddress,st.logo as storeinfoLogo,st.max_sellweight as storeMaxSellWeight,
+        st.max_landweight as storeinfoMaxLandWeight,st.max_sellnum as storeinfoMaxSellNum,st.max_landnum as storeinfoMaxLandNum,st.created_at as storeinfoCreateAt,
+        st.updated_at as storeinfoUpdatedAt,st.provinces as storeinfoProvinces,st.content as storeinfoContent
+
+
+        from storeinfo as st
+        left join users as u
+        on st.user_id =u.id
+        left join goods as g
+        on u.id = g.suppliers_id
+        left join
+            (select a1.attr_name as pingzhong,
+            a2.attr_name as attrname,
+            a2.specifications as specifications,
+            a2.material as material,
+            a2.id as attrnameid
+            from attribute a1
+            left join attribute a2
+            on a1.id = a2.parent_id
+            WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join ware w
+        on g.ware_id = w.id
+
+        <where>
+            st.id = #{storeinfoId,jdbcType=SMALLINT}
+
+            <if test="attrName != null">
+                and attr.attrname = #{attrName,jdbcType=VARCHAR}
+            </if>
+            <if test="attr1 != null">
+                and g.attr1 = #{attr1,jdbcType=VARCHAR}
+            </if>
+
+
+            <if test="wareId != null">
+                and w.id = #{wareId,jdbcType=INTEGER}
+            </if>
+            <if test="isOnSale != null">
+                and g.is_on_sale = #{isOnSale,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by
+        <if test="orderBy == 1">
+            g.shop_price
+        </if>
+        <if test="orderBy == 2">
+            g.shop_price desc
+        </if>
+        <if test="orderBy == 3">
+            g.add_time
+        </if>
+        <if test="orderBy == 4">
+            g.add_time desc
+        </if>
+        <if test="orderBy == null">
+            g.is_on_sale desc,g.add_time desc
+        </if>
+
+       <!-- case when #{orderBy,jdbcType=INTEGER} = 1 then  g.shop_price
+         when #{orderBy,jdbcType=INTEGER} = 2 then  g.shop_price desc
+         when #{orderBy,jdbcType=INTEGER} = 3 then  g.created_at
+         when #{orderBy,jdbcType=INTEGER} = 4 then  g.created_at desc
+        else  g.is_on_sale desc,g.created_at desc
+        end-->
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="StoreinfoDetailsNum" parameterType="com.zc.shop.admin.dto.StoreinfoDetailParam" resultType="int">
+        SELECT count(*)
+        from storeinfo as st
+        left join users as u
+        on st.user_id =u.id
+        left join goods as g
+        on u.id = g.suppliers_id
+        left join
+        (select a1.attr_name as pingzhong,
+        a2.attr_name as attrname,
+        a2.specifications as specifications,
+        a2.material as material,
+        a2.id as attrnameid
+        from attribute a1
+        left join attribute a2
+        on a1.id = a2.parent_id
+        WHERE a1.parent_id = 0) as attr
+        on attr.attrnameid = g.cat_id
+        left join ware w
+        on g.ware_id = w.id
+
+        <where>
+            st.id = #{storeinfoId,jdbcType=SMALLINT}
+
+            <if test="attrName != null">
+                and attr.attrname = #{attrName,jdbcType=VARCHAR}
+            </if>
+            <if test="attr1 != null">
+                and g.attr1 = #{attr1,jdbcType=VARCHAR}
+            </if>
+
+            <if test="wareId != null">
+                and w.id = #{wareId,jdbcType=INTEGER}
+            </if>
+            <if test="isOnSale != null">
+                and g.is_on_sale = #{isOnSale,jdbcType=INTEGER}
+            </if>
+
+        </where>
+    </select>
+
+
+</mapper>

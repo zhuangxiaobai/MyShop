@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.ShopcartExtMapper">
+
+
+
+    <select id="selectByUserId"  resultMap="com.zc.shop.mbg.mapper.ShopcartMapper.ResultMapWithBLOBs">
+        select
+        <include refid="com.zc.shop.mbg.mapper.ShopcartMapper.Base_Column_List" />
+        ,
+        <include refid="com.zc.shop.mbg.mapper.ShopcartMapper.Blob_Column_List" />
+        from shopcart
+        where user_id = #{userId,jdbcType=SMALLINT}
+    </select>
+
+
+
+
+
+</mapper>

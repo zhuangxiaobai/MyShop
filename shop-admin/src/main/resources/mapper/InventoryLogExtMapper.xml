@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.shop.admin.mapper.InventoryLogExtMapper">
+
+
+
+    <resultMap id="RuKuChuKuMapId" type="com.zc.shop.admin.vo.RuKuChuKuVo">
+
+        <!--库存记录表数据-->
+        <result column="inventoryLogId" jdbcType="BIGINT" property="inventoryLog.id" />
+        <result column="inventoryLogGoodsId" jdbcType="INTEGER" property="inventoryLog.goodsId" />
+        <result column="inventoryLogInvId" jdbcType="BIGINT" property="inventoryLog.invId" />
+        <result column="inventoryLogNum" jdbcType="INTEGER" property="inventoryLog.num" />
+        <result column="inventoryLogInuId" jdbcType="DECIMAL" property="inventoryLog.inuId" />
+        <result column="inventoryLogType" jdbcType="INTEGER" property="inventoryLog.type" />
+        <result column="inventoryLogCreatedAt" jdbcType="TIMESTAMP" property="inventoryLog.createdAt" />
+        <result column="inventoryLogWeight" jdbcType="DECIMAL" property="inventoryLog.weight" />
+
+        <!--库存表数据-->
+        <result column="inventoryId" jdbcType="BIGINT" property="inventory.id" />
+        <result column="inventorySn" jdbcType="VARCHAR" property="inventory.goodsSn" />
+        <result column="inventoryName" jdbcType="VARCHAR" property="inventory.goodsName" />
+        <result column="inventoryNumber" jdbcType="INTEGER" property="inventory.goodsNumber" />
+        <result column="inventoryWeight" jdbcType="DECIMAL" property="inventory.goodsWeight" />
+        <result column="inventoryWeightUnit" jdbcType="INTEGER" property="inventory.weightUnit" />
+        <result column="inventoryShopPrice" jdbcType="DECIMAL" property="inventory.shopPrice" />
+        <result column="inventoryIsOnSale" jdbcType="INTEGER" property="inventory.isOnSale" />
+        <result column="inventoryAddTime" jdbcType="TIMESTAMP" property="inventory.addTime" />
+        <result column="inventoryAddress" jdbcType="VARCHAR" property="inventory.address" />
+        <result column="inventorySuppliersId" jdbcType="SMALLINT" property="inventory.suppliersId" />
+        <result column="inventoryWarehouse" jdbcType="VARCHAR" property="inventory.warehouse" />
+        <result column="inventoryRemark" jdbcType="VARCHAR" property="inventory.remark" />
+        <result column="inventoryWeitype" jdbcType="INTEGER" property="inventory.weitype" />
+        <result column="inventoryType" jdbcType="VARCHAR" property="inventory.type" />
+        <result column="inventoryGuige" jdbcType="VARCHAR" property="inventory.guige" />
+        <result column="inventoryCaizhi" jdbcType="VARCHAR" property="inventory.caizhi" />
+        <result column="inventoryFactory" jdbcType="VARCHAR" property="inventory.factory" />
+        <result column="inventoryDanwei" jdbcType="VARCHAR" property="inventory.danwei" />
+        <result column="inventoryKunbao" jdbcType="VARCHAR" property="inventory.kunbao" />
+        <result column="inventoryCgcode" jdbcType="VARCHAR" property="inventory.cgcode" />
+
+    </resultMap>
+
+    <resultMap id="RuKuCaiGouChuKuXiaoShouMapId" type="com.zc.shop.admin.vo.RuKuCaiGouChukuXiaoShouVo">
+
+        <!--订单表数据-->
+        <id column="orderId" jdbcType="BIGINT" property="order.id" />
+        <result column="orderCode" jdbcType="VARCHAR" property="order.code" />
+        <result column="orderSupplierId" jdbcType="INTEGER" property="order.supplierId" />
+        <result column="orderGoodsId" jdbcType="INTEGER" property="order.goodsId" />
+        <result column="orderNum" jdbcType="INTEGER" property="order.num" />
+        <result column="orderWeight" jdbcType="DECIMAL" property="order.weight" />
+        <result column="orderStatus" jdbcType="INTEGER" property="order.status" />
+        <result column="orderBuyId" jdbcType="INTEGER" property="order.buyId" />
+        <result column="orderCreatedAt" jdbcType="TIMESTAMP" property="order.createdAt" />
+        <result column="orderUpdatedAt" jdbcType="TIMESTAMP" property="order.updatedAt" />
+        <result column="orderRemaining" jdbcType="DECIMAL" property="order.remaining" />
+        <result column="orderRemark" jdbcType="LONGVARCHAR" property="order.remark" />
+        <result column="orderPayment" jdbcType="DECIMAL" property="order.payment" />
+        <result column="orderMargin" jdbcType="DECIMAL" property="order.margin" />
+        <result column="orderType" jdbcType="INTEGER" property="order.type" />
+        <result column="orderRemainnumber" jdbcType="INTEGER" property="order.remainnumber" />
+        <!--</association>-->
+
+        <!--商品表数据集合-->
+        <result column="goodsId" jdbcType="INTEGER" property="goods.id" />
+        <result column="goodsGoodsSn" jdbcType="VARCHAR" property="goods.goodsSn" />
+        <result column="goodsGoodsName" jdbcType="VARCHAR" property="goods.goodsName" />
+        <result column="goodsGoodsNumber" jdbcType="SMALLINT" property="goods.goodsNumber" />
+        <result column="goodsGoodsWeight" jdbcType="DECIMAL" property="goods.goodsWeight" />
+        <result column="goodsWeightUnit" jdbcType="SMALLINT" property="goods.weightUnit" />
+        <result column="goodsShopPrice" jdbcType="DECIMAL" property="goods.shopPrice" />
+        <result column="goodsIsOnSale" jdbcType="TINYINT" property="goods.isOnSale" />
+        <result column="goodsAddTime" jdbcType="TIMESTAMP" property="goods.addTime" />
+        <result column="goodsAddress" jdbcType="VARCHAR" property="goods.address" />
+        <result column="goodsSuppliersId" jdbcType="SMALLINT" property="goods.suppliersId" />
+        <result column="goodsWarehouse" jdbcType="VARCHAR" property="goods.warehouse" />
+        <result column="goodsRemark" jdbcType="VARCHAR" property="goods.remark" />
+        <result column="goodsWeitype" jdbcType="INTEGER" property="goods.weitype" />
+        <result column="goodsType" jdbcType="VARCHAR" property="goods.type" />
+        <result column="goodsGuige" jdbcType="VARCHAR" property="goods.guige" />
+        <result column="goodsCaizhi" jdbcType="VARCHAR" property="goods.caizhi" />
+        <result column="goodsFactory" jdbcType="VARCHAR" property="goods.factory" />
+        <result column="goodsDanwei" jdbcType="VARCHAR" property="goods.danwei" />
+        <result column="goodsIsDelete" jdbcType="INTEGER" property="goods.isDelete" />
+        <result column="goodsRemainNumber" jdbcType="SMALLINT" property="goods.remainNumber" />
+        <result column="goodsRemainWeight" jdbcType="DECIMAL" property="goods.remainWeight" />
+
+        <!--结算详情表集合-->
+        <result column="settlementId" jdbcType="BIGINT" property="settlement.id" />
+        <result column="settlementOrderId" jdbcType="BIGINT" property="settlement.orderId" />
+        <result column="settlementGoodsId" jdbcType="INTEGER" property="settlement.goodsId"/>
+        <result column="settlementWeight" jdbcType="DECIMAL" property="settlement.weight"/>
+        <result column="settlementPrice" jdbcType="DECIMAL" property="settlement.price" />
+        <result column="settlementCreatedAt" jdbcType="TIMESTAMP" property="settlement.createdAt" />
+        <result column="settlementUpdatedAt" jdbcType="TIMESTAMP" property="settlement.updatedAt" />
+        <result column="settlementOrderCode" jdbcType="VARCHAR" property="settlement.orderCode" />
+        <result column="settlementNum" jdbcType="INTEGER" property="settlement.num"/>
+        <result column="settlementPriceAll" jdbcType="DECIMAL" property="settlement.priceAll"/>
+        <result column="settlementWeightPrice" jdbcType="DECIMAL" property="settlement.weightPrice" />
+
+
+    </resultMap>
+
+
+    <select id="selectRuKuByParam" resultMap="RuKuChuKuMapId">
+         select
+        invLog.id as inventoryLogId,invLog.goods_id as inventoryLogGoodsId,invLog.inv_id as inventoryLogInvId,
+        invLog.num as inventoryLogNum,invLog.inu_id as inventoryLogInuId,invLog.type as inventoryLogType,
+        invLog.created_at as inventoryLogCreatedAt,invLog.weight as inventoryLogWeight,
+
+        inv.id as inventoryId,inv.goods_sn as inventorySn,inv.goods_name as inventoryName,
+        inv.goods_number as inventoryNumber,inv.goods_weight as inventoryWeight,inv.weight_unit  as inventoryWeightUnit,
+        inv.shop_price as inventoryShopPrice, inv.is_on_sale as inventoryIsOnSale,inv.add_time as inventoryAddTime,
+        inv.address as  inventoryAddress,inv.suppliers_id as inventorySuppliersId,inv.warehouse as inventoryWarehouse,
+        inv.remark as inventoryRemark,inv.weitype as inventoryWeitype,inv.type as inventoryType,
+        inv.guige as inventoryGuige,inv.caizhi as inventoryCaizhi,inv.factory as inventoryFactory,
+        inv.danwei as inventoryDanwei,inv.kunbao as inventoryKunbao,inv.cgcode as inventoryCgcode
+
+        from inventory_log  invLog
+        left join  inventory inv
+        on  invLog.inv_id  = inv.id
+        <where>
+             invLog.type = 0
+            <if test="name != null">
+                and  inv.goods_name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and  inv.guige= #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and  inv.caizhi= #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and  inv.factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="ware != null">
+                and  inv.warehouse = #{ware,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null">
+                and date(invLog.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(invLog.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+
+            <if test="supplierId != null">
+                and invLog.inu_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by invLog.created_at desc
+        <if test="startPage != null and PageSize != null">
+            limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+        </if>
+
+
+
+
+    </select>
+    <select id="selectRuKuNumByParam" resultType="java.lang.Integer">
+        select
+          count(*)
+        from inventory_log  invLog
+        left join  inventory inv
+        on  invLog.inv_id  = inv.id
+        <where>
+            invLog.type = 0
+            <if test="name != null">
+                and  inv.goods_name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and  inv.guige= #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and  inv.caizhi= #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and  inv.factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="ware != null">
+                and  inv.warehouse = #{ware,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null">
+                and date(invLog.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(invLog.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+
+            <if test="supplierId != null">
+                and invLog.inu_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+
+
+    </select>
+
+    <select id="selectChuKuByParam" resultMap="RuKuChuKuMapId">
+    select
+        invLog.id as inventoryLogId,invLog.goods_id as inventoryLogGoodsId,invLog.inv_id as inventoryLogInvId,
+        invLog.num as inventoryLogNum,invLog.inu_id as inventoryLogInuId,invLog.type as inventoryLogType,
+        invLog.created_at as inventoryLogCreatedAt,invLog.weight as inventoryLogWeight,
+
+        inv.id as inventoryId,inv.goods_sn as inventorySn,inv.goods_name as inventoryName,
+        inv.goods_number as inventoryNumber,inv.goods_weight as inventoryWeight,inv.weight_unit  as inventoryWeightUnit,
+        inv.shop_price as inventoryShopPrice, inv.is_on_sale as inventoryIsOnSale,inv.add_time as inventoryAddTime,
+        inv.address as  inventoryAddress,inv.suppliers_id as inventorySuppliersId,inv.warehouse as inventoryWarehouse,
+        inv.remark as inventoryRemark,inv.weitype as inventoryWeitype,inv.type as inventoryType,
+        inv.guige as inventoryGuige,inv.caizhi as inventoryCaizhi,inv.factory as inventoryFactory,
+        inv.danwei as inventoryDanwei,inv.kunbao as inventoryKunbao,inv.cgcode as inventoryCgcode
+
+
+        from inventory_log  invLog
+    left join  inventory inv
+    on  invLog.inv_id  = inv.id
+    <where>
+        invLog.type = 1
+        <if test="name != null">
+            and  inv.goods_name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="guige != null">
+            and  inv.guige= #{guige,jdbcType=VARCHAR}
+        </if>
+        <if test="caizhi != null">
+            and  inv.caizhi= #{caizhi,jdbcType=VARCHAR}
+        </if>
+        <if test="factory != null">
+            and  inv.factory = #{factory,jdbcType=VARCHAR}
+        </if>
+        <if test="ware != null">
+            and  inv.warehouse = #{ware,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and date(invLog.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+        </if>
+        <if test="endTime != null">
+            and date(invLog.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+        </if>
+
+        <if test="supplierId != null">
+            and invLog.inu_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+
+    </where>
+    order by invLog.created_at desc
+    <if test="startPage != null and PageSize != null">
+        limit #{startPage,jdbcType=INTEGER},#{PageSize,jdbcType=INTEGER}
+    </if>
+    </select>
+
+    <select id="selectChuKuNumByParam" resultType="java.lang.Integer">
+        select
+        count(*)
+        from inventory_log  invLog
+        left join  inventory inv
+        on  invLog.inv_id  = inv.id
+        <where>
+            invLog.type = 1
+            <if test="name != null">
+                and  inv.goods_name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and  inv.guige= #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and  inv.caizhi= #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and  inv.factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="ware != null">
+                and  inv.warehouse = #{ware,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null">
+                and date(invLog.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(invLog.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+
+            <if test="supplierId != null">
+                and invLog.inu_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+
+
+    </select>
+
+
+    <select id="selectRuKuCaiGouList" resultMap="RuKuCaiGouChuKuXiaoShouMapId">
+    select
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,o.payment as orderPayment,o.margin as orderMargin,o.type as orderType,o.remainnumber as orderRemainnumber,
+
+
+        g.id as goodsId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_weight as goodsGoodsWeight,g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,
+        g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,
+        g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,g.guige as goodsGuige,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        g.is_delete as goodsIsDelete,g.remain_number as goodsRemainNumber,g.remain_weight  as goodsRemainWeight,
+
+
+        sett.id as settlementId,sett.order_id as settlementOrderId,sett.goods_id as settlementOrderId,sett.weight as settlementWeight,
+        sett.price as settlementPrice,sett.created_at as settlementCreatedAt,sett.updated_at as settlementUpdatedAt,
+        sett.order_code as settlementOrderCode, sett.num as settlementNum , sett.price_all as settlementPriceAll,sett.weight_price as settlementWeightPrice
+
+    from order  o
+    left join  goods g
+    on  o.goods_id  = g.id
+    left join settlement sett
+    on o.id = sett.order_id
+    <where>
+        o.status = 7
+        <if test="name != null">
+            and  g.goods_name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="guige != null">
+            and  g.guige= #{guige,jdbcType=VARCHAR}
+        </if>
+        <if test="caizhi != null">
+            and  g.caizhi= #{caizhi,jdbcType=VARCHAR}
+        </if>
+        <if test="factory != null">
+            and  g.factory = #{factory,jdbcType=VARCHAR}
+        </if>
+        <if test="ware != null">
+            and  g.warehouse = #{ware,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+        </if>
+        <if test="endTime != null">
+            and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+        </if>
+
+        <if test="buyId != null">
+            and o.buy_id = #{buyId,jdbcType=INTEGER}
+        </if>
+
+    </where>
+    order by o.created_at desc
+    </select>
+
+    <select id="selectChuKuXiaoShouList" resultMap="RuKuCaiGouChuKuXiaoShouMapId">
+        select
+        o.id as orderId,o.code as orderCode,o.supplier_id as orderSupplierId,o.goods_id as orderGoodsId,o.num as orderNum,
+        o.weight as orderWeight,o.status as orderStatus,o.buy_id as orderBuyId,o.created_at as orderCreatedAt,o.updated_at as orderUpdatedAt,
+        o.remaining as orderRemaining,o.remark as orderRemark,o.payment as orderPayment,o.margin as orderMargin,o.type as orderType,o.remainnumber as orderRemainnumber,
+
+
+        g.id as goodsId,g.goods_sn as goodsGoodsSn,g.goods_name as goodsGoodsName,g.goods_weight as goodsGoodsWeight,g.weight_unit as goodsWeightUnit,g.shop_price as goodsShopPrice,
+        g.is_on_sale as goodsIsOnSale,g.add_time as goodsAddTime,g.address as goodsAddress,g.suppliers_id as goodsSuppliersId,g.warehouse as goodsWarehouse,
+        g.remark as goodsRemark,g.weitype as goodsWeitype,g.type as goodsType,g.guige as goodsGuige,g.guige as goodsGuige,g.factory as goodsFactory,g.danwei as goodsDanwei,
+        g.is_delete as goodsIsDelete,g.remain_number as goodsRemainNumber,g.remain_weight  as goodsRemainWeight,
+
+
+        sett.id as settlementId,sett.order_id as settlementOrderId,sett.goods_id as settlementOrderId,sett.weight as settlementWeight,
+        sett.price as settlementPrice,sett.created_at as settlementCreatedAt,sett.updated_at as settlementUpdatedAt,
+        sett.order_code as settlementOrderCode, sett.num as settlementNum , sett.price_all as settlementPriceAll,sett.weight_price as settlementWeightPrice
+
+        from order  o
+        left join  goods g
+        on  o.goods_id  = g.id
+        left join settlement sett
+        on o.id = sett.order_id
+        <where>
+            o.status = 7
+            <if test="name != null">
+                and  g.goods_name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="guige != null">
+                and  g.guige= #{guige,jdbcType=VARCHAR}
+            </if>
+            <if test="caizhi != null">
+                and  g.caizhi= #{caizhi,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null">
+                and  g.factory = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="ware != null">
+                and  g.warehouse = #{ware,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null">
+                and date(o.created_at) <![CDATA[>=]]> #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and date(o.created_at) <![CDATA[<=]]> #{endTime,jdbcType=DATE}
+            </if>
+
+            <if test="supplierId != null">
+                and o.supplier_id = #{supplierId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+        order by o.created_at desc
+    </select>
+
+
+</mapper>
