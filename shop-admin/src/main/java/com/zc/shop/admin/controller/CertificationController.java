@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/certification")
 public class CertificationController {
 
+    //vvv
     @Autowired
     private CertificationService certificationService;
 
@@ -42,6 +43,8 @@ public class CertificationController {
         }
 
     }
+
+
 
 
     @ApiOperation(value = "获取自身的认证信息")
