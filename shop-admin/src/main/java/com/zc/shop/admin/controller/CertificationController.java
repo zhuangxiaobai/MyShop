@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/certification")
 public class CertificationController {
 
-    //注释zzz1aaq222qqw
+    //注释zzz1aa2222q222qqw
     @Autowired
     private CertificationService certificationService;
 
