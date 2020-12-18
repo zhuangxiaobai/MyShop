@@ -27,6 +27,9 @@ public class Lading implements Serializable {
     @ApiModelProperty(value = "提单状态")
     private Integer status;
 
+    @ApiModelProperty(value = "提单图片")
+    private String pic;
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime ladingedAt;
 
@@ -56,9 +59,6 @@ public class Lading implements Serializable {
 
     @ApiModelProperty(value = "提单留言")
     private String remark;
-
-    @ApiModelProperty(value = "提单图片")
-    private String pic;
 
     @ApiModelProperty(value = "司机信息等json格式")
     private String information;
@@ -122,6 +122,14 @@ public class Lading implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
     public LocalDateTime getLadingedAt() {
@@ -204,14 +212,6 @@ public class Lading implements Serializable {
         this.remark = remark;
     }
 
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
     public String getInformation() {
         return information;
     }
@@ -241,6 +241,7 @@ public class Lading implements Serializable {
         sb.append(", goodsId=").append(goodsId);
         sb.append(", weight=").append(weight);
         sb.append(", status=").append(status);
+        sb.append(", pic=").append(pic);
         sb.append(", ladingedAt=").append(ladingedAt);
         sb.append(", createdAt=").append(createdAt);
         sb.append(", updatedAt=").append(updatedAt);
@@ -251,7 +252,6 @@ public class Lading implements Serializable {
         sb.append(", realWeight=").append(realWeight);
         sb.append(", num=").append(num);
         sb.append(", remark=").append(remark);
-        sb.append(", pic=").append(pic);
         sb.append(", information=").append(information);
         sb.append(", shouquanshu=").append(shouquanshu);
         sb.append(", serialVersionUID=").append(serialVersionUID);

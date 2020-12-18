@@ -9,6 +9,7 @@
     <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
     <result column="weight" jdbcType="DECIMAL" property="weight" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
     <result column="ladinged_at" jdbcType="TIMESTAMP" property="ladingedAt" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
@@ -21,16 +22,15 @@
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zc.shop.mbg.po.Lading">
     <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
-    <result column="pic" jdbcType="LONGVARCHAR" property="pic" />
     <result column="information" jdbcType="LONGVARCHAR" property="information" />
     <result column="shouquanshu" jdbcType="LONGVARCHAR" property="shouquanshu" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, code, order_code, supplier_id, goods_id, weight, `status`, ladinged_at, created_at, 
-    updated_at, order_id, `type`, guohu, real_num, real_weight, num
+    id, code, order_code, supplier_id, goods_id, weight, `status`, pic, ladinged_at, 
+    created_at, updated_at, order_id, `type`, guohu, real_num, real_weight, num
   </sql>
   <sql id="Blob_Column_List">
-    remark, pic, information, shouquanshu
+    remark, information, shouquanshu
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
@@ -50,17 +50,17 @@
     </selectKey>
     insert into `lading` (code, order_code, supplier_id, 
       goods_id, weight, `status`, 
-      ladinged_at, created_at, updated_at, 
-      order_id, `type`, guohu, 
-      real_num, real_weight, num, 
-      remark, pic, information, 
+      pic, ladinged_at, created_at, 
+      updated_at, order_id, `type`, 
+      guohu, real_num, real_weight, 
+      num, remark, information, 
       shouquanshu)
     values (#{code,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, #{supplierId,jdbcType=INTEGER}, 
       #{goodsId,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
-      #{ladingedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{orderId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{guohu,jdbcType=VARCHAR}, 
-      #{realNum,jdbcType=INTEGER}, #{realWeight,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, 
-      #{remark,jdbcType=LONGVARCHAR}, #{pic,jdbcType=LONGVARCHAR}, #{information,jdbcType=LONGVARCHAR}, 
+      #{pic,jdbcType=VARCHAR}, #{ladingedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{orderId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{guohu,jdbcType=VARCHAR}, #{realNum,jdbcType=INTEGER}, #{realWeight,jdbcType=DECIMAL}, 
+      #{num,jdbcType=INTEGER}, #{remark,jdbcType=LONGVARCHAR}, #{information,jdbcType=LONGVARCHAR}, 
       #{shouquanshu,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zc.shop.mbg.po.Lading">
@@ -86,6 +86,9 @@
       </if>
       <if test="status != null">
         `status`,
+      </if>
+      <if test="pic != null">
+        pic,
       </if>
       <if test="ladingedAt != null">
         ladinged_at,
@@ -117,9 +120,6 @@
       <if test="remark != null">
         remark,
       </if>
-      <if test="pic != null">
-        pic,
-      </if>
       <if test="information != null">
         information,
       </if>
@@ -145,6 +145,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
       </if>
       <if test="ladingedAt != null">
         #{ladingedAt,jdbcType=TIMESTAMP},
@@ -176,9 +179,6 @@
       <if test="remark != null">
         #{remark,jdbcType=LONGVARCHAR},
       </if>
-      <if test="pic != null">
-        #{pic,jdbcType=LONGVARCHAR},
-      </if>
       <if test="information != null">
         #{information,jdbcType=LONGVARCHAR},
       </if>
@@ -207,6 +207,9 @@
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
       </if>
       <if test="ladingedAt != null">
         ladinged_at = #{ladingedAt,jdbcType=TIMESTAMP},
@@ -238,9 +241,6 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=LONGVARCHAR},
       </if>
-      <if test="pic != null">
-        pic = #{pic,jdbcType=LONGVARCHAR},
-      </if>
       <if test="information != null">
         information = #{information,jdbcType=LONGVARCHAR},
       </if>
@@ -258,6 +258,7 @@
       goods_id = #{goodsId,jdbcType=INTEGER},
       weight = #{weight,jdbcType=DECIMAL},
       `status` = #{status,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=VARCHAR},
       ladinged_at = #{ladingedAt,jdbcType=TIMESTAMP},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
@@ -268,7 +269,6 @@
       real_weight = #{realWeight,jdbcType=DECIMAL},
       num = #{num,jdbcType=INTEGER},
       remark = #{remark,jdbcType=LONGVARCHAR},
-      pic = #{pic,jdbcType=LONGVARCHAR},
       information = #{information,jdbcType=LONGVARCHAR},
       shouquanshu = #{shouquanshu,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
@@ -281,6 +281,7 @@
       goods_id = #{goodsId,jdbcType=INTEGER},
       weight = #{weight,jdbcType=DECIMAL},
       `status` = #{status,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=VARCHAR},
       ladinged_at = #{ladingedAt,jdbcType=TIMESTAMP},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},

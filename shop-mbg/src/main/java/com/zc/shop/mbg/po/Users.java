@@ -34,6 +34,15 @@ public class Users implements Serializable {
     @ApiModelProperty(value = "公司id")
     private Integer cId;
 
+    @ApiModelProperty(value = "真实姓名")
+    private String realname;
+
+    @ApiModelProperty(value = "性别,0为未知,1为男,2为女")
+    private Integer sex;
+
+    @ApiModelProperty(value = "邮箱")
+    private String email;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -116,6 +125,30 @@ public class Users implements Serializable {
         this.cId = cId;
     }
 
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -132,6 +165,9 @@ public class Users implements Serializable {
         sb.append(", roleId=").append(roleId);
         sb.append(", isDelete=").append(isDelete);
         sb.append(", cId=").append(cId);
+        sb.append(", realname=").append(realname);
+        sb.append(", sex=").append(sex);
+        sb.append(", email=").append(email);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

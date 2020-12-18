@@ -199,7 +199,21 @@ public class UserController {
 //    }
 
 
+    @ApiOperation(value = "个人信息-编辑,修改用户个人基本信息")
+    @RequestMapping(value = "/updatePersonal", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updatePersonal(@RequestBody @ApiParam(value="修改用户个人基本信息")UpdatePersonalParam updatePersonalParam,HttpServletRequest request) {
 
+
+        //传入去修改
+        int count = userService.updatePersonal(updatePersonalParam);
+        if(count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+
+    }
 
 
 

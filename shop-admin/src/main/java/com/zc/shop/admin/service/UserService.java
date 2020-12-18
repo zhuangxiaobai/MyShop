@@ -1,5 +1,6 @@
 package com.zc.shop.admin.service;
 
+import com.zc.shop.admin.dto.UpdatePersonalParam;
 import com.zc.shop.admin.dto.UsersParam;
 import com.zc.shop.mbg.po.Users;
 
@@ -15,4 +16,6 @@ public interface UserService {
     Users userExistByUserName(String username);
 
     int resetPassWord(String mobile, String newPassword);
+
+    int updatePersonal(UpdatePersonalParam updatePersonalParam);
 }

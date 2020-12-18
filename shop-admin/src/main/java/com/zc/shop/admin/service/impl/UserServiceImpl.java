@@ -1,6 +1,8 @@
 package com.zc.shop.admin.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import com.zc.shop.admin.dto.UpdatePersonalParam;
 import com.zc.shop.admin.dto.UsersParam;
 import com.zc.shop.admin.mapper.UsersExtMapper;
 import com.zc.shop.admin.service.UserService;
@@ -121,5 +123,18 @@ public class UserServiceImpl implements UserService {
 
 
         return usersExtMapper.updateByPrimaryKeySelective(users);
+    }
+
+    @Override
+    public int updatePersonal(UpdatePersonalParam updatePersonalParam) {
+
+       Users users  = new Users();
+
+        BeanUtil.copyProperties(updatePersonalParam,users);
+       return usersExtMapper.updateByPrimaryKeySelective(users);
+
+
+
+
     }
 }

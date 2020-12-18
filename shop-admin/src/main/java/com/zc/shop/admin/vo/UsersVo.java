@@ -35,4 +35,20 @@ public class UsersVo {
     private Integer cId;
 
 
+    private String realname;
+
+
+    private Integer sex;
+
+
+    private String email;
+
+
+    private String Introduction;
+
+
+
+
+
+
 }
