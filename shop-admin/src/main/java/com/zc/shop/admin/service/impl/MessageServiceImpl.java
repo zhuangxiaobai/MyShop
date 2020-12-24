@@ -1,18 +1,18 @@
-package com.zc.shop.admin;
+package com.zc.shop.admin.service.impl;
 
 import com.zc.shop.admin.dto.MessageListSelectParam;
-import com.zc.shop.admin.mapper.GoodsExtMapper;
 import com.zc.shop.admin.mapper.MessageExtMapper;
 import com.zc.shop.admin.mapper.MessageInfoExtMapper;
+import com.zc.shop.admin.service.MessageService;
 import com.zc.shop.admin.vo.MessageVo;
-import org.junit.jupiter.api.Test;
+import com.zc.shop.mbg.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@SpringBootTest
-class AdminApplicationTests {
+@Service
+public class MessageServiceImpl implements MessageService {
 
 
     @Autowired
@@ -23,15 +23,15 @@ class AdminApplicationTests {
     private MessageInfoExtMapper messageInfoExtMapper;
 
 
-    @Test
-    void contextLoads() {
+    @Override
+    public List<MessageVo> myMessageList(MessageListSelectParam messageListSelectParam) {
+
 
         List<MessageVo>  messageVos = messageExtMapper.selectMessageVoList();
 
-        System.out.println(messageVos.size());
-        for(MessageVo messageVo:messageVos){
-            System.out.println(messageVo.toString());
-        }
-    }
 
+
+
+        return messageVos;
+    }
 }
