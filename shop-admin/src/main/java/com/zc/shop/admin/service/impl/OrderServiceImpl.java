@@ -49,10 +49,19 @@ public class OrderServiceImpl implements OrderService {
     private RegiinvoicedetailExtMapper regiinvoicedetailExtMapper;
 
 
+    @Autowired
+    private MessageExtMapper messageExtMapper;
+
+
+    @Autowired
+    private MessageInfoExtMapper messageInfoExtMapper;
 
 
 
-      @Override
+
+
+
+    @Override
       public Map mySellOrder(OrderSellSelectParam orderSellSelectParam, Integer userId) {
 
            //分页查询处理
@@ -249,7 +258,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateShopcart(OrderParam orderParam) {
+    public int update(OrderParam orderParam, Integer userId) {
 
 
         LocalDateTime now  = LocalDateTime.now();
@@ -258,14 +267,18 @@ public class OrderServiceImpl implements OrderService {
         //查询这个订单号下面有多少条订单数据
          List<Order> orders  = orderExtMapper.selectOrderByOrderCode(orderParam.getCode());
 
+         if(orders == null){
+             throw new BusinessException("从订单号下面无法查询到订单记录");
+         }
+
+        Integer supplierId = null;
+        Integer buyUserId = null;
+
          for(Order order1: orders){
+             supplierId = order1.getSupplierId();
+             buyUserId = order1.getBuyId();
 
-
-
-
-
-
-              order1.setUpdatedAt(now);
+             order1.setUpdatedAt(now);
               order1.setStatus(status);
 
             int i = orderExtMapper.updateByPrimaryKeySelective(order1);
@@ -296,6 +309,39 @@ public class OrderServiceImpl implements OrderService {
         }
 
 
+        //修改完事之后去添加一条代办通知
+        Message message = new Message();
+         MessageInfo messageInfo = new MessageInfo();
+        messageInfo.setTitle("订单状态变更");
+        messageInfo.setText("订单号"+orderParam.getCode()+"的订单状态出现变更,请速处理");
+
+        int i = messageInfoExtMapper.insertSelective(messageInfo);
+        if(i != 1){
+            throw new BusinessException("插入时通知信息时异常");
+        }
+
+        message.setInfoId(messageInfo.getId());
+        //1.看1下是买家还是卖家发的
+        if(supplierId.equals(userId)){
+            message.setCreateId(userId);
+            message.setReceiveId(buyUserId);
+            //卖家发的，所以是买家消息
+            message.setTypeNext(0);
+
+        }else if(buyUserId.equals(userId)){
+            message.setCreateId(userId);
+            message.setReceiveId(supplierId);
+            //买家发的，所以是卖家消息
+            message.setTypeNext(1);
+        }
+
+       message.setCreatedAt(now);
+       message.setType(0);
+
+        int k = messageExtMapper.insertSelective(message);
+       if(k != 1){
+            throw new BusinessException("插入时通知主体时异常");
+        }
 
         return orders.size();
     }
@@ -349,7 +395,7 @@ public class OrderServiceImpl implements OrderService {
 
             List<GoodBuyParam> goodBuyParamList = supplierGoodsParam.getGoodBuyParam();
 
-            //对同意供应商下的不同商品进行增减操作
+            //对同一供应商下的不同商品进行增减操作
             for(GoodBuyParam goodBuyParam : goodBuyParamList){
 
 

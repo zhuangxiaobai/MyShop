@@ -101,8 +101,15 @@ public class OrderController {
     @ApiOperation("修改订单状态接口")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@RequestBody OrderParam orderParam) {
-        int count = orderService.updateShopcart(orderParam);
+    public CommonResult update(@RequestBody OrderParam orderParam,HttpServletRequest request) {
+
+        //获取当前用户id
+        Users user = (Users) request.getAttribute("user");
+        Integer userId = user.getId();
+
+
+
+        int count = orderService.update(orderParam,userId);
         if (count > 0) {
             return CommonResult.success(count);
         }

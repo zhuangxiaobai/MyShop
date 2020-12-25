@@ -13,7 +13,7 @@ public interface OrderService {
 
     Map myBuyOrder(OrderBuySelectParam orderBuySelectParam, Integer userId);
 
-    int updateShopcart(OrderParam orderParam);
+    int update(OrderParam orderParam, Integer userId);
 
     List<Order> myOrderIndex(Integer userId);
 
