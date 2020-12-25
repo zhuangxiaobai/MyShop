@@ -25,14 +25,27 @@
     </resultMap>
 
 
-    <select id="selectMessageVoList" resultMap="MessageVoMap" >
+    <select id="selectMessageVoList" resultMap="MessageVoMap" parameterType="com.zc.shop.admin.dto.MessageListSelectParam">
         select
         me.id as meId , `type`, type_next, create_id, receive_id, info_id, `status`, is_delete, created_at,
         mei.id as meiId,title,text
         from message me
         left join message_info mei
         on me.info_id = mei.id
+        where
+        me.is_delete = 0
+        and me.receive_id = #{id,jdbcType=INTEGER}
+        <if test="type !=null">
+        and  me.`type` = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="status !=null">
+            and  me.`status` = #{status,jdbcType=INTEGER}
+        </if>
+        order by me.`status`,me.created_at DESC
 
+        <if test="pageParam.startPage != null and pageParam.PageSize != null">
+            limit #{pageParam.startPage,jdbcType=INTEGER},#{pageParam.PageSize,jdbcType=INTEGER}
+        </if>
     </select>
 
 

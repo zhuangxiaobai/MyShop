@@ -1,7 +1,5 @@
 package com.zc.shop.admin;
 
-import com.zc.shop.admin.dto.MessageListSelectParam;
-import com.zc.shop.admin.mapper.GoodsExtMapper;
 import com.zc.shop.admin.mapper.MessageExtMapper;
 import com.zc.shop.admin.mapper.MessageInfoExtMapper;
 import com.zc.shop.admin.vo.MessageVo;
@@ -26,12 +24,12 @@ class AdminApplicationTests {
     @Test
     void contextLoads() {
 
-        List<MessageVo>  messageVos = messageExtMapper.selectMessageVoList();
+        /*List<MessageVo>  messageVos = messageExtMapper.selectMessageVoList(messageListSelectParam);
 
         System.out.println(messageVos.size());
         for(MessageVo messageVo:messageVos){
             System.out.println(messageVo.toString());
-        }
+        }*/
     }
 
 }

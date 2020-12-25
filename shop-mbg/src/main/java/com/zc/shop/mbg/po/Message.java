@@ -30,7 +30,7 @@ public class Message implements Serializable {
     @ApiModelProperty(value = "是否删除,0没删,1删了")
     private Integer isDelete;
 
-    @ApiModelProperty(value = "创建时间")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     private static final long serialVersionUID = 1L;

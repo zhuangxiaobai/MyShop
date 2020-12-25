@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface MessageService {
     List<MessageVo> myMessageList(MessageListSelectParam messageListSelectParam);
+
+    int updateStatus(List<Integer> readingHaved);
+
+    int updateDelete(List<Integer> needDelete);
 }
