@@ -2,11 +2,13 @@ package com.zc.shop.admin.service.impl;
 
 import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.mapper.*;
+import com.zc.shop.admin.service.MessageManagerService;
 import com.zc.shop.admin.service.OrderService;
 import com.zc.shop.admin.vo.*;
 import com.zc.shop.common.api.ResultCode;
 import com.zc.shop.common.exception.BusinessException;
 import com.zc.shop.mbg.po.*;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +59,8 @@ public class OrderServiceImpl implements OrderService {
     private MessageInfoExtMapper messageInfoExtMapper;
 
 
+    @Autowired
+    private MessageManagerService messageManagerService;
 
 
 
@@ -308,40 +312,8 @@ public class OrderServiceImpl implements OrderService {
 
         }
 
-
-        //修改完事之后去添加一条代办通知
-        Message message = new Message();
-         MessageInfo messageInfo = new MessageInfo();
-        messageInfo.setTitle("订单状态变更");
-        messageInfo.setText("订单号"+orderParam.getCode()+"的订单状态出现变更,请速处理");
-
-        int i = messageInfoExtMapper.insertSelective(messageInfo);
-        if(i != 1){
-            throw new BusinessException("插入时通知信息时异常");
-        }
-
-        message.setInfoId(messageInfo.getId());
-        //1.看1下是买家还是卖家发的
-        if(supplierId.equals(userId)){
-            message.setCreateId(userId);
-            message.setReceiveId(buyUserId);
-            //卖家发的，所以是买家消息
-            message.setTypeNext(0);
-
-        }else if(buyUserId.equals(userId)){
-            message.setCreateId(userId);
-            message.setReceiveId(supplierId);
-            //买家发的，所以是卖家消息
-            message.setTypeNext(1);
-        }
-
-       message.setCreatedAt(now);
-       message.setType(0);
-
-        int k = messageExtMapper.insertSelective(message);
-       if(k != 1){
-            throw new BusinessException("插入时通知主体时异常");
-        }
+        //调用插入通知的service
+       messageManagerService.addMessage(orderParam.getCode(),supplierId,buyUserId,userId,now);
 
         return orders.size();
     }

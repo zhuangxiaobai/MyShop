@@ -1,8 +1,6 @@
 package com.zc.shop.admin.service;
 
 import com.zc.shop.admin.dto.*;
-import com.zc.shop.admin.vo.LadingAllVo;
-import com.zc.shop.admin.vo.ShiTiChuKuVo;
 import com.zc.shop.mbg.po.Lading;
 
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.Map;
 public interface LadingService {
     int create(LadingCreateParam ladingCreateParam, Integer userId);
 
-    int updateLadingStatus(LadingParam ladingParam);
+    int updateLadingStatus(LadingParam ladingParam, Integer userId);
 
     Map mySellLading(LadingSellSelectParam ladingSelectParam, Integer userId);
 

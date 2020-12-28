@@ -1,26 +1,20 @@
 package com.zc.shop.admin.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.mapper.*;
 import com.zc.shop.admin.service.LadingService;
+import com.zc.shop.admin.service.MessageManagerService;
 import com.zc.shop.admin.util.ListPageUtil;
 import com.zc.shop.admin.vo.LadingAllVo;
-import com.zc.shop.admin.vo.OrdersAllVo;
 import com.zc.shop.admin.vo.ShiTiChuKuVo;
 import com.zc.shop.common.exception.BusinessException;
-import com.zc.shop.mbg.mapper.GoodsMapper;
-import com.zc.shop.mbg.mapper.StatementsMapper;
 import com.zc.shop.mbg.po.*;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -48,10 +42,13 @@ public class LadingServiceImpl implements LadingService {
     @Autowired
     private SettlementExtMapper settlementExtMapper;
 
+    @Autowired
+    private MessageManagerService messageManagerService;
 
 
-
-
+    /**
+     * 作废
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int create(LadingCreateParam ladingCreateParam, Integer userId) {
@@ -125,16 +122,23 @@ public class LadingServiceImpl implements LadingService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateLadingStatus(LadingParam ladingParam) {
+    public int updateLadingStatus(LadingParam ladingParam, Integer userId) {
 
         LocalDateTime now  = LocalDateTime.now();
         Integer status = ladingParam.getStatus();
 
         //查询这个提单号下面有多少条提单数据
         List<Lading> ladings = ladingExtMapper.selectLadingByLadingCode(ladingParam.getLadingCode());
+        //获取供货商id，用于通知时候的填写供货商id用
+        Integer supplierId = null;
 
         String orderCode = null;
+        //为了下面提单发送通知的时候去查数据库获取买方id用
+        Integer orderIdForMessage = null;
         for(Lading lading1: ladings){
+
+            supplierId = lading1.getSupplierId();
+            orderIdForMessage = lading1.getOrderId();
 
             lading1.setUpdatedAt(now);
             lading1.setStatus(status);
@@ -191,9 +195,10 @@ public class LadingServiceImpl implements LadingService {
             }
 
         }
+
+
       //4为提单中的买家确认收货，这时候需要判断此提单号关联的订单号下的所有商品是否已经被提完，提完就去修改订单状态为
       //  5待结算，没提完就不用修改，依旧为4
-
        if(ladingParam.getStatus() == 4){
 
           //取结算详情表中数据与订单表一一对应，比对实提数量与实提重量，所有实提重量订单表>=购买重量 可算都完成
@@ -203,7 +208,11 @@ public class LadingServiceImpl implements LadingService {
 
            //计算同一订单号下提完的商品数有多少
            int count = 0;
+           //订单变化时候的买方id，用在本{}中
+           Integer buyUserId  = null;
           for(Order order :orderList){
+
+              buyUserId = order.getBuyId();
 
                long orderId  = order.getId();
                Integer  buyNum = order.getNum();
@@ -245,10 +254,22 @@ public class LadingServiceImpl implements LadingService {
 
          }
 
+         //订单状态发生变化,发生订单通知
+           messageManagerService.addMessageByOrderCode(orderCode,supplierId,buyUserId,userId,now);
+
+
+
+       }else{
+            //为了去获取订单数据中买方id用的
+           Order order = orderExtMapper.selectByPrimaryKey(orderIdForMessage.longValue());
+
+           //只有提单发生了变化
+           //提单发生改变通知，发生提单通知
+           messageManagerService.addMessageByTiCode(ladingParam.getLadingCode(),supplierId, order.getBuyId(),userId,now);
+
+
 
        }
-
-
 
 
 
@@ -322,7 +343,7 @@ public class LadingServiceImpl implements LadingService {
     @Transactional(rollbackFor = Exception.class)
     public int createLadings(List<Lading> ladingList, Integer userId) {
 
-        //每一次创建提单，提单号相同，也可能提一个订单下面的多个商品
+        //每一次创建提单，提单号相同，也可能提一个订单下面的多个商品(每一次提单是提同一订单下的一个或者多个商品)
 
         String ladingCode = null;
         LocalDateTime now  = LocalDateTime.now();

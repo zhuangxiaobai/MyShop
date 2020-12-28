@@ -72,8 +72,15 @@ public class LadingController {
     @ApiOperation("修改提单状态的")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@RequestBody LadingParam ladingParam) {
-        int count = ladingService.updateLadingStatus(ladingParam);
+    public CommonResult update(@RequestBody LadingParam ladingParam, HttpServletRequest request) {
+
+        //获取当前用户id
+        Users user = (Users) request.getAttribute("user");
+        Integer userId = user.getId();
+
+
+
+        int count = ladingService.updateLadingStatus(ladingParam,userId);
         if (count > 0) {
             return CommonResult.success(count);
         }
