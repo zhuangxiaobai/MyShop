@@ -1,6 +1,7 @@
 package com.zc.shop.admin.service.impl;
 
 import com.zc.shop.admin.dto.MessageListSelectParam;
+import com.zc.shop.admin.dto.PageParam;
 import com.zc.shop.admin.mapper.MessageExtMapper;
 import com.zc.shop.admin.mapper.MessageInfoExtMapper;
 import com.zc.shop.admin.service.MessageService;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.zc.shop.admin.util.MyPageUtil.exchangeStartPage;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -42,10 +45,8 @@ public class MessageServiceImpl implements MessageService {
     //        }
 
         //分页查询处理
-        Integer startPage = messageListSelectParam.getPageParam().getStartPage();
-        Integer pageSize =  messageListSelectParam.getPageParam().getPageSize();
-        Integer  start = (startPage-1)*pageSize ;
-        messageListSelectParam.getPageParam().setStartPage(start);
+        PageParam pageParam = exchangeStartPage(messageListSelectParam.getPageParam());
+        messageListSelectParam.setPageParam(pageParam);
 
         List<MessageVo>  messageVos = messageExtMapper.selectMessageVoList(messageListSelectParam);
 

@@ -215,9 +215,37 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "修改邮箱信息")
+    @RequestMapping(value = "/updateMail", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateMail(@RequestBody @ApiParam(value="修改用户邮箱信息")UpdateUserMailParam updateUserMailParam,HttpServletRequest request) {
 
 
+        //传入去修改
+        int count = userService.updateMail(updateUserMailParam);
+        if(count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
 
+    }
+
+    @ApiOperation(value = "修改用户账号(手机号),更改完需要用新账号重新登陆")
+    @RequestMapping(value = "/updateUserName", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateUserName(@RequestBody @ApiParam(value="修改用户账号(手机号)")UpdateUserNameParam updateUserNameParam,HttpServletRequest request) {
+
+
+        //传入去修改
+        int count = userService.updateUserName(updateUserNameParam);
+        if(count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+
+    }
 
 
 

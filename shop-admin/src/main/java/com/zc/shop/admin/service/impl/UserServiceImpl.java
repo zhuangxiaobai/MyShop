@@ -3,6 +3,8 @@ package com.zc.shop.admin.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.zc.shop.admin.dto.UpdatePersonalParam;
+import com.zc.shop.admin.dto.UpdateUserMailParam;
+import com.zc.shop.admin.dto.UpdateUserNameParam;
 import com.zc.shop.admin.dto.UsersParam;
 import com.zc.shop.admin.mapper.UsersExtMapper;
 import com.zc.shop.admin.service.UserService;
@@ -134,6 +136,73 @@ public class UserServiceImpl implements UserService {
        return usersExtMapper.updateByPrimaryKeySelective(users);
 
 
+
+
+    }
+
+    @Override
+    public int updateMail(UpdateUserMailParam updateUserMailParam) {
+
+        String md5Password = DigestUtil.md5Hex(updateUserMailParam.getPassword());
+
+        Users user = usersExtMapper.selectUserByUserNameAndPassword(updateUserMailParam.getUserName(),md5Password);
+
+
+
+        //都相等验证通过去修改
+        if((user!=null)&& (user.getUsername().equals(updateUserMailParam.getUserName()))
+                && (md5Password.equals(user.getPassword()))){
+
+
+            user.setEmail(updateUserMailParam.getEmail());
+            user.setUpdatedAt(LocalDateTime.now());
+
+
+            int i = usersExtMapper.updateByPrimaryKeySelective(user);
+
+            if(i!=1){
+                throw new BusinessException(ResultCode.FAILED);
+            }
+
+            return i;
+
+        }
+
+        //否则返回
+       throw new BusinessException(ResultCode.USERNAMEORPASSWORDERROR);
+    }
+
+    @Override
+    public int updateUserName(UpdateUserNameParam updateUserNameParam) {
+
+
+        String md5Password = DigestUtil.md5Hex(updateUserNameParam.getPassword());
+
+        Users user = usersExtMapper.selectUserByUserNameAndPassword(updateUserNameParam.getUserName(),md5Password);
+
+
+
+        //都相等验证通过去修改
+        if((user!=null)&& (user.getUsername().equals(updateUserNameParam.getUserName()))
+                && (md5Password.equals(user.getPassword()))){
+
+
+            user.setUsername(updateUserNameParam.getNewUserName());
+            user.setUpdatedAt(LocalDateTime.now());
+
+
+            int i = usersExtMapper.updateByPrimaryKeySelective(user);
+
+            if(i!=1){
+                throw new BusinessException(ResultCode.FAILED);
+            }
+
+            return i;
+
+        }
+
+        //否则返回
+        throw new BusinessException(ResultCode.USERNAMEORPASSWORDERROR);
 
 
     }
