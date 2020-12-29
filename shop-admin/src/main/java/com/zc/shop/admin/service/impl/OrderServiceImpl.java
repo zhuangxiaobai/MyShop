@@ -313,7 +313,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //调用插入通知的service
-       messageManagerService.addMessage(orderParam.getCode(),supplierId,buyUserId,userId,now);
+       messageManagerService.addMessageByOrderCode(orderParam.getCode(),supplierId,buyUserId,userId,now);
 
         return orders.size();
     }
