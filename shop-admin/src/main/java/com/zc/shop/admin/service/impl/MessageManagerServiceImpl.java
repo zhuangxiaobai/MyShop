@@ -126,6 +126,44 @@ public class MessageManagerServiceImpl implements MessageManagerService {
 
 
     }
+    /**
+     *
+     * @param receiveId 卖方id
+     * @param createdId  买方id
+     * @param now   当前时间
+     */
+    @Override
+    public void addMessageBySys(Integer receiveId, Integer createdId,LocalDateTime now,String title,String text) {
+
+        //修改完事之后去添加一条代办通知
+        Message message = new Message();
+        MessageInfo messageInfo = new MessageInfo();
+        messageInfo.setTitle(title);
+        messageInfo.setText(text);
+
+        int i = messageInfoExtMapper.insertSelective(messageInfo);
+        if(i != 1){
+            throw new BusinessException("插入系统通知信息时异常");
+        }
+
+        message.setInfoId(messageInfo.getId());
+        message.setCreateId(createdId);
+        message.setReceiveId(receiveId);
+
+        message.setCreatedAt(now);
+        //系统是2
+        message.setType(2);
+
+        int k = messageExtMapper.insertSelective(message);
+        if(k != 1){
+            throw new BusinessException("插入系统通知主体时异常");
+        }
+
+
+
+    }
+
+
 
 
 }

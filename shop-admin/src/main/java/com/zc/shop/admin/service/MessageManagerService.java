@@ -14,7 +14,7 @@ public interface MessageManagerService {
        void  addMessageByTiCode(String tiCode,Integer supplierId,Integer buyUserId,Integer userId, LocalDateTime now );
 
 
-
+     void addMessageBySys(Integer receiveId, Integer createdId,LocalDateTime now,String title,String text);
 
 
 

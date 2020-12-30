@@ -234,7 +234,7 @@ public class EmployeesController {
 
 
 
-    @ApiOperation(value = "邀请员工(必须是已经注册过的用户)")
+    @ApiOperation(value = "公司拥有者邀请员工(必须是已经注册过的用户)")
     @RequestMapping(value = "/inviteEmployee", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult inviteEmployee(@RequestBody @ApiParam(value="添加员工对象")EmployeesInsertParam employeesInsertParam , HttpServletRequest request) {

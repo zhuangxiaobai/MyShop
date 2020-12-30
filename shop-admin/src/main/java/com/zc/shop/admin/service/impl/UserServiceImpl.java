@@ -7,10 +7,13 @@ import com.zc.shop.admin.dto.UpdateUserMailParam;
 import com.zc.shop.admin.dto.UpdateUserNameParam;
 import com.zc.shop.admin.dto.UsersParam;
 import com.zc.shop.admin.mapper.UsersExtMapper;
+import com.zc.shop.admin.service.MessageManagerService;
 import com.zc.shop.admin.service.UserService;
 import com.zc.shop.admin.util.JwtTokenUtil;
 import com.zc.shop.common.api.ResultCode;
 import com.zc.shop.common.exception.BusinessException;
+import com.zc.shop.mbg.po.Message;
+import com.zc.shop.mbg.po.MessageInfo;
 import com.zc.shop.mbg.po.Users;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UsersExtMapper usersExtMapper;
+
+
+    @Autowired
+    private MessageManagerService messageManagerService;
 
 
     @Override
@@ -97,9 +104,21 @@ public class UserServiceImpl implements UserService {
 
         currenetUser.setPassword(newPassword);
         currenetUser.setUpdatedAt(LocalDateTime.now());
+        int i = usersExtMapper.updateByPrimaryKeySelective(currenetUser);
+
+        if(i!=1){
+            throw new BusinessException("修改密码失败");
+        }
+
+        //去添加系统信息
+        String title = "密码变动";
+        String text = "您的密码已被修改,请悉知";
+        //修改完事之后去添加一条代办通知
+        messageManagerService.addMessageBySys(currenetUser.getId(),currenetUser.getId(),LocalDateTime.now(),title,text);
 
 
-        return usersExtMapper.updateByPrimaryKeySelective(currenetUser);
+        return i;
+
     }
 
     @Override
@@ -124,7 +143,22 @@ public class UserServiceImpl implements UserService {
         users.setUpdatedAt(LocalDateTime.now());
 
 
-        return usersExtMapper.updateByPrimaryKeySelective(users);
+        int i = usersExtMapper.updateByPrimaryKeySelective(users);
+
+
+        if(i!=1){
+            throw new BusinessException("重置密码失败");
+        }
+
+        //去添加系统信息
+        String title = "密码变动";
+        String text = "您的密码已被重置,请悉知";
+        //修改完事之后去添加一条代办通知
+        messageManagerService.addMessageBySys(users.getId(),users.getId(),LocalDateTime.now(),title,text);
+
+
+
+        return i;
     }
 
     @Override
@@ -133,10 +167,21 @@ public class UserServiceImpl implements UserService {
        Users users  = new Users();
 
         BeanUtil.copyProperties(updatePersonalParam,users);
-       return usersExtMapper.updateByPrimaryKeySelective(users);
+
+        int i = usersExtMapper.updateByPrimaryKeySelective(users);
+        if(i!=1){
+            throw new BusinessException("修改用户信息失败");
+        }
+
+        //去添加系统信息
+        String title = "个人信息变动";
+        String text = "您的个人信息已被修改,请悉知";
+        //修改完事之后去添加一条代办通知
+        messageManagerService.addMessageBySys(users.getId(),users.getId(),LocalDateTime.now(),title,text);
 
 
 
+        return i;
 
     }
 
@@ -163,6 +208,15 @@ public class UserServiceImpl implements UserService {
             if(i!=1){
                 throw new BusinessException(ResultCode.FAILED);
             }
+
+
+            //去添加系统信息
+            String title = "邮箱变动";
+            String text = "您的邮箱已被修改,请悉知";
+            //修改完事之后去添加一条代办通知
+            messageManagerService.addMessageBySys(user.getId(),user.getId(),LocalDateTime.now(),title,text);
+
+
 
             return i;
 
@@ -196,6 +250,17 @@ public class UserServiceImpl implements UserService {
             if(i!=1){
                 throw new BusinessException(ResultCode.FAILED);
             }
+
+
+            //去添加系统信息
+            String title = "用户账号(手机号)变动";
+            String text = "您的用户账号(手机号)已被修改,请悉知";
+            //修改完事之后去添加一条代办通知
+            messageManagerService.addMessageBySys(user.getId(),user.getId(),LocalDateTime.now(),title,text);
+
+
+
+
 
             return i;
 

@@ -1,5 +1,7 @@
 package com.zc.shop.admin.controller;
 
+import com.zc.shop.admin.dto.LadingParam;
+import com.zc.shop.admin.dto.UpdateCertificationStatusParam;
 import com.zc.shop.admin.service.CertificationService;
 import com.zc.shop.common.api.CommonResult;
 import com.zc.shop.mbg.po.Certification;
@@ -19,7 +21,6 @@ import java.util.List;
 @RequestMapping("/certification")
 public class CertificationController {
 
-    //注释zzz1aa2222q222qqw
     @Autowired
     private CertificationService certificationService;
 
@@ -73,6 +74,23 @@ public class CertificationController {
 
 
     }
+
+
+
+    @ApiOperation("修改用户发送的公司审核状态(被主平台方审核完成后由调主平台调用)")
+    @RequestMapping(value = "/updateCertificationStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateCertificationStatus(@RequestBody UpdateCertificationStatusParam updateCertificationStatusParam, HttpServletRequest request) {
+
+
+        int count = certificationService.updateCertificationStatus(updateCertificationStatusParam);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+
 
 
 
