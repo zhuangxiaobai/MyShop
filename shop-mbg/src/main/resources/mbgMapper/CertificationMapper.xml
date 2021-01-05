@@ -9,7 +9,7 @@
     <result column="companytype" jdbcType="VARCHAR" property="companytype" />
     <result column="builddate" jdbcType="TIMESTAMP" property="builddate" />
     <result column="ziben" jdbcType="VARCHAR" property="ziben" />
-    <result column="qixian" jdbcType="VARCHAR" property="qixian" />
+    <result column="qixian" jdbcType="TIMESTAMP" property="qixian" />
     <result column="idcard" jdbcType="VARCHAR" property="idcard" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="lianxiren" jdbcType="VARCHAR" property="lianxiren" />
@@ -63,7 +63,7 @@
       shouquanshu, kaipiaoziliao)
     values (#{company,jdbcType=VARCHAR}, #{xinyong,jdbcType=VARCHAR}, #{faren,jdbcType=VARCHAR}, 
       #{companytype,jdbcType=VARCHAR}, #{builddate,jdbcType=TIMESTAMP}, #{ziben,jdbcType=VARCHAR}, 
-      #{qixian,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{qixian,jdbcType=TIMESTAMP}, #{idcard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{lianxiren,jdbcType=VARCHAR}, #{lxridcard,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{back,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{shuihao,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{companyaddress,jdbcType=VARCHAR}, #{isSanzheng,jdbcType=INTEGER}, 
@@ -166,7 +166,7 @@
         #{ziben,jdbcType=VARCHAR},
       </if>
       <if test="qixian != null">
-        #{qixian,jdbcType=VARCHAR},
+        #{qixian,jdbcType=TIMESTAMP},
       </if>
       <if test="idcard != null">
         #{idcard,jdbcType=VARCHAR},
@@ -240,7 +240,7 @@
         ziben = #{ziben,jdbcType=VARCHAR},
       </if>
       <if test="qixian != null">
-        qixian = #{qixian,jdbcType=VARCHAR},
+        qixian = #{qixian,jdbcType=TIMESTAMP},
       </if>
       <if test="idcard != null">
         idcard = #{idcard,jdbcType=VARCHAR},
@@ -301,7 +301,7 @@
       companytype = #{companytype,jdbcType=VARCHAR},
       builddate = #{builddate,jdbcType=TIMESTAMP},
       ziben = #{ziben,jdbcType=VARCHAR},
-      qixian = #{qixian,jdbcType=VARCHAR},
+      qixian = #{qixian,jdbcType=TIMESTAMP},
       idcard = #{idcard,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       lianxiren = #{lianxiren,jdbcType=VARCHAR},
@@ -328,7 +328,7 @@
       companytype = #{companytype,jdbcType=VARCHAR},
       builddate = #{builddate,jdbcType=TIMESTAMP},
       ziben = #{ziben,jdbcType=VARCHAR},
-      qixian = #{qixian,jdbcType=VARCHAR},
+      qixian = #{qixian,jdbcType=TIMESTAMP},
       idcard = #{idcard,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       lianxiren = #{lianxiren,jdbcType=VARCHAR},

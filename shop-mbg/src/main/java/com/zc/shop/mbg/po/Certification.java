@@ -27,8 +27,8 @@ public class Certification implements Serializable {
     @ApiModelProperty(value = "注册资本")
     private String ziben;
 
-    @ApiModelProperty(value = "营业期限")
-    private String qixian;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime qixian;
 
     @ApiModelProperty(value = "法人身份证")
     private String idcard;
@@ -66,7 +66,7 @@ public class Certification implements Serializable {
     @ApiModelProperty(value = "0待审核1通过2不通过")
     private Integer status;
 
-    @ApiModelProperty(value = "userid")
+    @ApiModelProperty(value = "userid,公司创建者id(暂时没把公司多人概念放入)")
     private Integer userid;
 
     @ApiModelProperty(value = "营业执照")
@@ -136,11 +136,11 @@ public class Certification implements Serializable {
         this.ziben = ziben;
     }
 
-    public String getQixian() {
+    public LocalDateTime getQixian() {
         return qixian;
     }
 
-    public void setQixian(String qixian) {
+    public void setQixian(LocalDateTime qixian) {
         this.qixian = qixian;
     }
 

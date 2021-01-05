@@ -9,13 +9,13 @@ public class Message implements Serializable {
     @ApiModelProperty(value = "自增id")
     private Integer id;
 
-    @ApiModelProperty(value = "消息类型,0是代办,1是私信,2是系统")
+    @ApiModelProperty(value = "消息类型,0是代办,1是私信(占时没用),2是系统")
     private Integer type;
 
     @ApiModelProperty(value = "消息类型细分,0为买家,1为卖家，可为null")
     private Integer typeNext;
 
-    @ApiModelProperty(value = "信息创建人id,不为null")
+    @ApiModelProperty(value = "信息创建人id,不为null,系统的话为0")
     private Integer createId;
 
     @ApiModelProperty(value = "信息接受者id,必须有值，当为0且type为2时代表系统向全员发消息")

@@ -31,7 +31,7 @@ public class Users implements Serializable {
     @ApiModelProperty(value = "0未删除1已删除")
     private Integer isDelete;
 
-    @ApiModelProperty(value = "公司id")
+    @ApiModelProperty(value = "公司id(当为0时说明刚注册还没有注册公司或者被邀请进入公司)")
     private Integer cId;
 
     @ApiModelProperty(value = "真实姓名")

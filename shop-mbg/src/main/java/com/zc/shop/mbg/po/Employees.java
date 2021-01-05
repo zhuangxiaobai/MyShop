@@ -29,7 +29,7 @@ public class Employees implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
-    @ApiModelProperty(value = "性别，0为女，1为男")
+    @ApiModelProperty(value = "性别,0为女,1为男")
     private Integer gender;
 
     @ApiModelProperty(value = "员工姓名")
