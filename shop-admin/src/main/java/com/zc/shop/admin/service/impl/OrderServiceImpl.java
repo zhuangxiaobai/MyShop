@@ -2,6 +2,7 @@ package com.zc.shop.admin.service.impl;
 
 import com.zc.shop.admin.dto.*;
 import com.zc.shop.admin.mapper.*;
+import com.zc.shop.admin.service.GoodsService;
 import com.zc.shop.admin.service.MessageManagerService;
 import com.zc.shop.admin.service.OrderService;
 import com.zc.shop.admin.vo.*;
@@ -61,6 +62,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private MessageManagerService messageManagerService;
+
+
+    @Autowired
+    private GoodsService goodsService;
 
 
 
@@ -298,7 +303,7 @@ public class OrderServiceImpl implements OrderService {
 
                 Integer goodId = orderZuoFei.getGoodsId();
 
-         /*   Goods goods = goodsExtMapper.selectByPrimaryKey(goodId);
+              /*   Goods goods = goodsExtMapper.selectByPrimaryKey(goodId);
             Short num = Integer.valueOf(goods.getGoodsNumber()+buyNum).shortValue();*/
                 //修改商品数量
                 /* int updateNumSuccess = goodsExtMapper.updateGoodsNum(goodId,num);*/
@@ -337,9 +342,6 @@ public class OrderServiceImpl implements OrderService {
         //存放key:供货商id，订单号
         //Map<Integer,String> map = new HashMap<>();
 
-
-
-
         for(SupplierGoodsParam supplierGoodsParam :supplierGoodsParamList){
 
 
@@ -364,17 +366,15 @@ public class OrderServiceImpl implements OrderService {
 
             }
 
-
             List<GoodBuyParam> goodBuyParamList = supplierGoodsParam.getGoodBuyParam();
 
             //对同一供应商下的不同商品进行增减操作
             for(GoodBuyParam goodBuyParam : goodBuyParamList){
 
-
                 //商品id
                 Integer goodId =  goodBuyParam.getId();
 
-                //获取商品
+            /*     //获取商品
                 Goods goods = goodsExtMapper.selectByPrimaryKey(goodId);
 
                 //看商品是否下架
@@ -382,8 +382,9 @@ public class OrderServiceImpl implements OrderService {
                     //下架了
                     throw new BusinessException(ResultCode.GOODSISNOTONSALE);
 
-                }
+                }*/
 
+           /*
                 //查看余量是否够（在这只比较数量，这就够了）
                 Short remainNumber = goods.getRemainNumber();
                 //买的数量
@@ -414,6 +415,18 @@ public class OrderServiceImpl implements OrderService {
                     throw new BusinessException("修改商品数量时失败："+"商品id为"+goodBuyParam.getId());
 
                 }
+*/
+
+                //买的数量
+                Short buyNum = goodBuyParam.getNum().shortValue();
+                Goods goods  = goodsService.updateGoodNum(goodId,1,buyNum);
+
+                //计算单个商品重量,这个很不好，最好在表里添加上
+                Short goodsNumber = goods.getGoodsNumber();
+                BigDecimal goodsWeight = goods.getGoodsWeight();
+                BigDecimal oneWeight = goodsWeight.divide(new BigDecimal(goodsNumber), 4, RoundingMode.HALF_UP);
+
+
 
 
                 //创建订单

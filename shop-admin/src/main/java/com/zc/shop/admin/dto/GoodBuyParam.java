@@ -11,7 +11,7 @@ public class GoodBuyParam {
     @ApiModelProperty(value = "商品表主ID")
     private Integer id;
 
-    @ApiModelProperty(value = "商品表主ID")
+    @ApiModelProperty(value = "买商品的数量")
     private Integer num;
 
 

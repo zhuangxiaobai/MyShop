@@ -7,12 +7,15 @@ import com.zc.shop.admin.mapper.GoodsExtMapper;
 import com.zc.shop.admin.mapper.OrderExtMapper;
 import com.zc.shop.admin.service.GoodsService;
 import com.zc.shop.admin.vo.GoodsAllInfoVo;
+import com.zc.shop.common.api.ResultCode;
+import com.zc.shop.common.exception.BusinessException;
 import com.zc.shop.mbg.po.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,4 +164,69 @@ public class GoodsServiceImpl implements GoodsService {
 
         return goodsExtMapper.updateByPrimaryKeySelective(goods);
     }
+
+    @Override
+    public synchronized Goods updateGoodNum(int goodId,int jiaorjian, int num) {
+
+
+
+        //去查询现有的商品,查到现在商品的余量(数量和重量)
+        Goods goods = goodsExtMapper.selectByPrimaryKey(goodId);
+
+        //看商品是否下架
+        if( goods.getIsDelete() == 1){
+            //下架了
+            throw new BusinessException(ResultCode.GOODSISNOTONSALE);
+
+        }
+
+        //获取现有的商品的数量和重量
+        Short remainNumber = goods.getRemainNumber();
+        BigDecimal remainWeight = goods.getRemainWeight();
+
+        //计算单个商品重量
+        Short goodsNumber = goods.getGoodsNumber();
+        BigDecimal goodsWeight = goods.getGoodsWeight();
+        BigDecimal oneWeight = goodsWeight.divide(new BigDecimal(goodsNumber), 4, RoundingMode.HALF_UP);
+
+        //如果传入的是0加，直接加上数量和重量
+        if(jiaorjian == 0){
+            //设置加后的数量
+            goods.setRemainNumber((short) (remainNumber.intValue() + num));
+
+            //设置加后的重量
+            remainWeight = remainWeight.add(oneWeight.multiply(new BigDecimal(num)));
+            goods.setRemainWeight(remainWeight);
+        } //如果传入的是1减,直接减去数量和重量，(如果数量低于0的,操作失败)
+        else if(jiaorjian == 1){
+            //确认数量是否小于0
+            Short numAfter = Integer.valueOf(remainNumber - num).shortValue();
+            if(numAfter < 0){
+                throw new BusinessException(ResultCode.GOODSNUMBERNOTENOUGH);
+            }
+
+            //设置减后的数量
+            goods.setRemainNumber(numAfter);
+
+            //设置减后的重量
+            remainWeight = remainWeight.subtract(oneWeight.multiply(new BigDecimal(num)));
+            goods.setRemainWeight(remainWeight);
+
+        }else{
+            throw new BusinessException("传入的参数不符合规则,0或1");
+        }
+
+
+        int goodsSuccess = goodsExtMapper.updateByPrimaryKeySelective(goods);
+        if(goodsSuccess != 1){
+            throw new BusinessException("修改商品数量时失败："+"商品id为"+goods.getId());
+
+        }
+
+
+        return goods;
+
+    }
+
+
 }
