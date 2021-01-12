@@ -69,7 +69,6 @@ public class OrderServiceImpl implements OrderService {
 
 
 
-
     @Override
       public Map mySellOrder(OrderSellSelectParam orderSellSelectParam, Integer userId) {
 
@@ -295,22 +294,25 @@ public class OrderServiceImpl implements OrderService {
            //修改成功并且修改为0，订单作废，这时候需要去修改增加goods表商品数量(没有付款前可以作废订单)
             if(i>0 && status == 0){
 
+
+
                 Order orderZuoFei = orderExtMapper.selectByPrimaryKey(order1.getId());
 
                 //获取剩余重量和数量，加会goods表
                 Short remainNum = orderZuoFei.getRemainnumber().shortValue();
-                BigDecimal  remainWeight   = orderZuoFei.getRemaining();
+
+
+               // BigDecimal  remainWeight   = orderZuoFei.getRemaining();
 
                 Integer goodId = orderZuoFei.getGoodsId();
 
-              /*   Goods goods = goodsExtMapper.selectByPrimaryKey(goodId);
-            Short num = Integer.valueOf(goods.getGoodsNumber()+buyNum).shortValue();*/
-                //修改商品数量
-                /* int updateNumSuccess = goodsExtMapper.updateGoodsNum(goodId,num);*/
-                int updateNumSuccess = goodsExtMapper.updateGoodsNumPlus(goodId,remainNum,remainWeight);
-                if(!(updateNumSuccess >0)){
-                    throw new BusinessException("商品数量重量还原失败");
-                }
+
+                goodsService.updateGoodNum(goodId, 0, remainNum);
+
+//                int updateNumSuccess = goodsExtMapper.updateGoodsNumPlus(goodId,remainNum,remainWeight);
+//                if(!(updateNumSuccess >0)){
+//                    throw new BusinessException("商品数量重量还原失败");
+//                }
 
             }
 

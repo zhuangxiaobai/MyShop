@@ -166,6 +166,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public synchronized Goods updateGoodNum(int goodId,int jiaorjian, int num) {
 
 

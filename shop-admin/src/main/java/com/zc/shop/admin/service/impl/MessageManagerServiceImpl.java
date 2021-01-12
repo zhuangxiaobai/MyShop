@@ -87,6 +87,7 @@ public class MessageManagerServiceImpl implements MessageManagerService {
      * @param now   当前时间
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addMessageByTiCode(String tiCode, Integer supplierId, Integer buyUserId, Integer userId, LocalDateTime now) {
 
         //修改完事之后去添加一条代办通知
@@ -133,6 +134,7 @@ public class MessageManagerServiceImpl implements MessageManagerService {
      * @param now   当前时间
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addMessageBySys(Integer receiveId, Integer createdId,LocalDateTime now,String title,String text) {
 
         //修改完事之后去添加一条代办通知
